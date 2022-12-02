@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Play",
+            "request": "launch",
+            "mainClass": "ch.epfl.cs107.play.Play",
+            "projectName": "Mini-projet-2_f6f6b3e0"
+        },
+        {
+            "vmArgs": "-enableassertions"
+        }
+    ]
+}

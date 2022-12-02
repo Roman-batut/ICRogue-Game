@@ -2,7 +2,7 @@ package ch.epfl.cs107.play;
 
 import ch.epfl.cs107.play.game.Game;
 import ch.epfl.cs107.play.game.areagame.io.ResourcePath;
-import ch.epfl.cs107.play.game.tutosSolution.Tuto2;
+import ch.epfl.cs107.play.game.icrogue.ICRogue;
 import ch.epfl.cs107.play.io.DefaultFileSystem;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.io.ResourceFileSystem;
@@ -30,7 +30,7 @@ public class Play {
 
         // Create a demo game and initialize corresponding texts
 
-		final Game game = new Tuto2();
+		final Game game = new ICRogue();
 
 		// Use Swing display
 		final Window window = new SwingWindow(game.getTitle(), fileSystem, WINDOW_WIDTH, WINDOW_HEIGHT);
