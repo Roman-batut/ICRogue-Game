@@ -6,7 +6,7 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
-import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Fireball;
+import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Fire;
 import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Projectile;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
@@ -14,12 +14,13 @@ import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
-
+import java.util.ArrayList;
 public class ICRoguePlayer extends ICRogueActor {
 
     private float hp;
 	private Sprite sprite;
-    private Projectile fireball;
+    private Fire fireball;
+    private ArrayList<Projectile> projectiles; 
 	/// Animation duration in frame number
     private final static int MOVE_DURATION = 8;
 
@@ -29,6 +30,8 @@ public class ICRoguePlayer extends ICRogueActor {
         super(owner, orientation, coordinates);
 		this.hp = 10;
 		sprite = new Sprite(spriteName, 1.f, 1.f,this);
+        
+        projectiles = new ArrayList<Projectile>();
         
 		resetMotion();
 	}
@@ -50,8 +53,12 @@ public class ICRoguePlayer extends ICRogueActor {
             case RIGHT ->
                 sprite = new Sprite("zelda/player", .75f, 1.5f, this,new RegionOfInterest(0, 32, 16, 32), new Vector(.15f,-.15f));
         }
-        
         sprite.draw(canvas);
+
+        for(Projectile proj : projectiles){
+            proj.draw(canvas);
+        }
+        
     }
     
     //*UPDATE
@@ -64,8 +71,11 @@ public class ICRoguePlayer extends ICRogueActor {
         moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
         moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
         
-        launchFireball(getOrientation(), keyboard.get(Keyboard.X), deltaTime);
-        
+        launchFireball(getOrientation(), keyboard.get(Keyboard.X));
+        for(Projectile proj : projectiles){
+            proj.update(deltaTime);;
+        }
+
 	    super.update(deltaTime);
     }
     
@@ -78,15 +88,16 @@ public class ICRoguePlayer extends ICRogueActor {
         }
     }
 
-    private void launchFireball(Orientation orientation, Button b, float deltaTime){
+    private void launchFireball(Orientation orientation, Button b){
         if(b.isPressed()) {
             if (!isDisplacementOccurs()){
-                fireball = new Fireball(getOwnerArea(), orientation, getCurrentMainCellCoordinates(), 1, 5);
-                fireball.update(deltaTime);
+                fireball = new Fire(getOwnerArea(), orientation, getCurrentMainCellCoordinates());
+                // fireball.setSprite(new Sprite("zelda/bridge", 1f, 1f, fireball));
+                projectiles.add(fireball);
             }
         }
     }
-
+    
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
 

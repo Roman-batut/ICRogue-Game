@@ -3,6 +3,8 @@ package ch.epfl.cs107.play.game.icrogue;
 import ch.epfl.cs107.play.game.areagame.AreaGame;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.icrogue.actor.ICRoguePlayer;
+import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
+import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
 import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0Room;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -45,17 +47,6 @@ public class ICRogue extends AreaGame{
 		}
 		return false;
 	}
-	/* 
-	private void initArea(String areaKey) {
-		 
-		  ICRogueRoom area = (ICRogueRoom)setCurrentArea(areaKey, true);
-		  DiscreteCoordinates coords = area.getPlayerSpawnPosition();
-		  player = new GhostPlayer(area, Orientation.DOWN, coords,"ghost.1");
-		  player.enterArea(area, coords);
-	      player.centerCamera();
-		 
-	 }
-     */
     
 	@Override
 	public void update(float deltaTime) {
@@ -74,19 +65,5 @@ public class ICRogue extends AreaGame{
             begin(getWindow(), getFileSystem());
         }
     }
-
-    /*
-	protected void switchArea() {
-
-		player.leaveArea();
-
-		areaIndex = (areaIndex==0) ? 1 : 0;
-
-		ICRogueRoom currentArea = (ICRogueRoom)setCurrentArea(areas[areaIndex], false);
-		player.enterArea(currentArea, currentArea.getPlayerSpawnPosition());
-
-		player.strengthen();
-	}
-    */
 
 }

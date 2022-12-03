@@ -11,12 +11,14 @@ import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
-public class Fireball extends Projectile{
+public class Fire extends Projectile{
 
-    public Fireball(Area area, Orientation orientation, DiscreteCoordinates position, int dmg, int frames) {
-        super(area, orientation, position, dmg, frames);
-        //TODO Auto-generated constructor stub
+    public Fire(Area area, Orientation orientation, DiscreteCoordinates position) {
+        super(area, orientation, position, 1,5);
+        sprite = new Sprite("zelda/fire", 1f, 1f, this,new RegionOfInterest(0, 0, 16, 16), new Vector(0, 0));
+        
     }
+    
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         // TODO Auto-generated method stub
@@ -25,11 +27,11 @@ public class Fireball extends Projectile{
 
     @Override
     public void draw(Canvas canvas) {
-        setSprite(new Sprite("zelda/fire", 1f, 1f, this,new RegionOfInterest(0, 0, 16, 16), new Vector(0, 0)));
-        sprite.draw(canvas);
+       super.draw(canvas);
     }
+
+    @Override
     public void update(float deltaTime){
         super.update(deltaTime);
     }
-
  }
