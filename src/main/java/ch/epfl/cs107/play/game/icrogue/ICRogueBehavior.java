@@ -2,7 +2,6 @@ package ch.epfl.cs107.play.game.icrogue;
 
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
-import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.window.Window;
 
 public class ICRogueBehavior extends AreaBehavior{
@@ -53,7 +52,7 @@ public class ICRogueBehavior extends AreaBehavior{
 	/**
 	 * Cell adapted to the ICRogue game
 	 */
-	public class ICRogueCell extends Cell {
+	public class ICRogueCell extends Cell implements Interactable {
 		/// Type of the cell following the enum
 		private final ICRogueCellType type;
 		
@@ -88,10 +87,9 @@ public class ICRogueBehavior extends AreaBehavior{
 			return false;
 		}
 
-		@Override
-		public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+		public ICRogueCellType getType(){
+			return this.type;
 		}
 
 	}
-    
 }

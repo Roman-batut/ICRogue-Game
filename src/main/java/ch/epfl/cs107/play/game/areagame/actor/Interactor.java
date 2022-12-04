@@ -10,7 +10,7 @@ import java.util.List;
  * @see Interactable
  * This interface makes sense only in the "Area Context" with Actor contained into Area Cell
  */
-public interface Interactor {
+public interface Interactor{
 
     /**
      * Get this Interactor's current occupying cells coordinates

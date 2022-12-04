@@ -4,12 +4,13 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.epfl.cs107.play.game.areagame.Area;
+import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 
-public class Staff extends Item{
+public class Staff extends Item implements Interactable{
 
     private Sprite sprite;
 
@@ -17,31 +18,32 @@ public class Staff extends Item{
         super(area, orientation, position, false);
         sprite = new Sprite("zelda/staff_water.icon", .5f, .5f, this);
 
-        //TODO Auto-generated constructor stub
     }
 
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
-        // TODO Auto-generated method stub
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
     @Override
     public boolean isCellInteractable() {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public boolean isViewInteractable() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
+    }
+    
+    @Override
+    public boolean takeCellSpace(){
+        return true;
     }
 
     @Override
     public void draw(Canvas canvas) {
-        // TODO Auto-generated method stub
-        sprite.draw(canvas);
+       
+        sprite.draw(canvas);    
     }
     
 }

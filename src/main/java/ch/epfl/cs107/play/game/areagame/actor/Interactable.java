@@ -2,6 +2,13 @@ package ch.epfl.cs107.play.game.areagame.actor;
 
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.window.swing.SoundItem;
+import ch.epfl.cs107.play.game.icrogue.ICRogueBehavior.ICRogueCell;
+import ch.epfl.cs107.play.game.icrogue.actor.ICRoguePlayer;
+import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
+import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
+import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Fire;
+import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 
 import java.util.List;
 
@@ -37,7 +44,15 @@ public interface Interactable {
     /** Call directly the interaction on this if accepted
      * @param v (AreaInteractionVisitor) : the visitor
      * */
-    void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction);
+    default void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        if(this instanceof ICRogueCell){((ICRogueInteractionHandler) v).interactWith((ICRogueCell)this, isCellInteraction);}
+        else if(this instanceof ICRoguePlayer){((ICRogueInteractionHandler) v).interactWith((ICRoguePlayer)this, isCellInteraction);}
+        else if(this instanceof Cherry){((ICRogueInteractionHandler) v).interactWith((Cherry)this, isCellInteraction);}
+        else if(this instanceof Staff){((ICRogueInteractionHandler) v).interactWith((Staff)this, isCellInteraction);}
+        else if(this instanceof Fire){((ICRogueInteractionHandler) v).interactWith((Fire)this, isCellInteraction);}
+
+    }
+
 
     /**
      * Called when this Interactable leaves a cell
