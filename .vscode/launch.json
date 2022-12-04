@@ -5,6 +5,13 @@
             "name": "Launch Play",
             "request": "launch",
             "mainClass": "ch.epfl.cs107.play.Play",
+            "projectName": "Mini-projet-2-1_b959cc25"
+        },
+        {
+            "type": "java",
+            "name": "Launch Play",
+            "request": "launch",
+            "mainClass": "ch.epfl.cs107.play.Play",
             "projectName": "Mini-projet-2_f6f6b3e0"
         },
         {

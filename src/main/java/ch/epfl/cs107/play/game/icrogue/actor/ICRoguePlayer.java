@@ -9,7 +9,6 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
 import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Fire;
-import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Projectile;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
@@ -17,16 +16,14 @@ import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-public class ICRoguePlayer extends ICRogueActor implements Interactor , Interactable{
+public class ICRoguePlayer extends ICRogueActor implements Interactor{
 
     private final static int MOVE_DURATION = 8;
     
     private float hp;
 	private Sprite sprite;
-    private Fire fireball;
     private boolean equipW;
     private boolean distInteraction;
     private ICRoguePlayerInteractionHandler handler;
@@ -106,7 +103,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor , Interact
     
     private void launchFireball(Orientation orientation, Button b){
         if(b.isPressed()) {
-            fireball = new Fire(getOwnerArea(), orientation, getCurrentMainCellCoordinates());
+            new Fire(getOwnerArea(), orientation, getCurrentMainCellCoordinates());
             // fireball.setSprite(new Sprite("zelda/bridge", 1f, 1f, fireball));
         }
     }

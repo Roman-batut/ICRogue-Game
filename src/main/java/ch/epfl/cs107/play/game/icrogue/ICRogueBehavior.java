@@ -52,7 +52,7 @@ public class ICRogueBehavior extends AreaBehavior{
 	/**
 	 * Cell adapted to the ICRogue game
 	 */
-	public class ICRogueCell extends Cell implements Interactable {
+	public class ICRogueCell extends Cell {
 		/// Type of the cell following the enum
 		private final ICRogueCellType type;
 		
@@ -74,7 +74,13 @@ public class ICRogueBehavior extends AreaBehavior{
 
 		@Override
 		protected boolean canEnter(Interactable entity) {
+			for(Interactable val : entities){
+				if(val.takeCellSpace() && entity.takeCellSpace()){
+					return false;
+				}
+			}
 			return !(!type.isWalkable && entity.takeCellSpace());
+
 	    }
 	    
 		@Override
