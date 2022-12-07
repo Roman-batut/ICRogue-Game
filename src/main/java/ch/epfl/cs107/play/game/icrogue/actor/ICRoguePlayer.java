@@ -149,6 +149,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
             case RIGHT ->
                 sprite = new Sprite("zelda/player", .75f, 1.5f, this,new RegionOfInterest(0, 32, 16, 32), new Vector(.15f,-.15f));
         }
+
         sprite.draw(canvas);
     }
 
