@@ -11,16 +11,20 @@ abstract public class Item extends CollectableAreaEntity {
 
     private Sprite sprite;
 
+    //* CONSTRUCTOR
     public Item(Area area, Orientation orientation, DiscreteCoordinates position, boolean isCollected) {
         super(area, orientation, position, isCollected);
-        //TODO Auto-generated constructor stub
     }
     
+
+    //* REDEFINE Interactable
     @Override
     public boolean takeCellSpace(){
         return false;
     }
 
+
+    //* DRAW
     public void draw(Canvas canvas) {
         if(!isCollected()){
             sprite.draw(canvas);

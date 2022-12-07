@@ -24,9 +24,9 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
     
     private float hp;
 	private Sprite sprite;
-    private boolean equipW;
     private boolean distInteraction;
     private ICRoguePlayerInteractionHandler handler;
+    private boolean equipW;
 
 	//* CONSTRUCTOR
 	public ICRoguePlayer(Area owner, Orientation orientation, DiscreteCoordinates coordinates, String spriteName) {
@@ -37,19 +37,20 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
         distInteraction = false;
         handler = new ICRoguePlayerInteractionHandler();
         equipW = false;
+
         resetMotion();
 	}
 
 
     //* REDEFINE ICRogueActor
     @Override
-    public boolean takeCellSpace(){
-        return true;
-    }
-    
-    @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICRogueInteractionHandler) v).interactWith((ICRoguePlayer)this, isCellInteraction);
+    }
+
+    @Override
+    public boolean takeCellSpace(){
+        return true;
     }
 
 
@@ -127,6 +128,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
         moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
         moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
         moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
+        
         if (equipW){
             launchFireball(getOrientation(), keyboard.get(Keyboard.X));
         }

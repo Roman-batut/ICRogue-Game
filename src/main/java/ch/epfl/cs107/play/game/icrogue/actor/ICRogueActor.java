@@ -10,33 +10,38 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 abstract public class ICRogueActor extends MovableAreaEntity{
 
+    //* CONSTRUCTOR
     public ICRogueActor(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
     }
 
-    @Override
-    public void update(float deltaTime) {
-        super.update(deltaTime);
-    }
 
+    //* REDEFINE Interactable
     @Override
 	public List<DiscreteCoordinates> getCurrentCells() {
-		return Collections.singletonList(getCurrentMainCellCoordinates());
+        return Collections.singletonList(getCurrentMainCellCoordinates());
 	}
-
+    
     @Override
     public boolean takeCellSpace(){
         return false;
     }
-
+    
     @Override
     public boolean isCellInteractable() {
         return true;
     }
-
+    
     @Override
     public boolean isViewInteractable() {
         return false;
+    }
+    
+    
+    //* UPDATE
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
     }
 
 }

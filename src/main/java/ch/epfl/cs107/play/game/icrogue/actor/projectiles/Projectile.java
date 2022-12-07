@@ -45,15 +45,19 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
         frames = DEFAULT_MOVE_DURATION;
     }  
 
+    //* SETTERS
     public void setSprite(Sprite sprite){
         this.sprite = sprite;
     }
     
 
-    //* Consume
+    //* REDEFINE Consumable
+    @Override
     public void consume(){
         isConsumed = true;
     }
+
+    @Override
     public boolean isConsumed(){
        return isConsumed;
     }
@@ -90,6 +94,8 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
            }
        }
     }
+
+
     //* UPDATE
     @Override
     public void update(float deltaTime) {
@@ -97,6 +103,7 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
         move(frames);
     }
     
+
     //* DRAW
     @Override
     public void draw(Canvas canvas) {
@@ -104,5 +111,6 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
             sprite.draw(canvas);
         }
     }
+
 }
 

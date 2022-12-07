@@ -28,12 +28,14 @@ public class Level0Room extends ICRogueRoom{
 		private DiscreteCoordinates destination;
 		private Orientation orientation;
 
+		// CONSTRUCTOR
 		private Level0Connectors(DiscreteCoordinates position, DiscreteCoordinates desination, Orientation orientation){
 			this.position = position;
 			this.destination = destination;
 			this.orientation = orientation;
 		}
 		
+		// GETTERS
 		@Override
 		public DiscreteCoordinates getDestination(){
 			return destination;
@@ -46,10 +48,22 @@ public class Level0Room extends ICRogueRoom{
 		
 	}	
 	
+	//* CONSTRUCTOR
 	public Level0Room(DiscreteCoordinates roomCoordinates){
         super(getAllConnectorsPosition(), getAllConnectorsOrientation(),"icrogue/Level0Room", roomCoordinates);
 	}
 	
+	//* GETTERS
+	@Override
+	public String getTitle() {
+		return "icrogue/level0" + roomCoordinates.x + roomCoordinates.y;
+	}
+
+	@Override
+	public DiscreteCoordinates getPlayerSpawnPosition() {
+		return new DiscreteCoordinates(5,15);
+	}
+
 	static List<DiscreteCoordinates> getAllConnectorsPosition(){
 		List<DiscreteCoordinates> tab = new ArrayList<DiscreteCoordinates>();
 		
@@ -67,27 +81,19 @@ public class Level0Room extends ICRogueRoom{
 			tab.add(connectors.orientation);
 		}
 
-
 		return tab;
 	}
 
-    @Override
-	public String getTitle() {
-		return "icrogue/level0" + roomCoordinates.x + roomCoordinates.y;
-	}
 	
-	@Override
-	public DiscreteCoordinates getPlayerSpawnPosition() {
-		return new DiscreteCoordinates(5,15);
-	}
-	
+	//* CREATE AREA
 	protected void createArea() {
-        // Base
 		super.createArea();
+
         registerActor(new Background(this, getBehaviorName()));
 		registerActor(new Staff(this, Orientation.DOWN, new DiscreteCoordinates(4, 3)));
 		registerActor(new Cherry(this, Orientation.DOWN, new DiscreteCoordinates(6, 3)));
+
         // registerActor(new Foreground(this, getBehaviorName()));
-        // registerActor(new SimpleGhost(new Vector(20, 10), "ghost.2"));
-        }
-	}
+    }
+
+}

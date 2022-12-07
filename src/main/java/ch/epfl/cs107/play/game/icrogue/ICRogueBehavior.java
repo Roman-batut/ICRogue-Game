@@ -9,7 +9,6 @@ import ch.epfl.cs107.play.window.Window;
 public class ICRogueBehavior extends AreaBehavior{
 
     public enum ICRogueCellType{
-		//https://stackoverflow.com/questions/25761438/understanding-bufferedimage-getrgb-output-values
 		NONE(0,false), // Should never been used except in the toType method
 		GROUND(-16777216, true), // traversable 
 		WALL(-14112955, false), // non traversable 
@@ -18,11 +17,13 @@ public class ICRogueBehavior extends AreaBehavior{
 		final int type;
 		final boolean isWalkable;
 
+		// Constructor
 		ICRogueCellType(int type, boolean isWalkable){
 			this.type = type;
 			this.isWalkable = isWalkable;
 		}
 
+		// ToType
 		public static ICRogueCellType toType(int type){
 			for(ICRogueCellType ict : ICRogueCellType.values()){
 				if(ict.type == type)

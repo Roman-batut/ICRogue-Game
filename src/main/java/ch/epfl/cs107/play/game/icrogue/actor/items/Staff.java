@@ -15,15 +15,30 @@ public class Staff extends Item{
 
     private Sprite sprite;
 
+    //* CONSTRUCTOR
     public Staff(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, false);
         sprite = new Sprite("zelda/staff_water.icon", .5f, .5f, this);
 
     }
 
+
+    //* REDEFINE Item
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
+    }
+
+    @Override
+    public boolean takeCellSpace(){
+        return true;
+    }
+
+    
+    //* REDEFINE Interactable
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        ((ICRogueInteractionHandler) v).interactWith((Staff)this, isCellInteraction);
     }
 
     @Override
@@ -36,19 +51,11 @@ public class Staff extends Item{
         return true;
     }
     
-    @Override
-    public boolean takeCellSpace(){
-        return true;
-    }
-
+    //* DRAW
     @Override
     public void draw(Canvas canvas) {
        
         sprite.draw(canvas);    
     }
-    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        ((ICRogueInteractionHandler) v).interactWith((Staff)this, isCellInteraction);
-    }
 
-    
 }

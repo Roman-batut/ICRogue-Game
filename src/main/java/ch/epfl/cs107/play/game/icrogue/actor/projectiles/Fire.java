@@ -12,24 +12,32 @@ import ch.epfl.cs107.play.window.Canvas;
 
 public class Fire extends Projectile{
 
+    //* CONSTRUCTOR
     public Fire(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, 1,5);
         sprite = new Sprite("zelda/fire", 1f, 1f, this,new RegionOfInterest(0, 0, 16, 16), new Vector(0, 0));
         
     }
 
+    
+    //* REDEFINE Interactable
     @Override
-    public void draw(Canvas canvas) {
-       super.draw(canvas);
+    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        ((ICRogueInteractionHandler) v).interactWith(this, isCellInteraction);
     }
+    
 
+    //* UPDATE
     @Override
     public void update(float deltaTime){
         super.update(deltaTime);
     }
+
+
+    //* DRAW
     @Override
-    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        ((ICRogueInteractionHandler) v).interactWith(this, isCellInteraction);
+    public void draw(Canvas canvas) {
+       super.draw(canvas);
     }
 
  }

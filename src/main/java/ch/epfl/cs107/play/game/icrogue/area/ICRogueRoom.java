@@ -26,6 +26,7 @@ abstract public class ICRogueRoom extends Area{
     public ICRogueRoom(List<DiscreteCoordinates> connectorsCoordinates, List<Orientation> orientations, String behaviorName, DiscreteCoordinates roomCoordinates){
         this.roomCoordinates = roomCoordinates;
         this.behaviorName = behaviorName;
+        
         connectors = new ArrayList<>();
         int i = 0;
         for(DiscreteCoordinates val : connectorsCoordinates){
@@ -46,7 +47,9 @@ abstract public class ICRogueRoom extends Area{
     //* GETTERS
     public abstract DiscreteCoordinates getPlayerSpawnPosition();
     
-    public String getBehaviorName(){ return behaviorName; }
+    public String getBehaviorName(){ 
+        return behaviorName; 
+    }
     
 
     //* CREATE AREA

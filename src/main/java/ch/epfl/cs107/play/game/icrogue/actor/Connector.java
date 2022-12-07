@@ -32,15 +32,30 @@ public class Connector extends AreaEntity implements Interactable{
     
     private Sprite sprite;
 
+    //* CONSTRUCTOR
     public Connector(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
 
         type = State.INVISIBLE;
+        
         destination = area.getTitle();
         // coordinates = .getPlayerSpawnPosition(); 
         keyID = NO_KEY_ID;
     }
 
+
+    //* GETTERS
+    public State getType(){ 
+        return type; 
+    }
+    
+    //* SETTERS
+    public void setType(State type){ 
+        this.type = type; 
+    }
+
+
+    //* REDEFINE Interactable
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         DiscreteCoordinates coord = getCurrentMainCellCoordinates();
@@ -57,7 +72,6 @@ public class Connector extends AreaEntity implements Interactable{
 
     @Override
     public boolean isCellInteractable() {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -66,10 +80,8 @@ public class Connector extends AreaEntity implements Interactable{
         return true; 
     }
     
-    public void setType(State type){ this.type = type; }
 
-    public State getType(){ return type; }
-    
+    //* DRAW
     @Override
     public void draw(Canvas canvas) {
         if(type != State.OPEN){

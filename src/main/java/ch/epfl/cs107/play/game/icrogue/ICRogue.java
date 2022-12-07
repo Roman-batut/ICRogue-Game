@@ -14,26 +14,28 @@ public class ICRogue extends AreaGame{
 
     public final static float CAMERA_SCALE_FACTOR = 11.f;
 
-	private ICRoguePlayer player;
-	
     private Level0Room currentRoom;
+	private ICRoguePlayer player;
 
-	/**
-	 * Add all the areas
-	 */
+	//* INIT LEVEL
 	private void initLevel(){
 		currentRoom = new Level0Room(new DiscreteCoordinates(0,0));
+		player = new ICRoguePlayer(currentRoom, Orientation.UP, new DiscreteCoordinates(2, 2), "zelda/player");
+		
 		addArea(currentRoom);
         setCurrentArea(currentRoom.getTitle(), true);
-		player = new ICRoguePlayer(currentRoom, Orientation.UP, new DiscreteCoordinates(2, 2), "zelda/player");
 		currentRoom.registerActor(player);
 	}
 
+
+	//* GETTER
 	@Override
 	public String getTitle() {
 		return "ICRogue";
 	}
 
+
+	//* BEGIN
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
 		if (super.begin(window, fileSystem)) {
@@ -41,21 +43,24 @@ public class ICRogue extends AreaGame{
 			
 			return true;
 		}
+
 		return false;
 	}
     
+	//* UPDATE
 	@Override
 	public void update(float deltaTime) {
 		Keyboard keyboard = currentRoom.getKeyboard();
         restart(keyboard.get(Keyboard.R));
 		super.update(deltaTime);
-		
 	}
 
+	//* END
 	@Override
 	public void end() {
 	}
 
+	//* RESTART
 	private void restart(Button b){
         if(b.isPressed()){
             begin(getWindow(), getFileSystem());

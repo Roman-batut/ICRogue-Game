@@ -15,37 +15,43 @@ public class Cherry extends Item{
 
     private Sprite sprite;
 
+    //* CONSTRUCTOR
     public Cherry(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, false);
         sprite = new Sprite("icrogue/cherry", 0.6f, 0.6f, this);
 
     }
     
-    @Override
-    public void draw(Canvas canvas) {
-        // TODO Auto-generated method stub
-        if (!isCollected()){
-            sprite.draw(canvas);
-        }
-        
-    }
-
+    
+    //* REDEFINE Item
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
+    }
+    
+    //* REDEFINE Interactable
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        ((ICRogueInteractionHandler) v).interactWith((Cherry)this, isCellInteraction);
     }
 
     @Override
     public boolean isCellInteractable() {
         return true;
     }
-
+    
     @Override
     public boolean isViewInteractable() {
         return false;
     }
-    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        ((ICRogueInteractionHandler) v).interactWith((Cherry)this, isCellInteraction);
+
+
+    //* DRAW
+    @Override
+    public void draw(Canvas canvas) {
+        if (!isCollected()){
+            sprite.draw(canvas);
+        }
     }
-    
+
 }
