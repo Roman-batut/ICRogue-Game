@@ -3,6 +3,8 @@ package ch.epfl.cs107.play.game.icrogue.actor.projectiles;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.math.Vector;
@@ -25,4 +27,9 @@ public class Fire extends Projectile{
     public void update(float deltaTime){
         super.update(deltaTime);
     }
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        ((ICRogueInteractionHandler) v).interactWith(this, isCellInteraction);
+    }
+
  }

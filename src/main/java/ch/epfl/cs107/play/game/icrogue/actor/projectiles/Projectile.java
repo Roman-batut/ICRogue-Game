@@ -76,6 +76,7 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
     }
 
     // INTERACTIONS
+    //TODO Mettre dans Fire ?
     @Override
    public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);

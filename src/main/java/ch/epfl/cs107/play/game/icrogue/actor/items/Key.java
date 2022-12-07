@@ -11,14 +11,24 @@ import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 
-public class Staff extends Item{
+public class Key extends Item{
 
     private Sprite sprite;
+    private int ID;
 
-    public Staff(Area area, Orientation orientation, DiscreteCoordinates position) {
+    public Key(Area area, Orientation orientation, DiscreteCoordinates position, int ID) {
         super(area, orientation, position, false);
-        sprite = new Sprite("zelda/staff_water.icon", .5f, .5f, this);
+        sprite = new Sprite("icrogue/key", 0.6f, 0.6f, this);
+        this.ID = ID;
 
+    }
+    
+    @Override
+    public void draw(Canvas canvas) {
+        if (!isCollected()){
+            sprite.draw(canvas);
+        }
+        
     }
 
     @Override
@@ -33,22 +43,13 @@ public class Staff extends Item{
 
     @Override
     public boolean isViewInteractable() {
-        return true;
-    }
-    
-    @Override
-    public boolean takeCellSpace(){
-        return true;
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-       
-        sprite.draw(canvas);    
+        return false;
     }
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        ((ICRogueInteractionHandler) v).interactWith((Staff)this, isCellInteraction);
+        ((ICRogueInteractionHandler) v).interactWith((Key)this, isCellInteraction);
     }
-
     
+    public int getID(){ return ID; }
+
 }
+

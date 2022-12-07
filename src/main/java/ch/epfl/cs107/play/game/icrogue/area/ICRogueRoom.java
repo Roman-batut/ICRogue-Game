@@ -1,40 +1,62 @@
 package ch.epfl.cs107.play.game.icrogue.area;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.epfl.cs107.play.game.areagame.Area;
+import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.icrogue.ICRogue;
 import ch.epfl.cs107.play.game.icrogue.ICRogueBehavior;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
+import ch.epfl.cs107.play.game.icrogue.actor.Connector;
+import ch.epfl.cs107.play.game.icrogue.actor.Connector.State;
 
 abstract public class ICRogueRoom extends Area{
 
 	private ICRogueBehavior behavior;
-    protected DiscreteCoordinates roomCoordinates;
+    protected DiscreteCoordinates roomCoordinates; //TODO pass in private
     private String behaviorName; 
 
-    /**
-     * Create the area by adding it all actors
-     * called by begin method
-     * Note it set the Behavior as needed !
-     */
-    protected abstract void createArea();
-
-    /// EnigmeArea extends Area
-    public ICRogueRoom(String behaviorName, DiscreteCoordinates roomCoordinates){
-            this.roomCoordinates = roomCoordinates;
-            this.behaviorName = behaviorName;
+    private ArrayList<Connector> connectors;
+    
+    //* CONSTRUCTOR
+    public ICRogueRoom(List<DiscreteCoordinates> connectorsCoordinates, List<Orientation> orientations, String behaviorName, DiscreteCoordinates roomCoordinates){
+        this.roomCoordinates = roomCoordinates;
+        this.behaviorName = behaviorName;
+        connectors = new ArrayList<>();
+        int i = 0;
+        for(DiscreteCoordinates val : connectorsCoordinates){
+            Connector connector = new Connector((Area)this, orientations.get(i), val);
+            connectors.add(connector);
+            i++;
+        }
     }
 
+
+    //* REDEFINE Area
     @Override
     public final float getCameraScaleFactor() {
         return ICRogue.CAMERA_SCALE_FACTOR;
     }
 
+
+    //* GETTERS
     public abstract DiscreteCoordinates getPlayerSpawnPosition();
     
-    /// Demo2Area implements Playable
+    public String getBehaviorName(){ return behaviorName; }
+    
 
+    //* CREATE AREA
+    protected void createArea(){
+        for(Connector val : connectors){
+            registerActor(val);
+        }   
+    }
+    
+    //* BEGIN
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
         if (super.begin(window, fileSystem)) {
@@ -47,8 +69,29 @@ abstract public class ICRogueRoom extends Area{
         return false;
     }
     
-    public String getBehaviorName(){
-        return behaviorName;
+    //* UPDATE
+    @Override
+    public void update(float deltaTime){
+        Keyboard keyboard = this.getKeyboard();
+        
+        if(keyboard.get(Keyboard.O).isPressed()){
+            for(Connector val : connectors){
+                val.setType(State.OPEN);
+            }
+        }
+        if(keyboard.get(Keyboard.L).isPressed()){
+            connectors.get(0).setType(State.LOCK);
+        }
+        if(keyboard.get(Keyboard.T).isPressed()){
+            for(Connector val : connectors){
+                if(val.getType() == State.CLOSED)
+                    val.setType(State.OPEN);
+                if(val.getType() == State.OPEN)
+                    val.setType(State.CLOSED);
+            }
+        }
+        
+        super.update(deltaTime);
     }
     
 }

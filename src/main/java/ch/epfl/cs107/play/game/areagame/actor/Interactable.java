@@ -45,12 +45,6 @@ public interface Interactable {
      * @param v (AreaInteractionVisitor) : the visitor
      * */
     default void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        if(this instanceof ICRogueCell){((ICRogueInteractionHandler) v).interactWith((ICRogueCell)this, isCellInteraction);}
-        else if(this instanceof ICRoguePlayer){((ICRogueInteractionHandler) v).interactWith((ICRoguePlayer)this, isCellInteraction);}
-        else if(this instanceof Cherry){((ICRogueInteractionHandler) v).interactWith((Cherry)this, isCellInteraction);}
-        else if(this instanceof Staff){((ICRogueInteractionHandler) v).interactWith((Staff)this, isCellInteraction);}
-        else if(this instanceof Fire){((ICRogueInteractionHandler) v).interactWith((Fire)this, isCellInteraction);}
-
     }
 
 

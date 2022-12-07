@@ -29,7 +29,7 @@ public class Level0Room extends ICRogueRoom{
 	// TODO WITH STATIC FUNCTION AND TODO quoi c'est relou cette parti genre je sais pas faire les fonctions d'un enum 
 	@Override
 	public DiscreteCoordinates getDestination(){
-		return  null;
+		
 	}
 
 	@Override 

@@ -49,6 +49,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
     
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        ((ICRogueInteractionHandler) v).interactWith((ICRoguePlayer)this, isCellInteraction);
     }
 
 
@@ -103,7 +104,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
     
     private void launchFireball(Orientation orientation, Button b){
         if(b.isPressed()) {
-            new Fire(getOwnerArea(), orientation, getCurrentMainCellCoordinates());
+            new Fire(getOwnerArea(), orientation, getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
             // fireball.setSprite(new Sprite("zelda/bridge", 1f, 1f, fireball));
         }
     }
