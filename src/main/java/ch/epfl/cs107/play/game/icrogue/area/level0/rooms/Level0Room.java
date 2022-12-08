@@ -83,6 +83,7 @@ public class Level0Room extends ICRogueRoom{
 
 		return tab;
 	}
+	
 
 	
 	//* CREATE AREA

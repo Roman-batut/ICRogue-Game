@@ -21,6 +21,7 @@ abstract public class ICRogueRoom extends Area{
     private String behaviorName; 
 
     private ArrayList<Connector> connectors;
+
     
     //* CONSTRUCTOR
     public ICRogueRoom(List<DiscreteCoordinates> connectorsCoordinates, List<Orientation> orientations, String behaviorName, DiscreteCoordinates roomCoordinates){

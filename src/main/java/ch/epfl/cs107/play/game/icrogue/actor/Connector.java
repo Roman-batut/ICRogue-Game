@@ -34,7 +34,7 @@ public class Connector extends AreaEntity implements Interactable{
 
     //* CONSTRUCTOR
     public Connector(Area area, Orientation orientation, DiscreteCoordinates position) {
-        super(area, orientation, position);
+        super(area, orientation.opposite(), position);
 
         type = State.INVISIBLE;
         
@@ -87,10 +87,8 @@ public class Connector extends AreaEntity implements Interactable{
         if(type != State.OPEN){
             if(type == State.INVISIBLE){sprite = new Sprite("icrogue/invisibleDoor_"+getOrientation().ordinal(),(getOrientation().ordinal()+1)%2+1, getOrientation().ordinal()%2+1, this);}
             if(type == State.CLOSED){sprite = new Sprite("icrogue/door_"+getOrientation().ordinal(),(getOrientation().ordinal()+1)%2+1, getOrientation().ordinal()%2+1, this);}
-            if(type == State.LOCK){sprite = new Sprite("icrogue/lockedDoor_"+getOrientation().ordinal(),(getOrientation().ordinal()+1)%2+1, getOrientation().ordinal()%2+1,this);}
+            if(type == State.LOCK){sprite =new Sprite("icrogue/lockedDoor_"+getOrientation().ordinal(), (getOrientation().ordinal()+1)%2+1, getOrientation().ordinal()%2+1, this);}
             sprite.draw(canvas);
         }
-        //TODO BETTER ORIENTATION
     }
-    
 }
