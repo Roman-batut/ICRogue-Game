@@ -52,7 +52,23 @@ abstract public class ICRogueRoom extends Area{
         return behaviorName; 
     }
     
+    //* Setters
+    public void setConnectorDestination(String destination, ConnectorInRoom connector){
+        Connector currentConnector = connectors.get(connector.getIndex());
+        currentConnector.setDestination(destination);
+    }
+    public void setConnector(String destination, ConnectorInRoom connector){
+        Connector currentConnector = connectors.get(connector.getIndex());
+        setConnectorDestination(destination, connector);
+        currentConnector.setType(State.INVISIBLE);
+    }
+    public void lockRoomConnector(ConnectorInRoom connector, int keyId){
+        Connector currentConnector = connectors.get(connector.getIndex());
+        currentConnector.setType(State.LOCK);
+        currentConnector.setKeyId(keyId);
+    }
 
+    
     //* CREATE AREA
     protected void createArea(){
         for(Connector val : connectors){

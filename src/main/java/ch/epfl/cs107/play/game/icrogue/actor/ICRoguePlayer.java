@@ -80,16 +80,26 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
         @Override
         public void interactWith(Cherry cherry, boolean isCellInteraction) {
             cherry.collect();
-        
         }
+
         @Override
         public void interactWith(Staff staff, boolean isCellInteraction) {
             if(wantsViewInteraction()){
                 staff.collect();
                 equipW = true;
             }
-        
         }
+
+        @Override
+        public void interactWith(Connector connector, boolean isCellInteraction){
+            if(wantsViewInteraction()){
+                if()
+            }
+            if(wantsCellInteraction() && !(isDisplacementOccurs())){
+                //deplacer
+            }
+        }
+
     }
     
     

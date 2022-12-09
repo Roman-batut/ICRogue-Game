@@ -83,18 +83,14 @@ public class Level0Room extends ICRogueRoom{
 
 		return tab;
 	}
-	
 
-	
 	//* CREATE AREA
+	@Override
 	protected void createArea() {
 		super.createArea();
 
         registerActor(new Background(this, getBehaviorName()));
 		registerActor(new Staff(this, Orientation.DOWN, new DiscreteCoordinates(4, 3)));
 		registerActor(new Cherry(this, Orientation.DOWN, new DiscreteCoordinates(6, 3)));
-
-        // registerActor(new Foreground(this, getBehaviorName()));
     }
-
 }

@@ -27,7 +27,7 @@ public class Connector extends AreaEntity implements Interactable{
     private State type;
 
     private String destination;
-    private DiscreteCoordinates coordinates;
+    private DiscreteCoordinates CoordinatesOfArrive;
     private int keyID;
     
     private Sprite sprite;
@@ -36,10 +36,8 @@ public class Connector extends AreaEntity implements Interactable{
     public Connector(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation.opposite(), position);
 
-        type = State.INVISIBLE;
-        
-        destination = area.getTitle();
-        // coordinates = .getPlayerSpawnPosition(); 
+        type = State.INVISIBLE;;
+        CoordinatesOfArrive = position; 
         keyID = NO_KEY_ID;
     }
 
@@ -54,6 +52,20 @@ public class Connector extends AreaEntity implements Interactable{
         this.type = type; 
     }
 
+    public void setDestination(String destination){ 
+        this.destination = destination; 
+    } 
+
+    // public void setDestination(Area desination){
+    //     this.destination = desination.getTitle();
+    // }
+    
+    public void setCoordinates(DiscreteCoordinates CoordinatesOfArrive){
+        this.CoordinatesOfArrive = CoordinatesOfArrive;
+    }
+    public void setKeyId(int keyId){
+        this.keyID = keyId;
+    }
 
     //* REDEFINE Interactable
     @Override
