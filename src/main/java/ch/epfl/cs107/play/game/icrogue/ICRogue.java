@@ -24,20 +24,8 @@ public class ICRogue extends AreaGame{
 	//* INIT LEVEL
 	private void initLevel(){
 		Level0 level = new Level0(this);
-		// ICRogueRoom[][] carte = level.getCarte();
-
-
-		//for (ICRogueRoom[] rooms : carte) {
-		// 	for (ICRogueRoom room : rooms) {
-		// 		if(room != null){
-		// 			addArea(room);
-		// 		}
-		// 	}
-		//}
-		
+		currentRoom = (ICRogueRoom)setCurrentArea(level.getStartingRoom().getTitle(), true);
 		player = new ICRoguePlayer(currentRoom, Orientation.UP, new DiscreteCoordinates(2, 2), "zelda/player");
-		
-        currentRoom = (ICRogueRoom)setCurrentArea(level.getStartingRoom(), true);
 		currentRoom.registerActor(player);
 	}
 

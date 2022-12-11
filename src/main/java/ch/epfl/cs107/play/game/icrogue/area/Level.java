@@ -55,11 +55,7 @@ public abstract class Level{
     
 
     //* Getter
-    public ICRogueRoom[][] getCarte(){
-        return Carte.clone();
-    }
-
-    public String getStartingRoom(){
-        return StartingRoom.getTitle();
+    public ICRogueRoom getStartingRoom(){
+        return StartingRoom;
     }
 }

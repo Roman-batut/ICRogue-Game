@@ -94,24 +94,24 @@ abstract public class ICRogueRoom extends Area{
     //* UPDATE
     @Override
     public void update(float deltaTime){
-        Keyboard keyboard = this.getKeyboard();
+        // Keyboard keyboard = this.getKeyboard();
         
-        if(keyboard.get(Keyboard.O).isPressed()){
-            for(Connector val : connectors){
-                val.setType(State.OPEN);
-            }
-        }
-        if(keyboard.get(Keyboard.L).isPressed()){
-            connectors.get(0).setType(State.LOCK);
-        }
-        if(keyboard.get(Keyboard.T).isPressed()){
-            for(Connector val : connectors){
-                if(val.getType() == State.CLOSED)
-                    val.setType(State.OPEN);
-                if(val.getType() == State.OPEN)
-                    val.setType(State.CLOSED);
-            }
-        }
+        // if(keyboard.get(Keyboard.O).isPressed()){
+        //     for(Connector val : connectors){
+        //         val.setType(State.OPEN);
+        //     }
+        // }
+        // if(keyboard.get(Keyboard.L).isPressed()){
+        //     connectors.get(0).setType(State.LOCK);
+        // }
+        // if(keyboard.get(Keyboard.T).isPressed()){
+        //     for(Connector val : connectors){
+        //         if(val.getType() == State.CLOSED)
+        //             val.setType(State.OPEN);
+        //         if(val.getType() == State.OPEN)
+        //             val.setType(State.CLOSED);
+        //     }
+        // }
         
         super.update(deltaTime);
     }
