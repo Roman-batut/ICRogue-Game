@@ -25,6 +25,7 @@ abstract public class ICRogueRoom extends Area{
     
     //* CONSTRUCTOR
     public ICRogueRoom(List<DiscreteCoordinates> connectorsCoordinates, List<Orientation> orientations, String behaviorName, DiscreteCoordinates roomCoordinates){
+        assert connectorsCoordinates.size() == orientations.size();
         this.roomCoordinates = roomCoordinates;
         this.behaviorName = behaviorName;
         
@@ -51,6 +52,7 @@ abstract public class ICRogueRoom extends Area{
     public String getBehaviorName(){ 
         return behaviorName; 
     }
+
     
     //* Setters
     public void setConnectorDestination(String destination, ConnectorInRoom connector){

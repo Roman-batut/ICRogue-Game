@@ -1,5 +1,6 @@
 package ch.epfl.cs107.play.game.icrogue.area.level0;
 
+import ch.epfl.cs107.play.game.icrogue.ICRogue;
 import ch.epfl.cs107.play.game.icrogue.area.Level;
 import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0KeyRoom;
 import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0Room;
@@ -12,8 +13,8 @@ public class Level0 extends Level{
     private int PART_1_KEY_ID = 0;
 
     //* Constructor
-    public Level0() {
-        super(4, 2, new DiscreteCoordinates(2, 0));
+    public Level0(ICRogue jeu) {
+        super(4, 2, new DiscreteCoordinates(2, 0), jeu);
         super.setStartingRoom(new DiscreteCoordinates(1,0));
     }
     

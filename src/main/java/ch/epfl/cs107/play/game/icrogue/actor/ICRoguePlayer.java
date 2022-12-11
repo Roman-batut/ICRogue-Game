@@ -6,7 +6,9 @@ import ch.epfl.cs107.play.game.areagame.actor.Interactor;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.icrogue.actor.Connector.State;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
+import ch.epfl.cs107.play.game.icrogue.actor.items.Key;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
 import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Fire;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
@@ -27,6 +29,9 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
     private boolean distInteraction;
     private ICRoguePlayerInteractionHandler handler;
     private boolean equipW;
+    private Key equipK;
+    private boolean wantTopass;
+    private String destination;
 
 	//* CONSTRUCTOR
 	public ICRoguePlayer(Area owner, Orientation orientation, DiscreteCoordinates coordinates, String spriteName) {
@@ -40,6 +45,14 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
 
         resetMotion();
 	}
+
+    //* Getters
+    public boolean getPassing(){
+        return wantTopass;
+    }
+    public String getdestination(){
+        return destination;
+    }
 
 
     //* REDEFINE ICRogueActor
@@ -89,14 +102,30 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
                 equipW = true;
             }
         }
+        
+        @Override
+        public void interactWith(Key key, boolean isCellInteraction) {
+            equipK = key;
+            key.collect();
+        }
 
         @Override
         public void interactWith(Connector connector, boolean isCellInteraction){
             if(wantsViewInteraction()){
-                if()
+                if(connector.getType() == State.LOCK){
+                    if(connector.getKeyId() == equipK.getID()){
+                        connector.setType(State.OPEN);
+                    }
+                }
+            
             }
             if(wantsCellInteraction() && !(isDisplacementOccurs())){
-                //deplacer
+                if(connector.getType() == State.OPEN){
+                    wantTopass = true;
+                    destination = connector.getDestination();
+                    // ICRogue.switchArea();
+                    //deplacer
+                }
             }
         }
 

@@ -46,6 +46,14 @@ public class Connector extends AreaEntity implements Interactable{
     public State getType(){ 
         return type; 
     }
+
+    public int getKeyId(){
+        return keyID;
+    }
+
+    public String getDestination(){
+        return destination;
+    }
     
     //* SETTERS
     public void setType(State type){ 
