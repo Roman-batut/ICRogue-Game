@@ -36,7 +36,7 @@ public class Connector extends AreaEntity implements Interactable{
     public Connector(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation.opposite(), position);
 
-        type = State.INVISIBLE;;
+        type = State.INVISIBLE;
         CoordinatesOfArrive = position; 
         keyID = NO_KEY_ID;
     }
@@ -52,7 +52,7 @@ public class Connector extends AreaEntity implements Interactable{
     }
 
     public String getDestination(){
-        return destination;
+         return destination;
     }
     
     //* SETTERS
