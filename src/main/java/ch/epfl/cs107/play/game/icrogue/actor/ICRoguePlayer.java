@@ -111,24 +111,18 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
 
         @Override
         public void interactWith(Connector connector, boolean isCellInteraction){
-            System.out.println("la?");
+            wantTopass =false;
             if(wantsViewInteraction()){
-                System.out.println("la");
                 if(connector.getType() == State.LOCK){
-                    System.out.println("ici");
                     if(connector.getKeyId() == equipK.getID()){
-                        System.out.println("here");
                         connector.setType(State.OPEN);
                     }
                 }
-            
             }
             if(wantsCellInteraction() && !(isDisplacementOccurs())){
                 if(connector.getType() == State.OPEN){
                     wantTopass = true;
                     destination = connector.getDestination();
-                    // ICRogue.switchArea();
-                    //deplacer
                 }
             }
         }
