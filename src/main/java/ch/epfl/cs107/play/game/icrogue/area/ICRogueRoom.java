@@ -62,7 +62,7 @@ abstract public class ICRogueRoom extends Area{
     public void setConnector(String destination, ConnectorInRoom connector){
         Connector currentConnector = connectors.get(connector.getIndex());
         setConnectorDestination(destination, connector);
-        currentConnector.setType(State.INVISIBLE);
+        currentConnector.setType(State.OPEN);
     }
     public void lockRoomConnector(ConnectorInRoom connector, int keyId){
         Connector currentConnector = connectors.get(connector.getIndex());

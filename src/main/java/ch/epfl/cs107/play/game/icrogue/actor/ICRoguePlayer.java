@@ -111,9 +111,13 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
 
         @Override
         public void interactWith(Connector connector, boolean isCellInteraction){
+            System.out.println("la?");
             if(wantsViewInteraction()){
+                System.out.println("la");
                 if(connector.getType() == State.LOCK){
+                    System.out.println("ici");
                     if(connector.getKeyId() == equipK.getID()){
+                        System.out.println("here");
                         connector.setType(State.OPEN);
                     }
                 }
@@ -173,7 +177,6 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
         }
             
         viewInteraction(keyboard.get(Keyboard.W));
-
         super.update(deltaTime);
     }
 

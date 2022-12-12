@@ -23,8 +23,8 @@ public abstract class Level{
     }
 
     protected void setRoom(DiscreteCoordinates coords, ICRogueRoom room) {
-        jeu.addArea(room);
         Carte[coords.x][coords.y] = room;
+        jeu.addArea(room);
     }
     
     protected void setRoomConnectorDestination(DiscreteCoordinates coords, String destination, ConnectorInRoom connector) {
