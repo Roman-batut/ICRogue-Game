@@ -13,11 +13,12 @@ import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 import ch.epfl.cs107.play.game.icrogue.actor.Connector;
 import ch.epfl.cs107.play.game.icrogue.actor.Connector.State;
+import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0Room.Level0Connectors;
 
 abstract public class ICRogueRoom extends Area{
 
 	private ICRogueBehavior behavior;
-    protected DiscreteCoordinates roomCoordinates; //TODO pass in private
+    private DiscreteCoordinates roomCoordinates;
     private String behaviorName; 
 
     private ArrayList<Connector> connectors;
@@ -69,7 +70,6 @@ abstract public class ICRogueRoom extends Area{
         currentConnector.setType(State.LOCK);
         currentConnector.setKeyId(keyId);
     }
-
     
     //* CREATE AREA
     protected void createArea(){

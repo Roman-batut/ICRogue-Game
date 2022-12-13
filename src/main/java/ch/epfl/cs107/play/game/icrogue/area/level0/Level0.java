@@ -15,12 +15,12 @@ public class Level0 extends Level{
     //* Constructor
     public Level0(ICRogue jeu) {
         super(4, 2, new DiscreteCoordinates(2, 0), jeu);
-        super.setStartingRoom(new DiscreteCoordinates(0,0));
+        super.setStartingRoom(new DiscreteCoordinates(1,1));
         
     }
     
     public void generateFixedMap(){
-        generateMap1();
+        generateMap2();
 
         // generateMap2();
     }

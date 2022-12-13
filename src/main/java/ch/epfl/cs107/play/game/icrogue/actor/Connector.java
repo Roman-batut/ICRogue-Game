@@ -69,7 +69,9 @@ public class Connector extends AreaEntity implements Interactable{
     // public void setDestination(Area desination){
     //     this.destination = desination.getTitle();
     // }
-    
+    public DiscreteCoordinates getCoordinatesofarrive(){
+        return CoordinatesOfArrive;
+    }
     public void setCoordinates(DiscreteCoordinates CoordinatesOfArrive){
         this.CoordinatesOfArrive = CoordinatesOfArrive;
     }
@@ -86,15 +88,13 @@ public class Connector extends AreaEntity implements Interactable{
 
     @Override
     public boolean takeCellSpace() {
-        if(type == State.OPEN){
-            return false;
-        }
-        return true; 
+        return !(type.equals(State.OPEN));
+    
     }
 
     @Override
     public boolean isCellInteractable() {
-        return false;
+        return(type.equals(State.OPEN));
     }
 
     @Override

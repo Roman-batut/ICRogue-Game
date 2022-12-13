@@ -11,6 +11,7 @@ import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Key;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
 import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Fire;
+import ch.epfl.cs107.play.game.icrogue.area.ICRogueRoom;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
@@ -18,6 +19,8 @@ import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 public class ICRoguePlayer extends ICRogueActor implements Interactor{
@@ -29,7 +32,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
     private boolean distInteraction;
     private ICRoguePlayerInteractionHandler handler;
     private boolean equipW;
-    private Key equipK;
+    private List<Key> equipK;
     private boolean wantTopass;
     private String destination;
 
@@ -42,6 +45,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
         distInteraction = false;
         handler = new ICRoguePlayerInteractionHandler();
         equipW = false;
+        equipK = new ArrayList<Key>();
 
         resetMotion();
 	}
@@ -54,6 +58,10 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
         return destination;
     }
 
+    //*Setters
+    public void setPassing(boolean change){
+        wantTopass =change;
+    }
 
     //* REDEFINE ICRogueActor
     @Override
@@ -105,21 +113,23 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
         
         @Override
         public void interactWith(Key key, boolean isCellInteraction) {
-            equipK = key;
+            equipK.add(key);
             key.collect();
         }
 
         @Override
         public void interactWith(Connector connector, boolean isCellInteraction){
-            wantTopass =false;
+            
             if(wantsViewInteraction()){
                 if(connector.getType() == State.LOCK){
-                    if(connector.getKeyId() == equipK.getID()){
+                    for(Key val : equipK){
+                    if(connector.getKeyId() == val.getID()){
                         connector.setType(State.OPEN);
+                    }
                     }
                 }
             }
-            if(wantsCellInteraction() && !(isDisplacementOccurs())){
+            if(wantsCellInteraction() && !(isDisplacementOccurs())&& isCellInteraction){
                 if(connector.getType() == State.OPEN){
                     wantTopass = true;
                     destination = connector.getDestination();
@@ -189,6 +199,24 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor{
         }
 
         sprite.draw(canvas);
+    }
+
+
+    //CHANGE AREA
+    public void leaveRoom(){
+        getOwnerArea().unregisterActor(this);
+    }
+
+    /**
+     *
+     * @param area (Area): initial area, not null
+     * @param position (DiscreteCoordinates): initial position, not null
+     */
+    public void enterRoom(ICRogueRoom icRogueRoom, DiscreteCoordinates position){
+        icRogueRoom.registerActor(this);
+        setOwnerArea(icRogueRoom);
+        setCurrentPosition(position.toVector());
+        resetMotion();
     }
 
 }

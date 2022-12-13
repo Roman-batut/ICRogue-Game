@@ -2,12 +2,9 @@ package ch.epfl.cs107.play.game.icrogue;
 
 import ch.epfl.cs107.play.game.areagame.AreaGame;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.icrogue.actor.Connector;
 import ch.epfl.cs107.play.game.icrogue.actor.ICRoguePlayer;
 import ch.epfl.cs107.play.game.icrogue.area.ICRogueRoom;
-import ch.epfl.cs107.play.game.icrogue.area.Level;
 import ch.epfl.cs107.play.game.icrogue.area.level0.Level0;
-import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0Room;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Button;
@@ -53,7 +50,7 @@ public class ICRogue extends AreaGame{
 		Keyboard keyboard = currentRoom.getKeyboard();
         restart(keyboard.get(Keyboard.R));
 		if(player.getPassing()){
-			switchArea();
+			switchRoom();
 		}
 		super.update(deltaTime);
 	}
@@ -71,13 +68,14 @@ public class ICRogue extends AreaGame{
     }
 
 	//* SWITCH AREA 
-	protected void switchArea() {
+	protected void switchRoom() {
 		
-		currentRoom.unregisterActor(player);
+		player.leaveRoom();
 		
 		currentRoom = (ICRogueRoom)setCurrentArea(player.getdestination(), false);
 		
-		currentRoom.registerActor(player);
+		player.enterRoom(currentRoom, new DiscreteCoordinates(2, 1));
+		player.setPassing(false);
 	}
 
 }
