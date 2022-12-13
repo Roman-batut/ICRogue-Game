@@ -47,10 +47,12 @@ public class Level0Room extends ICRogueRoom{
 		}
 		
 	}	
+	DiscreteCoordinates roomCoordinates;
 	
 	//* CONSTRUCTOR
 	public Level0Room(DiscreteCoordinates roomCoordinates){
         super(getAllConnectorsPosition(), getAllConnectorsOrientation(),"icrogue/Level0Room", roomCoordinates);
+		this.roomCoordinates = roomCoordinates;
 	}
 	
 	//* GETTERS

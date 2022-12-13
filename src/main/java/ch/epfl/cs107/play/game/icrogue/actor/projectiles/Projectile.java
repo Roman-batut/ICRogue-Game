@@ -17,8 +17,8 @@ import ch.epfl.cs107.play.window.Canvas;
 
 abstract public class Projectile extends ICRogueActor implements Consumable, Interactor{
 
-    private final int DEFAULT_DAMAGE = 1;
-    private final int DEFAULT_MOVE_DURATION = 10;
+    private final static int DEFAULT_DAMAGE = 1;
+    private final static int DEFAULT_MOVE_DURATION = 10;
 
     protected Sprite sprite;
     private int frames;
@@ -38,11 +38,7 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
     }
     
     public Projectile(Area area, Orientation orientation, DiscreteCoordinates position){
-        super(area, orientation, position);
-        area.registerActor(this);
-        // TODO better ?
-        dmg = DEFAULT_DAMAGE; 
-        frames = DEFAULT_MOVE_DURATION;
+        this(area, orientation, position, DEFAULT_DAMAGE, DEFAULT_MOVE_DURATION);
     }  
 
     //* SETTERS
