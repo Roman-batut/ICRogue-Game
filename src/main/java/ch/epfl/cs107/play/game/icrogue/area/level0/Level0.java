@@ -22,7 +22,7 @@ public class Level0 extends Level{
     public void generateFixedMap(){
         generateMap2();
 
-        // generateMap2();
+        // generateMap1();
     }
     
     private void generateMap1() {

@@ -12,12 +12,22 @@ abstract public class Item extends CollectableAreaEntity {
     private Sprite sprite;
 
     //* CONSTRUCTOR
+    /**
+     * @param area
+     * @param orientation
+     * @param position
+     * @param isCollected
+     */
     public Item(Area area, Orientation orientation, DiscreteCoordinates position, boolean isCollected) {
         super(area, orientation, position, isCollected);
     }
     
 
     //* REDEFINE Interactable
+    /**
+     * Indicate if the current Interactable take the whole cell space or not
+     * @return (boolean)
+     */
     @Override
     public boolean takeCellSpace(){
         return false;
@@ -25,6 +35,10 @@ abstract public class Item extends CollectableAreaEntity {
 
 
     //* DRAW
+    /**
+     * Renders itself on specified canvas.
+     * @param canvas target, not null
+     */
     public void draw(Canvas canvas) {
         if(!isCollected()){
             sprite.draw(canvas);

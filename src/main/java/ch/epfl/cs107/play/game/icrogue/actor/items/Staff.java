@@ -16,6 +16,11 @@ public class Staff extends Item{
     private Sprite sprite;
 
     //* CONSTRUCTOR
+    /**
+     * @param area
+     * @param orientation
+     * @param position
+     */
     public Staff(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, false);
         sprite = new Sprite("zelda/staff_water.icon", .5f, .5f, this);
@@ -24,11 +29,19 @@ public class Staff extends Item{
 
 
     //* REDEFINE Item
+    /**
+     * Get this Interactor's current occupying cells coordinates
+     * @return (List of DiscreteCoordinates). May be empty but not null
+     */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
+    /**
+     * Indicate if the current Interactable take the whole cell space or not
+     * @return (boolean)
+     */
     @Override
     public boolean takeCellSpace(){
         return true;
@@ -36,25 +49,39 @@ public class Staff extends Item{
 
     
     //* REDEFINE Interactable
+    /** 
+     * Call directly the interaction on this if accepted
+     * @param v (AreaInteractionVisitor) : the visitor
+     * @param isCellInteraction (boolean) : true if the interaction is on a cell
+     */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICRogueInteractionHandler) v).interactWith((Staff)this, isCellInteraction);
     }
 
+    /**
+     * @return (boolean): true if this is able to have cell interactions
+     */
     @Override
     public boolean isCellInteractable() {
         return true;
     }
 
+    /**
+     * @return (boolean): true if this is able to have view interactions
+     */
     @Override
     public boolean isViewInteractable() {
         return true;
     }
     
     //* DRAW
+    /**
+     * Renders itself on specified canvas.
+     * @param canvas target, not null
+     */
     @Override
     public void draw(Canvas canvas) {
-       
         sprite.draw(canvas);    
     }
 

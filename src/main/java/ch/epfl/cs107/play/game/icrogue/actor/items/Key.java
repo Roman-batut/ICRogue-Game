@@ -17,6 +17,12 @@ public class Key extends Item{
     private int ID;
 
     //* CONSTRUCTOR
+    /**
+     * @param area
+     * @param orientation
+     * @param position
+     * @param ID
+     */
     public Key(Area area, Orientation orientation, DiscreteCoordinates position, int ID) {
         super(area, orientation, position, false);
         sprite = new Sprite("icrogue/key", 0.6f, 0.6f, this);
@@ -26,28 +32,46 @@ public class Key extends Item{
 
 
     //* GETTERS
+    /**
+     * @return ID of the key
+     */
     public int getID(){ 
         return ID; 
     }
     
 
     //* REDEFINE Item
+    /**
+     * Get this Interactor's current occupying cells coordinates
+     * @return (List of DiscreteCoordinates). May be empty but not null
+     */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
     //* REDEFINE Interactable
+    /** 
+     * Call directly the interaction on this if accepted
+     * @param v (AreaInteractionVisitor) : the visitor
+     * @param isCellInteraction (boolean) : true if the interaction is on a cell
+     */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICRogueInteractionHandler) v).interactWith((Key)this, isCellInteraction);
     }
 
+    /**
+     * @return (boolean): true if this is able to have cell interactions
+     */
     @Override
     public boolean isCellInteractable() {
         return true;
     }
     
+    /**
+     * @return (boolean): true if this is able to have view interactions
+     */
     @Override
     public boolean isViewInteractable() {
         return false;
@@ -55,6 +79,10 @@ public class Key extends Item{
     
 
     //* DRAW
+    /**
+     * Renders itself on specified canvas.
+     * @param canvas target, not null
+     */
     @Override
     public void draw(Canvas canvas) {
         if (!isCollected()){

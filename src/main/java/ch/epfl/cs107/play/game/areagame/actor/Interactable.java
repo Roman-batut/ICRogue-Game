@@ -2,13 +2,6 @@ package ch.epfl.cs107.play.game.areagame.actor;
 
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.window.swing.SoundItem;
-import ch.epfl.cs107.play.game.icrogue.ICRogueBehavior.ICRogueCell;
-import ch.epfl.cs107.play.game.icrogue.actor.ICRoguePlayer;
-import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
-import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
-import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Fire;
-import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 
 import java.util.List;
 

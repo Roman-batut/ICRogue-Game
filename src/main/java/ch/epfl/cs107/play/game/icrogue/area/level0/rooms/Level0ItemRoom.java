@@ -11,26 +11,33 @@ abstract public class Level0ItemRoom extends Level0Room {
     List<Item> items;
 
     // * Constructor
+    /**
+     * @param roomCoordinates
+     */
     public Level0ItemRoom(DiscreteCoordinates roomCoordinates) {
         super(roomCoordinates);
         items = new ArrayList<Item>();
-        // TODO Auto-generated constructor stub
     }
 
+
     // * Add
+    /**
+     * Add an item to the room
+     * @param item
+     */
     public void addItem(Item item) {
         items.add(item);
     }
     
+
     //* CREATE AREA
+
     @Override
     protected void createArea() {
         super.createArea();
         for (Item val : items) {
             registerActor(val);
         }
-
-        // registerActor(new Foreground(this, getBehaviorName()));
     }
 
 }

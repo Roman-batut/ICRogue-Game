@@ -14,6 +14,12 @@ public abstract class Level{
     
 
     // * Constructor
+    /**
+     * @param height
+     * @param width
+     * @param spawnpos
+     * @param jeu
+     */
     public Level(int height, int width, DiscreteCoordinates spawnpos, ICRogue jeu) {
         Carte = new ICRogueRoom[height][width];
         bossRoomCoordinates = new DiscreteCoordinates(0, 0);
@@ -22,6 +28,8 @@ public abstract class Level{
         // setRoom(bossRoomCoordinates, bossRoom);
     }
 
+    
+    // * Methods
     protected void setRoom(DiscreteCoordinates coords, ICRogueRoom room) {
         Carte[coords.x][coords.y] = room;
         jeu.addArea(room);
@@ -54,7 +62,7 @@ public abstract class Level{
     abstract protected void generateFixedMap();
     
 
-    //* Getter
+    // * Getter
     public ICRogueRoom getStartingRoom(){
         return StartingRoom;
     }

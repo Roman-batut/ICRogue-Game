@@ -35,6 +35,11 @@ public class Connector extends AreaEntity implements Interactable{
     private Sprite sprite;
 
     //* CONSTRUCTOR
+    /**
+     * @param area
+     * @param orientation
+     * @param position
+     */
     public Connector(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation.opposite(), position);
 
@@ -57,6 +62,10 @@ public class Connector extends AreaEntity implements Interactable{
          return destination;
     }
     
+    public DiscreteCoordinates getCoordinatesofarrive(){
+        return CoordinatesOfArrive;
+    }
+
     //* SETTERS
     public void setType(State type){ 
         this.type = type; 
@@ -66,48 +75,66 @@ public class Connector extends AreaEntity implements Interactable{
         this.destination = destination; 
     } 
 
-    // public void setDestination(Area desination){
-    //     this.destination = desination.getTitle();
-    // }
-    public DiscreteCoordinates getCoordinatesofarrive(){
-        return CoordinatesOfArrive;
-    }
     public void setCoordinates(DiscreteCoordinates CoordinatesOfArrive){
         this.CoordinatesOfArrive = CoordinatesOfArrive;
     }
     public void setKeyId(int keyId){
         this.keyID = keyId;
     }
+    
 
     //* REDEFINE Interactable
+    /**
+     * Get this Interactor's current occupying cells coordinates
+     * @return (List of DiscreteCoordinates). May be empty but not null
+     */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         DiscreteCoordinates coord = getCurrentMainCellCoordinates();
         return List.of(coord, coord.jump(new Vector((getOrientation().ordinal()+1)%2, getOrientation().ordinal()%2)));
     }
 
+    /**
+     * Indicate if the current Interactable take the whole cell space or not
+     * @return (boolean)
+     */
     @Override
     public boolean takeCellSpace() {
         return !(type.equals(State.OPEN));
     
     }
 
+    /**
+     * @return (boolean): true if this is able to have cell interactions
+     */
     @Override
     public boolean isCellInteractable() {
         return(type.equals(State.OPEN));
     }
 
+    /**
+     * @return (boolean): true if this is able to have view interactions
+     */
     @Override
     public boolean isViewInteractable() {
         return true; 
     }
     
+    /** 
+     * Call directly the interaction on this if accepted
+     * @param v (AreaInteractionVisitor) : the visitor
+     * @param isCellInteraction (boolean) : true if the interaction is on a cell
+     */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICRogueInteractionHandler) v).interactWith(this, isCellInteraction);
     }
 
     //* DRAW
+    /**
+     * Renders itself on specified canvas.
+     * @param canvas target, not null
+     */
     @Override
     public void draw(Canvas canvas) {
         if(type != State.OPEN){

@@ -27,6 +27,13 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
     private ICRogueProjInteractionHandler handler;
         
     //* CONSTRUCTORS
+    /**
+     * @param area
+     * @param orientation
+     * @param position
+     * @param dmg
+     * @param frames
+     */
     public Projectile(Area area, Orientation orientation, DiscreteCoordinates position, int dmg, int frames) {
         super(area, orientation, position);
         this.frames = frames;
@@ -37,6 +44,11 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
         area.registerActor(this);
     }
     
+    /**
+     * @param area
+     * @param orientation
+     * @param position
+     */
     public Projectile(Area area, Orientation orientation, DiscreteCoordinates position){
         this(area, orientation, position, DEFAULT_DAMAGE, DEFAULT_MOVE_DURATION);
     }  
@@ -60,16 +72,26 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
 
 
     //* REDEFINE Interactor
+    /**
+     * Get this Interactor's current field of view cells coordinates
+     * @return (List of DiscreteCoordinates). May be empty but not null
+     */
     @Override
     public List<DiscreteCoordinates> getFieldOfViewCells() {
        return Collections.singletonList (getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
     }
 
+    /**
+     * @return (boolean): true if this require cell interaction 
+     */
     @Override
     public boolean wantsCellInteraction(){
         return true;
     }
     
+    /**
+     * @return (boolean): true if this require view interaction 
+     */
     @Override
     public boolean wantsViewInteraction() {
         return true;
@@ -77,12 +99,19 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
 
     // INTERACTIONS
     //TODO Mettre dans Fire ?
+    /**
+     * Do this Interactor interact with the given Interactable
+     * The interaction is implemented on the interactor side !
+     * @param other (Interactable). Not null
+     * @param isCellInteraction True if this is a cell interaction
+     */
     @Override
    public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
         
     }
     private class ICRogueProjInteractionHandler implements ICRogueInteractionHandler{
+        //TODO
        @Override
        public void interactWith(ICRogueCell cell, boolean isCellInteraction) {
            if(cell.getType() == ICRogueCellType.WALL || cell.getType() == ICRogueCellType.HOLE){
@@ -93,6 +122,10 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
 
 
     //* UPDATE
+    /**
+     * Update the actor
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
+     */
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
@@ -101,6 +134,10 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
     
 
     //* DRAW
+    /**
+     * Renders itself on specified canvas.
+     * @param canvas target, not null
+     */
     @Override
     public void draw(Canvas canvas) {
         if(!isConsumed()){
