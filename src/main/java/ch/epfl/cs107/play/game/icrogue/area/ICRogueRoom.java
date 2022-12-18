@@ -9,17 +9,20 @@ import ch.epfl.cs107.play.game.icrogue.ICRogue;
 import ch.epfl.cs107.play.game.icrogue.ICRogueBehavior;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Window;
 import ch.epfl.cs107.play.game.icrogue.actor.Connector;
 import ch.epfl.cs107.play.game.icrogue.actor.Connector.State;
 
-abstract public class ICRogueRoom extends Area{
+abstract public class ICRogueRoom extends Area implements Logic{
 
 	private ICRogueBehavior behavior;
     private DiscreteCoordinates roomCoordinates;
     private String behaviorName; 
+    private boolean isVisited;
+    private boolean open;
 
-    private ArrayList<Connector> connectors;
+    private List<Connector> connectors;
 
     
     //* CONSTRUCTOR
@@ -27,6 +30,7 @@ abstract public class ICRogueRoom extends Area{
         assert connectorsCoordinates.size() == orientations.size();
         this.roomCoordinates = roomCoordinates;
         this.behaviorName = behaviorName;
+        isVisited = Logic.TRUE.isOff();
         
         connectors = new ArrayList<>();
         int i = 0;
@@ -37,38 +41,69 @@ abstract public class ICRogueRoom extends Area{
         }
     }
 
-
-    //* REDEFINE Area
-    @Override
-    public final float getCameraScaleFactor() {
-        return ICRogue.CAMERA_SCALE_FACTOR;
-    }
-
-
-    //* GETTERS
+    // * GETTERS
     public abstract DiscreteCoordinates getPlayerSpawnPosition();
     
     public String getBehaviorName(){ 
         return behaviorName; 
     }
 
-    
-    //* Setters
+    // * Setters
     public void setConnectorDestination(String destination, ConnectorInRoom connector){
         Connector currentConnector = connectors.get(connector.getIndex());
         currentConnector.setDestination(destination);
     }
+
     public void setConnector(String destination, ConnectorInRoom connector){
         Connector currentConnector = connectors.get(connector.getIndex());
         setConnectorDestination(destination, connector);
-        currentConnector.setType(State.OPEN);
+        currentConnector.setType(State.CLOSED);
     }
+
     public void lockRoomConnector(ConnectorInRoom connector, int keyId){
         Connector currentConnector = connectors.get(connector.getIndex());
         currentConnector.setType(State.LOCK);
         currentConnector.setKeyId(keyId);
     }
+
+
+    // * METHODS 
+    public void openConnectors(){
+        for(Connector val : connectors){
+            if(val.getType() == State.CLOSED){
+                val.setType(State.OPEN);
+            }
+        }
+    }
+
+    public void isVisited(){
+        isVisited = true;
+    }
+
+
+    // * REDEFINE Area
+    @Override
+    public final float getCameraScaleFactor() {
+        return ICRogue.CAMERA_SCALE_FACTOR;
+    }
+
+    // * REDEFINE Logic 
+    @Override
+    public boolean isOn() {
+        return isVisited;
+    }
+
+    @Override
+    public boolean isOff() {
+        return !isVisited;
+    }
+
+    @Override
+    public float getIntensity() {
+        return 0;
+    }
     
+
     //* CREATE AREA
     protected void createArea(){
         for(Connector val : connectors){
@@ -92,26 +127,12 @@ abstract public class ICRogueRoom extends Area{
     //* UPDATE
     @Override
     public void update(float deltaTime){
-        // Keyboard keyboard = this.getKeyboard();
-        
-        // if(keyboard.get(Keyboard.O).isPressed()){
-        //     for(Connector val : connectors){
-        //         val.setType(State.OPEN);
-        //     }
-        // }
-        // if(keyboard.get(Keyboard.L).isPressed()){
-        //     connectors.get(0).setType(State.LOCK);
-        // }
-        // if(keyboard.get(Keyboard.T).isPressed()){
-        //     for(Connector val : connectors){
-        //         if(val.getType() == State.CLOSED)
-        //             val.setType(State.OPEN);
-        //         if(val.getType() == State.OPEN)
-        //             val.setType(State.CLOSED);
-        //     }
-        // }
-        
+        if(isOn() && !open){
+            openConnectors();
+            open = true;
+        }
         super.update(deltaTime);
+        
     }
-    
+
 }

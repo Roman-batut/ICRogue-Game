@@ -4,14 +4,10 @@ import java.util.Collections;
 import java.util.List;
 
 import ch.epfl.cs107.play.game.areagame.Area;
-import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Interactor;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
-import ch.epfl.cs107.play.game.icrogue.ICRogueBehavior.ICRogueCell;
-import ch.epfl.cs107.play.game.icrogue.ICRogueBehavior.ICRogueCellType;
 import ch.epfl.cs107.play.game.icrogue.actor.ICRogueActor;
-import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 
@@ -20,11 +16,11 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
     private final static int DEFAULT_DAMAGE = 1;
     private final static int DEFAULT_MOVE_DURATION = 10;
 
-    protected Sprite sprite;
+    protected Sprite sprite; //TODO private ?
     private int frames;
     private int dmg;
     private boolean isConsumed ;
-    private ICRogueProjInteractionHandler handler;
+    // private ICRogueProjInteractionHandler handler;
         
     //* CONSTRUCTORS
     /**
@@ -39,7 +35,7 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
         this.frames = frames;
         this.dmg = dmg;
         isConsumed =false;
-        handler = new ICRogueProjInteractionHandler();
+        // handler = new ICRogueProjInteractionHandler();
         
         area.registerActor(this);
     }
@@ -53,16 +49,27 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
         this(area, orientation, position, DEFAULT_DAMAGE, DEFAULT_MOVE_DURATION);
     }  
 
+    //* GETTERS
+    public int getDmg(){
+        return dmg;
+    }
+
     //* SETTERS
     public void setSprite(Sprite sprite){
         this.sprite = sprite;
+    }
+
+    protected void setDmg(int dmg){
+        this.dmg = dmg;
     }
     
 
     //* REDEFINE Consumable
     @Override
     public void consume(){
-        isConsumed = true;
+        if (!isConsumed) {
+            isConsumed = getOwnerArea().unregisterActor(this);
+        }
     }
 
     @Override
@@ -97,30 +104,6 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
         return true;
     }
 
-    // INTERACTIONS
-    //TODO Mettre dans Fire ?
-    /**
-     * Do this Interactor interact with the given Interactable
-     * The interaction is implemented on the interactor side !
-     * @param other (Interactable). Not null
-     * @param isCellInteraction True if this is a cell interaction
-     */
-    @Override
-   public void interactWith(Interactable other, boolean isCellInteraction) {
-        other.acceptInteraction(handler, isCellInteraction);
-        
-    }
-    private class ICRogueProjInteractionHandler implements ICRogueInteractionHandler{
-        //TODO
-       @Override
-       public void interactWith(ICRogueCell cell, boolean isCellInteraction) {
-           if(cell.getType() == ICRogueCellType.WALL || cell.getType() == ICRogueCellType.HOLE){
-                consume();
-           }
-       }
-    }
-
-
     //* UPDATE
     /**
      * Update the actor
@@ -140,9 +123,7 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
      */
     @Override
     public void draw(Canvas canvas) {
-        if(!isConsumed()){
-            sprite.draw(canvas);
-        }
+        sprite.draw(canvas);
     }
 
 }

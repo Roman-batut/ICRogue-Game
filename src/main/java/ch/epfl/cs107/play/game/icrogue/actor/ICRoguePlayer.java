@@ -10,6 +10,7 @@ import ch.epfl.cs107.play.game.icrogue.actor.Connector.State;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Key;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
+import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Arrow;
 import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Fire;
 import ch.epfl.cs107.play.game.icrogue.area.ICRogueRoom;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
@@ -36,6 +37,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     private List<Key> equipK;
     private boolean wantTopass;
     private String destination;
+    private boolean isAlive;
 
     // * CONSTRUCTOR
     /**
@@ -47,12 +49,13 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     public ICRoguePlayer(Area owner, Orientation orientation, DiscreteCoordinates coordinates, String spriteName) {
         super(owner, orientation, coordinates);
 
-        this.hp = 10;
+        this.hp = 5;
         sprite = new Sprite(spriteName, 1.f, 1.f, this);
         distInteraction = false;
         handler = new ICRoguePlayerInteractionHandler();
-        equipW = false;
+        equipW = true;
         equipK = new ArrayList<Key>();
+        isAlive = true;
 
         resetMotion();
     }
@@ -64,6 +67,10 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
 
     public String getdestination() {
         return destination;
+    }
+    
+    public boolean isAlive(){
+        return isAlive;
     }
 
     // *Setters
@@ -120,6 +127,9 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     }
 
     // INTERACTIONS
+    public void reciveDmg(int Dmg){
+        hp -= Dmg;
+    }
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
@@ -199,7 +209,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     }
 
 
-    // * CHANGE AREA
+    // * METHODS
     public void leaveRoom() {
         getOwnerArea().unregisterActor(this);
     }
@@ -209,6 +219,11 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         setOwnerArea(icRogueRoom);
         setCurrentPosition(position.toVector());
         resetMotion();
+        icRogueRoom.isVisited();
+    }
+
+    private void die(){
+        isAlive = false;
     }
 
 
@@ -228,8 +243,13 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         if (equipW) {
             launchFireball(getOrientation(), keyboard.get(Keyboard.X));
         }
-
+        
         viewInteraction(keyboard.get(Keyboard.W));
+        
+        if(hp <= 0){
+            die();
+        }
+        
         super.update(deltaTime);
     }
 

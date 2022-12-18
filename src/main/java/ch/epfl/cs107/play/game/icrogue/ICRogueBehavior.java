@@ -99,6 +99,7 @@ public class ICRogueBehavior extends AreaBehavior{
 		public ICRogueCellType getType(){
 			return this.type;
 		}
+
 		public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
 			((ICRogueInteractionHandler) v).interactWith(this, isCellInteraction);
 		}

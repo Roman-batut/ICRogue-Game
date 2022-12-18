@@ -7,28 +7,23 @@ import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.icrogue.ICRogueBehavior.ICRogueCell;
 import ch.epfl.cs107.play.game.icrogue.ICRogueBehavior.ICRogueCellType;
-import ch.epfl.cs107.play.game.icrogue.actor.enemies.Enemy;
-import ch.epfl.cs107.play.game.icrogue.actor.enemies.Turret;
+import ch.epfl.cs107.play.game.icrogue.actor.ICRoguePlayer;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
-public class Fire extends Projectile{
 
-    private ICRogueFireInteractionHandler handler;
-    //* CONSTRUCTOR
-    /**
-     * @param area
-     * @param orientation
-     * @param position
-     */
-    public Fire(Area area, Orientation orientation, DiscreteCoordinates position) {
+public class Arrow extends Projectile{
+
+    private ICRogueArrowInteractionHandler handler;
+    
+    public Arrow(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, 1,5);
-        sprite = new Sprite("zelda/fire", 1f, 1f, this,new RegionOfInterest(0, 0, 16, 16), new Vector(0, 0));
-        handler = new ICRogueFireInteractionHandler();
-        super.setDmg(2);
+        sprite = new Sprite("zelda/arrow", 1f, 1f, this,new RegionOfInterest(32*orientation.ordinal(), 0, 32, 32),new Vector(0, 0));
+       handler = new ICRogueArrowInteractionHandler();
+        super.setDmg(1);
     }
 
     
@@ -43,26 +38,26 @@ public class Fire extends Projectile{
         ((ICRogueInteractionHandler) v).interactWith(this, isCellInteraction);
     }
 
-     //INTERACTIONS
+    //INTERACTIONS
     @Override
    public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
         
     }
-    private class ICRogueFireInteractionHandler implements ICRogueInteractionHandler{
+    private class ICRogueArrowInteractionHandler implements ICRogueInteractionHandler{
        @Override
+       //TODO UPgrade in projectile all common part
        public void interactWith(ICRogueCell cell, boolean isCellInteraction) {
            if(cell.getType() == ICRogueCellType.WALL || cell.getType() == ICRogueCellType.HOLE){
                 consume();
            }
        }
-       
-       public void interactWith(Turret turret, boolean isCellInteraction){
+       public void interactWith(ICRoguePlayer player, boolean isCellInteraction){
             consume();
-            turret.reciveDmg(getDmg());
+            player.reciveDmg(getDmg());
        }
     }
-    
+
 
     //* UPDATE
     /**
@@ -85,4 +80,4 @@ public class Fire extends Projectile{
        super.draw(canvas);
     }
 
- }
+}

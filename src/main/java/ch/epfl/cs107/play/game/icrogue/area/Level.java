@@ -8,7 +8,6 @@ public abstract class Level{
     private ICRogueRoom[][] Carte;
     private DiscreteCoordinates bossRoomCoordinates;
     private ICRogueRoom bossRoom;
-    //private String StartingRoomString;
     private ICRogueRoom StartingRoom;
     private ICRogue jeu;
     
@@ -25,7 +24,7 @@ public abstract class Level{
         bossRoomCoordinates = new DiscreteCoordinates(0, 0);
         this.jeu = jeu;
         generateFixedMap();
-        // setRoom(bossRoomCoordinates, bossRoom);
+        setBossRoom(bossRoomCoordinates);
     }
 
     
@@ -58,6 +57,12 @@ public abstract class Level{
         StartingRoom = (ICRogueRoom)Carte[coords.x][coords.y];
 
     }
+    
+    protected void setBossRoom(DiscreteCoordinates coords) {
+       // StartingRoomString = Carte[coords.x][coords.y].getTitle()+coords.x+coords.y;
+        bossRoom = (ICRogueRoom)Carte[coords.x][coords.y];
+
+    }
 
     abstract protected void generateFixedMap();
     
@@ -66,4 +71,9 @@ public abstract class Level{
     public ICRogueRoom getStartingRoom(){
         return StartingRoom;
     }
+
+    public ICRogueRoom getBossRoom(){
+        return bossRoom;
+    }
+    
 }

@@ -33,16 +33,16 @@ abstract public class Item extends CollectableAreaEntity {
         return false;
     }
 
-
     //* DRAW
     /**
      * Renders itself on specified canvas.
      * @param canvas target, not null
      */
     public void draw(Canvas canvas) {
-        if(!isCollected()){
-            sprite.draw(canvas);
-        } 
+        
+        sprite.draw(canvas);
+        
     }    
+
     
 }

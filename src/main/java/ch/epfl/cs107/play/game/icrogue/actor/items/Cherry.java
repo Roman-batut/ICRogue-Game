@@ -71,9 +71,8 @@ public class Cherry extends Item {
      */
     @Override
     public void draw(Canvas canvas) {
-        if (!isCollected()) {
-            sprite.draw(canvas);
-        }
+        sprite.draw(canvas);
+        
     }
 
 }

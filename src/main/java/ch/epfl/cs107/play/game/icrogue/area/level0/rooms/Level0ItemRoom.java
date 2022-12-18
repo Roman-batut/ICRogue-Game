@@ -10,7 +10,7 @@ abstract public class Level0ItemRoom extends Level0Room {
 
     List<Item> items;
 
-    // * Constructor
+    // * CONSTRUCTOR
     /**
      * @param roomCoordinates
      */
@@ -20,7 +20,24 @@ abstract public class Level0ItemRoom extends Level0Room {
     }
 
 
-    // * Add
+    // * REDEFINE Logic
+    @Override
+    public boolean isOn() {
+        for(Item item : items){
+            if(!item.isCollected()){
+                return false;
+            }
+        }
+        return super.isOn();
+    }
+
+    @Override
+    public boolean isOff() {
+        return !isOn();
+    }
+
+
+    // * ADD
     /**
      * Add an item to the room
      * @param item
@@ -30,8 +47,7 @@ abstract public class Level0ItemRoom extends Level0Room {
     }
     
 
-    //* CREATE AREA
-
+    // * CREATE AREA
     @Override
     protected void createArea() {
         super.createArea();

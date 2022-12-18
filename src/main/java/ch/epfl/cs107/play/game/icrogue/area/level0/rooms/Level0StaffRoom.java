@@ -20,6 +20,5 @@ public class Level0StaffRoom extends Level0ItemRoom{
     protected void createArea(){
         super.createArea();
     }
-
     
 }

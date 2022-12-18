@@ -4,6 +4,7 @@ import ch.epfl.cs107.play.game.areagame.AreaGame;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.icrogue.actor.ICRoguePlayer;
 import ch.epfl.cs107.play.game.icrogue.area.ICRogueRoom;
+import ch.epfl.cs107.play.game.icrogue.area.Level;
 import ch.epfl.cs107.play.game.icrogue.area.level0.Level0;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -16,14 +17,16 @@ public class ICRogue extends AreaGame{
     public final static float CAMERA_SCALE_FACTOR = 11.f;
 
 	private ICRogueRoom currentRoom;
+	private Level currentLevel;
 	private ICRoguePlayer player;
 
 	//* INIT LEVEL
 	private void initLevel(){
-		Level0 level = new Level0(this);
+		Level level = new Level0(this);
 		currentRoom = (ICRogueRoom)setCurrentArea(level.getStartingRoom().getTitle(), true);
+		currentLevel = level;
 		player = new ICRoguePlayer(currentRoom, Orientation.UP, new DiscreteCoordinates(2, 2), "zelda/player");
-		currentRoom.registerActor(player);
+		player.enterRoom(currentRoom, new DiscreteCoordinates(2, 1));
 	}
 
 
@@ -51,6 +54,13 @@ public class ICRogue extends AreaGame{
         restart(keyboard.get(Keyboard.R));
 		if(player.getPassing()){
 			switchRoom();
+		}
+		if(currentLevel.getBossRoom().isOn()){
+			System.out.println("Win");
+		}
+		if(!player.isAlive()){
+			System.out.println("Game Over");
+			begin(getWindow(), getFileSystem());
 		}
 		super.update(deltaTime);
 	}

@@ -20,7 +20,6 @@ public class Level0KeyRoom extends Level0ItemRoom {
     @Override
     protected void createArea(){
         super.createArea();
-        registerActor(key);
     }
     
 }

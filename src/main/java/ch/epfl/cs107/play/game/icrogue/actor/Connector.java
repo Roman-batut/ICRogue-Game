@@ -31,6 +31,7 @@ public class Connector extends AreaEntity implements Interactable{
     private String destination;
     private DiscreteCoordinates CoordinatesOfArrive;
     private int keyID;
+    private boolean hasOpen;
     
     private Sprite sprite;
 
@@ -46,6 +47,7 @@ public class Connector extends AreaEntity implements Interactable{
         type = State.INVISIBLE;
         CoordinatesOfArrive = position; 
         keyID = NO_KEY_ID;
+        hasOpen = false;
     }
 
 
@@ -65,10 +67,16 @@ public class Connector extends AreaEntity implements Interactable{
     public DiscreteCoordinates getCoordinatesofarrive(){
         return CoordinatesOfArrive;
     }
+    public boolean gethasOpen(){
+        return hasOpen;
+    }
 
     //* SETTERS
     public void setType(State type){ 
         this.type = type; 
+        if(type == State.OPEN){
+            hasOpen = true;
+        }
     }
 
     public void setDestination(String destination){ 
