@@ -4,14 +4,9 @@ package ch.epfl.cs107.play.game.icrogue.area.level0.rooms;
 import java.util.ArrayList;
 import java.util.List;
 
-// import ch.epfl.cs107.play.game.actor.Entity;
 import ch.epfl.cs107.play.game.areagame.actor.Background;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-// import ch.epfl.cs107.play.game.icrogue.actor.Connector;
-// import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
-// import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
 import ch.epfl.cs107.play.game.icrogue.area.ConnectorInRoom;
-// import ch.epfl.cs107.play.game.areagame.actor.Foreground;
 import ch.epfl.cs107.play.game.icrogue.area.ICRogueRoom;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
@@ -27,6 +22,7 @@ public class Level0Room extends ICRogueRoom{
 		private DiscreteCoordinates position;
 		private DiscreteCoordinates destination;
 		private Orientation orientation;
+		
 
 		// CONSTRUCTOR
 		private Level0Connectors(DiscreteCoordinates position, DiscreteCoordinates desination, Orientation orientation){
@@ -47,7 +43,8 @@ public class Level0Room extends ICRogueRoom{
 		}
 		
 	}	
-	DiscreteCoordinates roomCoordinates;
+	
+	private DiscreteCoordinates roomCoordinates;
 	
 	//* CONSTRUCTOR
 	public Level0Room(DiscreteCoordinates roomCoordinates){
@@ -90,9 +87,6 @@ public class Level0Room extends ICRogueRoom{
 	@Override
 	protected void createArea() {
 		super.createArea();
-
         registerActor(new Background(this, getBehaviorName()));
-		// registerActor(new Staff(this, Orientation.DOWN, new DiscreteCoordinates(4, 3)));
-		// registerActor(new Cherry(this, Orientation.DOWN, new DiscreteCoordinates(6, 3)));
     }
 }

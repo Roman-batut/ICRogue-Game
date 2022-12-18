@@ -53,13 +53,11 @@ public abstract class Level{
     }
     
     protected void setStartingRoom(DiscreteCoordinates coords) {
-       // StartingRoomString = Carte[coords.x][coords.y].getTitle()+coords.x+coords.y;
         StartingRoom = (ICRogueRoom)Carte[coords.x][coords.y];
 
     }
     
     protected void setBossRoom(DiscreteCoordinates coords) {
-       // StartingRoomString = Carte[coords.x][coords.y].getTitle()+coords.x+coords.y;
         bossRoom = (ICRogueRoom)Carte[coords.x][coords.y];
 
     }

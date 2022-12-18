@@ -7,7 +7,6 @@ import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.icrogue.ICRogueBehavior.ICRogueCell;
 import ch.epfl.cs107.play.game.icrogue.ICRogueBehavior.ICRogueCellType;
-import ch.epfl.cs107.play.game.icrogue.actor.enemies.Enemy;
 import ch.epfl.cs107.play.game.icrogue.actor.enemies.Turret;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -56,7 +55,7 @@ public class Fire extends Projectile{
                 consume();
            }
        }
-       
+
        public void interactWith(Turret turret, boolean isCellInteraction){
             consume();
             turret.reciveDmg(getDmg());

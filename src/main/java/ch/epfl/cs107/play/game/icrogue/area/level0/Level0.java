@@ -21,23 +21,11 @@ public class Level0 extends Level{
     }
     
     public void generateFixedMap(){
-        generateMap2();
+        generateMapFinal();
 
-        // generateMap1();
-    }
-    
-    private void generateMap1() {
-        DiscreteCoordinates room00 = new DiscreteCoordinates(0, 0);
-        setRoom(room00, new Level0KeyRoom(room00, PART_1_KEY_ID));
-        setRoomConnector(room00, "icrogue/level010", Level0Room.Level0Connectors.E);
-        lockRoomConnector(room00, Level0Room.Level0Connectors.E,  PART_1_KEY_ID);
-
-        DiscreteCoordinates room10 = new DiscreteCoordinates(1, 0);
-        setRoom(room10, new Level0Room(room10));
-        setRoomConnector(room10, "icrogue/level000", Level0Room.Level0Connectors.W);
     }
 
-    private void generateMap2() {
+    private void generateMapFinal() {
         DiscreteCoordinates room00 = new DiscreteCoordinates(0, 0);
         setRoom(room00, new Level0TurretRoom(room00));
         setRoomConnector(room00, "icrogue/level010", Level0Room.Level0Connectors.E);
@@ -47,7 +35,7 @@ public class Level0 extends Level{
         setRoomConnector(room10, "icrogue/level011", Level0Room.Level0Connectors.S);
         setRoomConnector(room10, "icrogue/level020", Level0Room.Level0Connectors.E);
 
-        lockRoomConnector(room10, Level0Room.Level0Connectors.W,  BOSS_KEY_ID);
+        lockRoomConnector(room10, Level0Room.Level0Connectors.W,  PART_1_KEY_ID);
         setRoomConnectorDestination(room10, "icrogue/level000", Level0Room.Level0Connectors.W);
 
         DiscreteCoordinates room20 = new DiscreteCoordinates(2,0);
@@ -63,6 +51,5 @@ public class Level0 extends Level{
         setRoom (room11, new Level0Room(room11));
         setRoomConnector(room11, "icrogue/level010", Level0Room.Level0Connectors.N);
     }
-
 
 }

@@ -6,13 +6,11 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class Level0KeyRoom extends Level0ItemRoom {
     
-    private int keyId;
     private Key key;
 
     //* Constructor
     public Level0KeyRoom(DiscreteCoordinates roomCoordinates, int keyId) {
         super(roomCoordinates);
-        this.keyId = keyId;
         key = new Key(this, Orientation.UP, new DiscreteCoordinates(5,5), keyId);
         super.addItem(key);
     }

@@ -10,7 +10,6 @@ import ch.epfl.cs107.play.game.icrogue.actor.Connector.State;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Key;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
-import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Arrow;
 import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Fire;
 import ch.epfl.cs107.play.game.icrogue.area.ICRogueRoom;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
@@ -68,7 +67,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     public String getdestination() {
         return destination;
     }
-    
+
     public boolean isAlive(){
         return isAlive;
     }
