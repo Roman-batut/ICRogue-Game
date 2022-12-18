@@ -52,7 +52,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         sprite = new Sprite(spriteName, 1.f, 1.f, this);
         distInteraction = false;
         handler = new ICRoguePlayerInteractionHandler();
-        equipW = true;
+        equipW = false;
         equipK = new ArrayList<Key>();
         isAlive = true;
 
