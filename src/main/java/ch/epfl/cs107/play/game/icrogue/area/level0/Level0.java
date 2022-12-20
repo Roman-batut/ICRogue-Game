@@ -12,7 +12,7 @@ public class Level0 extends Level{
 
     private int BOSS_KEY_ID = 0;
     private int PART_1_KEY_ID = 0;
-    private int[] tab = new int[]{1,4,1};
+    private int[] tab = new int[]{2,10,2};
     //* Constructor
     public Level0(ICRogue jeu) {
         // super(4, 2, new DiscreteCoordinates(2, 0), jeu);
