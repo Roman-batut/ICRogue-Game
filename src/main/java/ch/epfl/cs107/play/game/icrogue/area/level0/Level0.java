@@ -12,10 +12,11 @@ public class Level0 extends Level{
 
     private int BOSS_KEY_ID = 0;
     private int PART_1_KEY_ID = 0;
-
+    private int[] tab = new int[]{1,4,1};
     //* Constructor
     public Level0(ICRogue jeu) {
-        super(4, 2, new DiscreteCoordinates(2, 0), jeu);
+        // super(4, 2, new DiscreteCoordinates(2, 0), jeu);
+        super(true, new DiscreteCoordinates(2, 0), new int[]{1,4,1},4,2,jeu);
         super.setStartingRoom(new DiscreteCoordinates(1,1));
         
     }
