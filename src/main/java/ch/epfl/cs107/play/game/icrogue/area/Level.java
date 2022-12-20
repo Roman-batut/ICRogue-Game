@@ -145,6 +145,7 @@ public abstract class Level{
                 pos = freeSlotsPlacement[RandomHelper.chooseKInList(1, chosePlaces).get(0)];
             }
             posx = pos[0]; posy = pos[1];
+            roomsToPlace -= maxRoomsToPlace;
         }            
 
         List<Integer> notplacedListx = new ArrayList<Integer>(); 
@@ -158,10 +159,16 @@ public abstract class Level{
         }
 
         boolean isPlaced = false;
+        List<Integer> indexList =new ArrayList<Integer>();
+        for(int i = 0; i<notplacedListx.size(); i++){
+                indexList.add(i);
+            }
         while(!isPlaced){
-            int x = RandomHelper.chooseKInList(1, notplacedListx).get(0);
-            int y = notplacedListy.get(notplacedListx.indexOf(x));
+            int index = RandomHelper.chooseKInList(1, indexList).get(0);
+            int x = notplacedListy.get(index);
+            int y = notplacedListy.get(index);
             int nbrfreeslots = freeSlots(placementmap , x, y, MapState.PLACED)[1][0][0];
+            nbrfreeslots += freeSlots(placementmap , x, y, MapState.EXPLORED)[1][0][0];
             if(nbrfreeslots > 0){
                 placementmap[x][y] = MapState.BOSS_ROOM;
                 isPlaced =true;
@@ -175,7 +182,7 @@ public abstract class Level{
     private int[][][] freeSlots(MapState[][] map, int x, int y, MapState type){
         int[][][] freeSlots = {{{0,0},{0,0},{0,0},{0,0}},{{0}}}; //HAUT, BAS, GAUCHE, DROITE, nbfreeSlots
 
-        if(x+1 <= map[0].length && map[x+1][y] == type){
+        if(x+1 < map[0].length && map[x+1][y] == type){
             freeSlots[0][0][0] = x+1;
             freeSlots[0][0][1] = y;
             freeSlots[1][0][0]++;
@@ -191,7 +198,7 @@ public abstract class Level{
             freeSlots[0][2][1] = y-1;
             freeSlots[1][0][0]++;
         }
-        if(y+1 <= map.length && map[x][y+1] == type){
+        if(y+1 < map.length && map[x][y+1] == type){
             freeSlots[0][3][0] = x;
             freeSlots[0][3][1] = y+1;
             freeSlots[1][0][0]++;
@@ -203,7 +210,7 @@ public abstract class Level{
     private int maxRoomsToPlace(int max){
         ArrayList<Integer> list = new ArrayList<Integer>();
 
-        for(int i=0 ; i<max ; i++){ 
+        for(int i=1 ; i<=max ; i++){ 
             list.add(i); 
         }
 
