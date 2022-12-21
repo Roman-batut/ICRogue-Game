@@ -14,8 +14,10 @@ public abstract class Level{
     private ICRogueRoom bossRoom;
     private ICRogueRoom StartingRoom;
     private ICRogue jeu;
-    private int[] roomsDistribution;
     private int nbRooms;
+    private int[] roomsDistribution;
+    private MapState[][] roomsPlacement;
+    private ICRogueRoom[] roomTypes;
 
     // * Constructor
     /**
@@ -43,8 +45,10 @@ public abstract class Level{
             }
 
             Carte = new ICRogueRoom[nbRooms][nbRooms];
+            roomsPlacement = generateRandomRoomPlacement();
+
+            printMap(roomsPlacement);
             // generateRandomMap();
-            printMap(generateRandomRoomPlacement());
         }
 
     }
@@ -93,11 +97,47 @@ public abstract class Level{
 
     }
 
+    abstract protected void setUpConnector(MapState[][] roomsPlacement, ICRogueRoom room);
+
     abstract protected void generateFixedMap();
     
-    // Random
+
+    // * RANDOM
     protected void generateRandomMap(){
-        
+        for(int i=0 ; i<roomsDistribution.length ; ++i){
+            int k = roomsDistribution[i];
+
+            //Usable map coords
+            List<Integer> usablex = new ArrayList<Integer>(); 
+            List<Integer> usabley = new ArrayList<Integer>();
+            for(int j=0 ; j<roomsPlacement.length ; j++){
+                for(int h=0 ; h<roomsPlacement[0].length ; h++){
+                    if(roomsPlacement[j][h] == MapState.PLACED || roomsPlacement[j][h] == MapState.EXPLORED){
+                        usablex.add(j); usabley.add(h);
+                    }
+                    if(roomsPlacement[j][h] == MapState.BOSS_ROOM){
+                        bossRoomCoordinates = new DiscreteCoordinates(j, h);
+                    }
+                }
+            }
+
+            //Emplacements map coords
+            List<Integer> emplacementsx = RandomHelper.chooseKInList(k, usablex);
+            List<Integer> emplacementsy = new ArrayList<Integer>();
+            for(int index : emplacementsx){
+                emplacementsy.add(usabley.get(usablex.indexOf(index)));
+            }
+
+            //Placement
+            for(int l=0 ; l<emplacementsx.size() ; l++){
+                setRoom(new DiscreteCoordinates(emplacementsx.get(l),emplacementsy.get(l)), roomTypes[i]);
+                roomsPlacement[emplacementsx.get(l)][emplacementsy.get(l)] = MapState.CREATED;
+            }
+        }
+        //???
+        setUpConnector(roomsPlacement, roomTypes[i]);
+        setBossRoom(bossRoomCoordinates);
+
     }
     
     protected MapState[][] generateRandomRoomPlacement(){
