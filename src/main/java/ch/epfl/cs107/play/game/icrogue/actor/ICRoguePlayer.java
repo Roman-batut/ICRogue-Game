@@ -5,9 +5,12 @@ import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Interactor;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.actor.Text;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.icrogue.actor.Connector.State;
+import ch.epfl.cs107.play.game.icrogue.actor.Health.healthbar;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
+import ch.epfl.cs107.play.game.icrogue.actor.items.Coin;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Key;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
 import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Fire;
@@ -20,15 +23,18 @@ import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.swing.text.AttributeSet.ColorAttribute;
+
 public class ICRoguePlayer extends ICRogueActor implements Interactor {
 
-    private final static int MOVE_DURATION = 8;
+    private final static int MOVE_DURATION = 5;
 
-    private float hp;
+    private int hp;
     private Sprite sprite;
     private boolean distInteraction;
     private ICRoguePlayerInteractionHandler handler;
@@ -37,6 +43,10 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     private boolean wantTopass;
     private String destination;
     private boolean isAlive;
+    private healthbar hpbar;
+    private int money;
+    private Text bourse;
+
 
     // * CONSTRUCTOR
     /**
@@ -48,14 +58,17 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     public ICRoguePlayer(Area owner, Orientation orientation, DiscreteCoordinates coordinates, String spriteName) {
         super(owner, orientation, coordinates);
 
-        this.hp = 5;
+        this.hp = 6;
         sprite = new Sprite(spriteName, 1.f, 1.f, this);
         distInteraction = false;
         handler = new ICRoguePlayerInteractionHandler();
         equipW = false;
         equipK = new ArrayList<Key>();
         isAlive = true;
-
+        hpbar = new healthbar(owner, Orientation.UP, new DiscreteCoordinates(0, 9), this);
+        money = 0;
+        bourse = new Text(("Bourse : "+ money), new DiscreteCoordinates(7, 10),owner,true,1f, Color.WHITE);
+        
         resetMotion();
     }
 
@@ -70,6 +83,9 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
 
     public boolean isAlive(){
         return isAlive;
+    }
+    public int hp(){
+        return hp;
     }
 
     // *Setters
@@ -140,6 +156,11 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         public void interactWith(Cherry cherry, boolean isCellInteraction) {
             cherry.collect();
         }
+        //  Coin 
+        public void interactWith(Coin coin, boolean isCellInteraction) {
+            coin.collect();
+            money ++;
+        }
 
         // Staff
         @Override
@@ -148,6 +169,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
                 staff.collect();
                 equipW = true;
             }
+
         }
 
         // Key
@@ -199,26 +221,30 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     }
 
     private void viewInteraction(Button b) {
-        if (b.isPressed()) {
+        if(b.isPressed()){
             distInteraction = true;
         }
         if (isDisplacementOccurs()) {
             distInteraction = false;
         }
+        
     }
 
 
     // * METHODS
     public void leaveRoom() {
         getOwnerArea().unregisterActor(this);
+        getOwnerArea().unregisterActor(hpbar);
     }
 
     public void enterRoom(ICRogueRoom icRogueRoom, DiscreteCoordinates position) {
         icRogueRoom.registerActor(this);
+        icRogueRoom.registerActor(hpbar);
         setOwnerArea(icRogueRoom);
         setCurrentPosition(position.toVector());
         resetMotion();
         icRogueRoom.isVisited();
+
     }
 
     private void die(){
@@ -248,7 +274,8 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         if(hp <= 0){
             die();
         }
-        
+        bourse.setText("Bourse : "+ money);
+        hpbar.update(deltaTime);
         super.update(deltaTime);
     }
 
@@ -274,7 +301,9 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
                 sprite = new Sprite("zelda/player", .75f, 1.5f, this, new RegionOfInterest(0, 32, 16, 32),
                         new Vector(.15f, -.15f));
         }
+        bourse.draw(canvas);
 
+        hpbar.draw(canvas);
         sprite.draw(canvas);
     }
 

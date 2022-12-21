@@ -16,7 +16,7 @@ public class Level0 extends Level{
     //* Constructor
     public Level0(ICRogue jeu) {
         // super(4, 2, new DiscreteCoordinates(2, 0), jeu);
-        super(true, new DiscreteCoordinates(2, 0), new int[]{1,4,1},4,2,jeu);
+        super(false, new DiscreteCoordinates(2, 0), new int[]{1,4,1,},2,4,jeu);
         super.setStartingRoom(new DiscreteCoordinates(1,1));
         
     }

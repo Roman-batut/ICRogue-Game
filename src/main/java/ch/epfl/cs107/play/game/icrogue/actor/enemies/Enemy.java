@@ -7,11 +7,15 @@ import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Interactor;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.icrogue.RandomHelper;
 import ch.epfl.cs107.play.game.icrogue.actor.ICRogueActor;
 import ch.epfl.cs107.play.game.icrogue.actor.ICRoguePlayer;
+import ch.epfl.cs107.play.game.icrogue.actor.items.Coin;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
+
+import java.util.ArrayList;
 import java.util.Collections;
 
 public abstract class Enemy extends ICRogueActor implements Interactor{
@@ -96,6 +100,14 @@ public abstract class Enemy extends ICRogueActor implements Interactor{
     public void reciveDmg(int Dmg){
         hp -= Dmg;
     }
+    public void MoneyDrop(){
+        List<Integer> proba = new ArrayList<Integer>();
+        proba.add(0);  proba.add(0); proba.add(1); proba.add(0);
+        int pick = RandomHelper.chooseKInList(1, proba).get(0);
+        if(pick == 1){
+            getOwnerArea().registerActor(new Coin(getOwnerArea(), Orientation.UP, getCurrentMainCellCoordinates()));
+        }
+    }
 
 
     // * UPDATE
@@ -103,6 +115,7 @@ public abstract class Enemy extends ICRogueActor implements Interactor{
     public void update(float deltaTime) {
         if(hp <= 0){
             die();
+            MoneyDrop();
         }
         
         super.update(deltaTime);

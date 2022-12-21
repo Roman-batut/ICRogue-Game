@@ -101,7 +101,7 @@ public abstract class Level{
     }
     
     protected MapState[][] generateRandomRoomPlacement(){
-        int roomsToPlace = nbRooms-1;
+        int roomsToPlace = nbRooms;
         
         MapState[][] placementmap = new MapState[Carte.length][Carte.length];
         
@@ -110,10 +110,9 @@ public abstract class Level{
                 placementmap[i][j] = MapState.NULL;
             }
         }
-
         int posx = Carte.length/2; int posy =  Carte.length/2;
         placementmap[posx][posy] = MapState.PLACED;
-
+        roomsToPlace --;
         while(roomsToPlace > 0){
             int[][] freeSlotsPlacement = freeSlots(placementmap, posx, posy, MapState.NULL)[0];
             int freeSlots = freeSlots(placementmap, posx, posy, MapState.NULL)[1][0][0];
@@ -148,29 +147,17 @@ public abstract class Level{
             roomsToPlace -= maxRoomsToPlace;
         }            
 
-        List<Integer> notplacedListx = new ArrayList<Integer>(); 
-        List<Integer> notplacedListy = new ArrayList<Integer>();
-        for(int i=0 ; i<placementmap.length ; i++){
-            for(int j=0 ; j<placementmap[0].length ; j++){
-                if(placementmap[i][j] == MapState.NULL){
-                    notplacedListx.add(i); notplacedListy.add(j);
-                }
-            }
-        }
-
         boolean isPlaced = false;
         List<Integer> indexList =new ArrayList<Integer>();
-        for(int i = 0; i<notplacedListx.size(); i++){
-                indexList.add(i);
-            }
+        for(int i = 0; i<placementmap.length; i++){
+            indexList.add(i);        
+        }
         while(!isPlaced){
-            int index = RandomHelper.chooseKInList(1, indexList).get(0);
-            int x = notplacedListy.get(index);
-            int y = notplacedListy.get(index);
-            int nbrfreeslots = freeSlots(placementmap , x, y, MapState.PLACED)[1][0][0];
-            nbrfreeslots += freeSlots(placementmap , x, y, MapState.EXPLORED)[1][0][0];
+            int indexx = RandomHelper.chooseKInList(1, indexList).get(0);
+            int indexy = RandomHelper.chooseKInList(1, indexList).get(0);
+            int nbrfreeslots = freeSlots(placementmap , indexx, indexy, MapState.PLACED)[1][0][0];
             if(nbrfreeslots > 0){
-                placementmap[x][y] = MapState.BOSS_ROOM;
+                placementmap[indexx][indexy] = MapState.BOSS_ROOM;
                 isPlaced =true;
             }
         }
@@ -182,28 +169,27 @@ public abstract class Level{
     private int[][][] freeSlots(MapState[][] map, int x, int y, MapState type){
         int[][][] freeSlots = {{{0,0},{0,0},{0,0},{0,0}},{{0}}}; //HAUT, BAS, GAUCHE, DROITE, nbfreeSlots
 
-        if(x+1 < map[0].length && map[x+1][y] == type){
+        if(x+1 < map[0].length && map[x+1][y].equals(type)){
             freeSlots[0][0][0] = x+1;
             freeSlots[0][0][1] = y;
             freeSlots[1][0][0]++;
         }
-        if(x-1 >= 0 && map[x-1][y] == type){
+        if(x-1 >= 0 && map[x-1][y].equals(type)){
             freeSlots[0][1][0] = x-1;
             freeSlots[0][1][1] = y;
             freeSlots[1][0][0]++;
         }
 
-        if(y-1 >= 0 && map[x][y-1] == type){
+        if(y-1 >= 0 && map[x][y-1].equals(type)){
             freeSlots[0][2][0] = x;
             freeSlots[0][2][1] = y-1;
             freeSlots[1][0][0]++;
         }
-        if(y+1 < map.length && map[x][y+1] == type){
+        if(y+1 < map.length && map[x][y+1].equals(type)){
             freeSlots[0][3][0] = x;
             freeSlots[0][3][1] = y+1;
             freeSlots[1][0][0]++;
         }
-
         return freeSlots;
     }
 

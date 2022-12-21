@@ -1,20 +1,23 @@
 package ch.epfl.cs107.play.game.icrogue.actor.items;
 
+import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.actor.Text;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 
+
 public class Staff extends Item{
 
     private Sprite sprite;
-
+    private Text message;
     //* CONSTRUCTOR
     /**
      * @param area
@@ -24,7 +27,7 @@ public class Staff extends Item{
     public Staff(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, false);
         sprite = new Sprite("zelda/staff_water.icon", .5f, .5f, this);
-
+        message = new Text(("Press W to grab"), new DiscreteCoordinates(position.x, position.y+1),area,true,0.4f, Color.WHITE);
     }
 
 
@@ -82,7 +85,9 @@ public class Staff extends Item{
      */
     @Override
     public void draw(Canvas canvas) {
-        sprite.draw(canvas);    
+        sprite.draw(canvas); 
+        message.draw(canvas);
     }
+
 
 }
