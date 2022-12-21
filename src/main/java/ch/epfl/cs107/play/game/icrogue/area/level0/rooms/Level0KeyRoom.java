@@ -8,7 +8,11 @@ public class Level0KeyRoom extends Level0ItemRoom {
     
     private Key key;
 
-    //* Constructor
+    // * Constructor
+    /**
+     * @param roomCoordinates
+     * @param keyId
+     */
     public Level0KeyRoom(DiscreteCoordinates roomCoordinates, int keyId) {
         super(roomCoordinates);
         key = new Key(this, Orientation.UP, new DiscreteCoordinates(5,5), keyId);

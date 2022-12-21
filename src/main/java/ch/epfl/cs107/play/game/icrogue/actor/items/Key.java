@@ -27,14 +27,10 @@ public class Key extends Item{
         super(area, orientation, position, false);
         sprite = new Sprite("icrogue/key", 0.6f, 0.6f, this);
         this.ID = ID;
-
     }
 
 
     //* GETTERS
-    /**
-     * @return ID of the key
-     */
     public int getID(){ 
         return ID; 
     }

@@ -22,7 +22,7 @@ public class ICRogue extends AreaGame{
 
 	//* INIT LEVEL
 	private void initLevel(){
-		Level level = new Level0(this);
+		Level level = new Level0(this, true);
 		currentRoom = (ICRogueRoom)setCurrentArea(level.getStartingRoom().getTitle(), true);
 		currentLevel = level;
 		player = new ICRoguePlayer(currentRoom, Orientation.UP, new DiscreteCoordinates(2, 2), "zelda/player");
@@ -82,9 +82,9 @@ public class ICRogue extends AreaGame{
 		
 		player.leaveRoom();
 		
-		currentRoom = (ICRogueRoom)setCurrentArea(player.getdestination(), false);
+		currentRoom = (ICRogueRoom)setCurrentArea(player.getDestination(), false);
 		
-		player.enterRoom(currentRoom, new DiscreteCoordinates(2, 1));
+		player.enterRoom(currentRoom, new DiscreteCoordinates(0, 2));//player.getDestinationOfArrive());
 		player.setPassing(false);
 	}
 

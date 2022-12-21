@@ -20,7 +20,6 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
     private int frames;
     private int dmg;
     private boolean isConsumed ;
-    // private ICRogueProjInteractionHandler handler;
         
     //* CONSTRUCTORS
     /**
@@ -35,7 +34,6 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
         this.frames = frames;
         this.dmg = dmg;
         isConsumed =false;
-        // handler = new ICRogueProjInteractionHandler();
         
         area.registerActor(this);
     }
@@ -115,7 +113,6 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
         move(frames);
     }
     
-
     //* DRAW
     /**
      * Renders itself on specified canvas.

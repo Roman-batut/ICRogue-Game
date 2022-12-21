@@ -20,11 +20,16 @@ public class Turret extends Enemy{
     private List<Orientation> shootOrientations;
 
     // * CONSTRUTOR
+    /**
+     * @param area
+     * @param orientation
+     * @param position
+     * @param shootOrientations
+     */
     public Turret(Area area, Orientation orientation, DiscreteCoordinates position, List<Orientation> shootOrientations) {
         super(area, orientation, position);
         sprite = new Sprite("icrogue/static_npc", 1.5f, 1.5f, this, null, new Vector(-0.25f, 0));
         this.shootOrientations = shootOrientations;
-
     }
 
 
@@ -40,7 +45,7 @@ public class Turret extends Enemy{
     }
 
 
-    // * METHODS 
+    // * METHODS
     private void shoot(){
         for(Orientation ort : shootOrientations){
             new Arrow(getOwnerArea(), ort, getCurrentMainCellCoordinates().jump(ort.toVector()));
@@ -54,6 +59,10 @@ public class Turret extends Enemy{
 
 
     // * UPDATE
+    /**
+     * Update the actor
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
+     */
     @Override
     public void update(float deltaTime) {
         if(isAlive()){
@@ -63,10 +72,13 @@ public class Turret extends Enemy{
             }
         }
         super.update(deltaTime);
-        
     }
     
     // * DRAW
+    /**
+     * Renders itself on specified canvas.
+     * @param canvas target, not null
+     */
     @Override
     public void draw(Canvas canvas) {
         if(isAlive()){

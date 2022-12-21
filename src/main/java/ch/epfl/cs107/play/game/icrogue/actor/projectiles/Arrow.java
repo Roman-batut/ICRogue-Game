@@ -19,6 +19,12 @@ public class Arrow extends Projectile{
 
     private ICRogueArrowInteractionHandler handler;
     
+    // * CONSTRUCTOR
+    /**
+     * @param area
+     * @param orientation
+     * @param position
+     */
     public Arrow(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, 1,5);
         sprite = new Sprite("zelda/arrow", 1f, 1f, this,new RegionOfInterest(32*orientation.ordinal(), 0, 32, 32),new Vector(0, 0));
@@ -27,7 +33,7 @@ public class Arrow extends Projectile{
     }
 
     
-    //* REDEFINE Interactable
+    // * REDEFINE Interactable
     /** 
      * Call directly the interaction on this if accepted
      * @param v (AreaInteractionVisitor) : the visitor
@@ -59,7 +65,7 @@ public class Arrow extends Projectile{
     }
 
 
-    //* UPDATE
+    // * UPDATE
     /**
      * Update the actor
      * @param deltaTime elapsed time since last update, in seconds, non-negative
@@ -69,8 +75,7 @@ public class Arrow extends Projectile{
         super.update(deltaTime);
     }
 
-
-    //* DRAW
+    // * DRAW
     /**
      * Renders itself on specified canvas.
      * @param canvas target, not null

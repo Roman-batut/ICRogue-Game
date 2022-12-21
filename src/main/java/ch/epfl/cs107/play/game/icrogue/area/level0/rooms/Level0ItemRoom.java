@@ -21,6 +21,9 @@ abstract public class Level0ItemRoom extends Level0Room {
 
 
     // * REDEFINE Logic
+    /**
+     * @return (boolean): true if the signal is considered as on
+     */
     @Override
     public boolean isOn() {
         for(Item item : items){
@@ -31,6 +34,9 @@ abstract public class Level0ItemRoom extends Level0Room {
         return super.isOn();
     }
 
+    /**
+     * @return (boolean): true if the signal is considered as off
+     */
     @Override
     public boolean isOff() {
         return !isOn();

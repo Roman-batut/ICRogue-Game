@@ -10,7 +10,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 abstract public class ICRogueActor extends MovableAreaEntity{
 
-    //* CONSTRUCTOR
+    // * CONSTRUCTOR
     /**
      * @param area
      * @param orientation
@@ -21,7 +21,7 @@ abstract public class ICRogueActor extends MovableAreaEntity{
     }
 
 
-    //* REDEFINE Interactable
+    // * REDEFINE Interactable
     /**
      * Get this Interactor's current occupying cells coordinates
      * @return (List of DiscreteCoordinates). May be empty but not null
@@ -57,7 +57,7 @@ abstract public class ICRogueActor extends MovableAreaEntity{
     }
     
     
-    //* UPDATE
+    // * UPDATE
     /**
      * Update the actor
      * @param deltaTime elapsed time since last update, in seconds, non-negative

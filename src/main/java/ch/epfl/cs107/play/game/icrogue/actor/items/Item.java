@@ -39,9 +39,7 @@ abstract public class Item extends CollectableAreaEntity {
      * @param canvas target, not null
      */
     public void draw(Canvas canvas) {
-        
         sprite.draw(canvas);
-        
     }    
 
     

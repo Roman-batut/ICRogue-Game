@@ -18,6 +18,7 @@ public class Staff extends Item{
 
     private Sprite sprite;
     private Text message;
+    
     //* CONSTRUCTOR
     /**
      * @param area
@@ -78,6 +79,7 @@ public class Staff extends Item{
         return true;
     }
     
+
     //* DRAW
     /**
      * Renders itself on specified canvas.
@@ -88,6 +90,5 @@ public class Staff extends Item{
         sprite.draw(canvas); 
         message.draw(canvas);
     }
-
 
 }

@@ -17,7 +17,8 @@ import ch.epfl.cs107.play.window.Canvas;
 public class Fire extends Projectile{
 
     private ICRogueFireInteractionHandler handler;
-    //* CONSTRUCTOR
+
+    // * CONSTRUCTOR
     /**
      * @param area
      * @param orientation
@@ -31,7 +32,7 @@ public class Fire extends Projectile{
     }
 
     
-    //* REDEFINE Interactable
+    // * REDEFINE Interactable
     /** 
      * Call directly the interaction on this if accepted
      * @param v (AreaInteractionVisitor) : the visitor
@@ -44,9 +45,8 @@ public class Fire extends Projectile{
 
      //INTERACTIONS
     @Override
-   public void interactWith(Interactable other, boolean isCellInteraction) {
+    public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
-        
     }
     private class ICRogueFireInteractionHandler implements ICRogueInteractionHandler{
        @Override
@@ -56,6 +56,7 @@ public class Fire extends Projectile{
            }
        }
 
+       @Override
        public void interactWith(Turret turret, boolean isCellInteraction){
             consume();
             turret.reciveDmg(getDmg());
@@ -72,7 +73,6 @@ public class Fire extends Projectile{
     public void update(float deltaTime){
         super.update(deltaTime);
     }
-
 
     //* DRAW
     /**

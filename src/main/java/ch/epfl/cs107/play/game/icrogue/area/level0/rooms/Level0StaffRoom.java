@@ -9,7 +9,10 @@ public class Level0StaffRoom extends Level0ItemRoom{
 
     private Staff staff;
 
-    //* Constructor
+    // * Constructor
+    /**
+     * @param roomCoordinates
+     */
     public Level0StaffRoom(DiscreteCoordinates roomCoordinates) {
         super(roomCoordinates);
         staff = new Staff(this, Orientation.UP, new DiscreteCoordinates(5,5));

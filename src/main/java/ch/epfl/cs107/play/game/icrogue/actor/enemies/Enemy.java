@@ -18,30 +18,32 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public abstract class Enemy extends ICRogueActor implements Interactor{
-    
-    protected Sprite sprite; //TODO private ?
+public abstract class Enemy extends ICRogueActor implements Interactor {
+
+    protected Sprite sprite; // TODO private ?
     private ICRogueEnemyInteractionHandler handler;
     private int hp;
     private boolean isAlive;
 
-
-    // * CONSTRUCTOR 
+    // * CONSTRUCTOR
+    /**
+     * @param area
+     * @param orientation
+     * @param position
+     */
     public Enemy(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
         hp = 10;
         isAlive = true;
         handler = new ICRogueEnemyInteractionHandler();
-
     }
 
     // * GETTERS
-    public boolean isAlive(){
+    public boolean isAlive() {
         return isAlive;
     }
 
-
-    // * REDEFINE Interactor 
+    // * REDEFINE Interactor
     /**
      * Indicate if the current Interactable take the whole cell space or not
      * @return (boolean)
@@ -50,7 +52,6 @@ public abstract class Enemy extends ICRogueActor implements Interactor{
     public boolean takeCellSpace() {
         return false;
     }
-    
 
     // * REDEFINE Interactor
     /**
@@ -61,7 +62,7 @@ public abstract class Enemy extends ICRogueActor implements Interactor{
     public List<DiscreteCoordinates> getFieldOfViewCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
     }
-    
+
     /**
      * @return (boolean): true if this require cell interaction
      */
@@ -87,44 +88,55 @@ public abstract class Enemy extends ICRogueActor implements Interactor{
     private class ICRogueEnemyInteractionHandler implements ICRogueInteractionHandler {
         // Player
         public void interactWith(ICRoguePlayer player, boolean isCellInteraction) {
+            MoneyDrop();
             die();
         }
     }
 
-    
-    // * METHODS 
-    public void die(){
+    // * METHODS
+    public void die() {
         isAlive = false;
     }
-    
-    public void reciveDmg(int Dmg){
+
+    public void reciveDmg(int Dmg) {
         hp -= Dmg;
     }
-    public void MoneyDrop(){
+
+    public void MoneyDrop() {
         List<Integer> proba = new ArrayList<Integer>();
-        proba.add(0);  proba.add(0); proba.add(1); proba.add(0);
+        proba.add(0);
+        proba.add(0);
+        proba.add(1);
+        proba.add(0);
         int pick = RandomHelper.chooseKInList(1, proba).get(0);
-        if(pick == 1){
+        if (pick == 1) {
             getOwnerArea().registerActor(new Coin(getOwnerArea(), Orientation.UP, getCurrentMainCellCoordinates()));
         }
     }
 
-
     // * UPDATE
+    /**
+     * Update the actor
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
+     */
     @Override
     public void update(float deltaTime) {
-        if(hp <= 0){
+        if (hp <= 0) {
             die();
             MoneyDrop();
         }
-        
+
         super.update(deltaTime);
     }
-    
+
     // * DRAW
+    /**
+     * Renders itself on specified canvas.
+     * @param canvas target, not null
+     */
     @Override
     public void draw(Canvas canvas) {
-        if(isAlive){
+        if (isAlive) {
             sprite.draw(canvas);
         }
     }

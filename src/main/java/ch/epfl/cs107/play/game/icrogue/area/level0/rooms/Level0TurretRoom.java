@@ -10,6 +10,9 @@ import java.util.Arrays;
 public class Level0TurretRoom extends Level0EnemyRoom{
 
     // * CONSTRUCTOR
+    /**
+     * @param roomCoordinates
+     */
     public Level0TurretRoom(DiscreteCoordinates roomCoordinates) {
         super(roomCoordinates);
 
@@ -18,7 +21,7 @@ public class Level0TurretRoom extends Level0EnemyRoom{
 
     }
 
-
+    
     // * CREATE AREA
     @Override
     protected void createArea(){

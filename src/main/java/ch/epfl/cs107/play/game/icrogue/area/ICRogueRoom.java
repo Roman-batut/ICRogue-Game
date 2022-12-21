@@ -47,6 +47,10 @@ abstract public class ICRogueRoom extends Area implements Logic{
     public String getBehaviorName(){ 
         return behaviorName; 
     }
+    
+    public DiscreteCoordinates getCoordinates(){
+        return roomCoordinates;
+    }
 
     // * Setters
     public void setConnectorDestination(String destination, ConnectorInRoom connector){
@@ -65,7 +69,10 @@ abstract public class ICRogueRoom extends Area implements Logic{
         currentConnector.setType(State.LOCK);
         currentConnector.setKeyId(keyId);
     }
-
+    public void setConnectorDestinationcoords(ConnectorInRoom connector){
+        Connector currentConnector = connectors.get(connector.getIndex());
+        currentConnector.setDestinationCoordinates(connector.getDestination());
+    }
 
     // * METHODS 
     public void openConnectors(){

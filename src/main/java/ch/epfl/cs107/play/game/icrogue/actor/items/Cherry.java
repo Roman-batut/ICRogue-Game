@@ -24,7 +24,6 @@ public class Cherry extends Item {
     public Cherry(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, false);
         sprite = new Sprite("icrogue/cherry", 0.6f, 0.6f, this);
-
     }
 
     // * REDEFINE Item
@@ -72,7 +71,6 @@ public class Cherry extends Item {
     @Override
     public void draw(Canvas canvas) {
         sprite.draw(canvas);
-        
     }
 
 }

@@ -23,7 +23,6 @@ public class Level0Room extends ICRogueRoom{
 		private DiscreteCoordinates destination;
 		private Orientation orientation;
 		
-
 		// CONSTRUCTOR
 		private Level0Connectors(DiscreteCoordinates position, DiscreteCoordinates desination, Orientation orientation){
 			this.position = position;
@@ -46,13 +45,16 @@ public class Level0Room extends ICRogueRoom{
 	
 	private DiscreteCoordinates roomCoordinates;
 	
-	//* CONSTRUCTOR
+	// * CONSTRUCTOR
+	/**
+	 * @param roomCoordinates
+	 */
 	public Level0Room(DiscreteCoordinates roomCoordinates){
         super(getAllConnectorsPosition(), getAllConnectorsOrientation(),"icrogue/Level0Room", roomCoordinates);
 		this.roomCoordinates = roomCoordinates;
 	}
 	
-	//* GETTERS
+	// * GETTERS
 	@Override
 	public String getTitle() {
 		return "icrogue/level0" + roomCoordinates.x + roomCoordinates.y;
@@ -83,10 +85,12 @@ public class Level0Room extends ICRogueRoom{
 		return tab;
 	}
 
-	//* CREATE AREA
+
+	// * CREATE AREA
 	@Override
 	protected void createArea() {
 		super.createArea();
         registerActor(new Background(this, getBehaviorName()));
     }
+
 }

@@ -1,6 +1,7 @@
 package ch.epfl.cs107.play.game.icrogue.area.level0;
 
 import ch.epfl.cs107.play.game.icrogue.ICRogue;
+import ch.epfl.cs107.play.game.icrogue.area.ICRogueRoom;
 import ch.epfl.cs107.play.game.icrogue.area.Level;
 import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0KeyRoom;
 import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0Room;
@@ -12,15 +13,18 @@ public class Level0 extends Level{
 
     private int BOSS_KEY_ID = 0;
     private int PART_1_KEY_ID = 0;
-    private int[] tab = new int[]{2,10,2};
-    //* Constructor
-    public Level0(ICRogue jeu) {
-        // super(4, 2, new DiscreteCoordinates(2, 0), jeu);
-        super(false, new DiscreteCoordinates(2, 0), new int[]{1,4,1,},2,4,jeu);
-        super.setStartingRoom(new DiscreteCoordinates(1,1));
-        
+    
+    // * CONSTRUCTORS
+    public Level0(ICRogue jeu, boolean randomMap) {
+        super(randomMap, new DiscreteCoordinates(2, 0), RoomType.getroomDistrubution() ,4,2,jeu);
+    }
+
+    public Level0(ICRogue jeu){
+        super(true, new DiscreteCoordinates(2, 0), RoomType.getroomDistrubution(), 4,2, jeu);
     }
     
+    
+    // * METHODS
     public void generateFixedMap(){
         generateMapFinal();
 
@@ -53,4 +57,81 @@ public class Level0 extends Level{
         setRoomConnector(room11, "icrogue/level010", Level0Room.Level0Connectors.N);
     }
 
+    @Override
+    protected void setUpConnector(MapState[][] roomsPlacement, ICRogueRoom room) {
+        DiscreteCoordinates roomCoordinates = room.getCoordinates();
+        int x = roomCoordinates.x;
+        int y = roomCoordinates.y;
+        if(x+1 <roomsPlacement[0].length && roomsPlacement[x+1][y] != MapState.NULL){
+            if(roomsPlacement[x+1][y] == MapState.BOSS_ROOM){
+                lockRoomConnector(roomCoordinates, Level0Room.Level0Connectors.N, PART_1_KEY_ID);
+            }else{
+                setRoomConnector(roomCoordinates, room.getTitle(), Level0Room.Level0Connectors.N);
+            }
+            room.setConnectorDestinationcoords(Level0Room.Level0Connectors.N);
+        }
+        if(x-1 >= 0 && roomsPlacement[x-1][y]!= MapState.NULL){
+            if(roomsPlacement[x-1][y] == MapState.BOSS_ROOM){
+                lockRoomConnector(roomCoordinates, Level0Room.Level0Connectors.S, PART_1_KEY_ID);
+            }else{
+                setRoomConnector(roomCoordinates, room.getTitle(), Level0Room.Level0Connectors.S);
+            }
+            room.setConnectorDestinationcoords(Level0Room.Level0Connectors.S);
+        }
+
+        if(y-1 >= 0 && roomsPlacement[x][y-1]!= MapState.NULL){
+            if(roomsPlacement[x][y-1] == MapState.BOSS_ROOM){
+                lockRoomConnector(roomCoordinates, Level0Room.Level0Connectors.W, PART_1_KEY_ID);
+            }else{
+                setRoomConnector(roomCoordinates,room.getTitle(), Level0Room.Level0Connectors.W);
+            }
+            room.setConnectorDestinationcoords(Level0Room.Level0Connectors.W);
+        }
+        if(y+1 <roomsPlacement.length && roomsPlacement[x][y+1]!= MapState.NULL){
+            if(roomsPlacement[x][y+1] == MapState.BOSS_ROOM){
+                lockRoomConnector(roomCoordinates, Level0Room.Level0Connectors.E, PART_1_KEY_ID);
+            }else{
+                setRoomConnector(roomCoordinates, room.getTitle(), Level0Room.Level0Connectors.E);
+            }
+            room.setConnectorDestinationcoords(Level0Room.Level0Connectors.E);
+        }
+    }
+
+    protected ICRogueRoom createRoom(int ordinal, DiscreteCoordinates coordinates){
+        ICRogueRoom room = new Level0Room(coordinates);
+        switch (ordinal) {
+            case 0 ->   room = new Level0TurretRoom(coordinates);
+            case 1 ->   room = new Level0StaffRoom(coordinates);
+            case 2 ->   room = new Level0KeyRoom(coordinates, BOSS_KEY_ID);
+            case 3 ->   room = new Level0Room(coordinates);
+            case 4 ->   room = new Level0Room(coordinates);
+        
+        }
+        return room;
+    }
+
+    public enum RoomType {
+        TURRET_ROOM(3), // type and number of roon 
+        STAFF_ROOM(1),
+        BOSS_KEY(1),
+        SPAWN(1),
+        NORMAL(1);
+
+        int occurence;
+        
+        private RoomType(int numberOf){
+            this.occurence = numberOf;
+		}
+
+        public static int[] getroomDistrubution(){
+           int[] RoomT = new int[RoomType.values().length];
+           int i =0;
+            for(RoomType room : RoomType.values()){
+			    RoomT[i] = (room.occurence);
+                i++;
+            }
+            return RoomT;
+        }
+    }
+        
 }

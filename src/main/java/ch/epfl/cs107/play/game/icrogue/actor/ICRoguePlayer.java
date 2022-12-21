@@ -8,7 +8,7 @@ import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.actor.Text;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.icrogue.actor.Connector.State;
-import ch.epfl.cs107.play.game.icrogue.actor.Health.healthbar;
+import ch.epfl.cs107.play.game.icrogue.actor.health.Healthbar;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Coin;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Key;
@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.swing.text.AttributeSet.ColorAttribute;
-
 public class ICRoguePlayer extends ICRogueActor implements Interactor {
 
     private final static int MOVE_DURATION = 5;
@@ -43,10 +41,10 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     private boolean wantTopass;
     private String destination;
     private boolean isAlive;
-    private healthbar hpbar;
+    private Healthbar hpbar;
     private int money;
     private Text bourse;
-
+    private DiscreteCoordinates destinationpos;
 
     // * CONSTRUCTOR
     /**
@@ -65,7 +63,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         equipW = false;
         equipK = new ArrayList<Key>();
         isAlive = true;
-        hpbar = new healthbar(owner, Orientation.UP, new DiscreteCoordinates(0, 9), this);
+        hpbar = new Healthbar(owner, Orientation.UP, new DiscreteCoordinates(0, 9), this);
         money = 0;
         bourse = new Text(("Bourse : "+ money), new DiscreteCoordinates(7, 10),owner,true,1f, Color.WHITE);
         
@@ -77,8 +75,12 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         return wantTopass;
     }
 
-    public String getdestination() {
+    public String getDestination() {
         return destination;
+    }
+
+    public DiscreteCoordinates getDestinationOfArrive() {
+        return destinationpos;
     }
 
     public boolean isAlive(){
@@ -88,7 +90,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         return hp;
     }
 
-    // *Setters
+    // * Setters
     public void setPassing(boolean change) {
         wantTopass = change;
     }
@@ -156,6 +158,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         public void interactWith(Cherry cherry, boolean isCellInteraction) {
             cherry.collect();
         }
+
         //  Coin 
         public void interactWith(Coin coin, boolean isCellInteraction) {
             coin.collect();
@@ -196,6 +199,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
                 if (connector.getType() == State.OPEN) {
                     wantTopass = true;
                     destination = connector.getDestination();
+                    destinationpos = connector.getCoordinatesofarrive();
                 }
             }
         }
@@ -278,7 +282,6 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         hpbar.update(deltaTime);
         super.update(deltaTime);
     }
-
 
     // * DRAW
     /**

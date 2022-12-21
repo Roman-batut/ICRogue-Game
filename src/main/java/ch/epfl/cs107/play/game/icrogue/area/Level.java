@@ -11,12 +11,13 @@ public abstract class Level{
 
     private ICRogueRoom[][] Carte;
     private DiscreteCoordinates bossRoomCoordinates;
+    private DiscreteCoordinates startingRoomCoordinates;
     private ICRogueRoom bossRoom;
     private ICRogueRoom StartingRoom;
     private ICRogue jeu;
     private int nbRooms;
-    private int[] roomsDistribution;
     private MapState[][] roomsPlacement;
+    private int[] roomsDistribution;
     private ICRogueRoom[] roomTypes;
 
     // * Constructor
@@ -28,15 +29,18 @@ public abstract class Level{
      * @param height
      * @param jeu
      */
-    protected Level(boolean randomMap, DiscreteCoordinates startPosition,int[] roomsDistribution, int width, int height, ICRogue jeu) {
-        bossRoomCoordinates = new DiscreteCoordinates(0, 0);
+    protected Level(boolean randomMap, DiscreteCoordinates startPosition,int[] roomsDistribution,  int height,int width, ICRogue jeu) {
         this.jeu = jeu;
         this.roomsDistribution = roomsDistribution;
         
         if(!randomMap){
             Carte = new ICRogueRoom[height][width];
+            bossRoomCoordinates = new DiscreteCoordinates(0, 0);
+            startingRoomCoordinates = new DiscreteCoordinates(1, 1);
             generateFixedMap();
             setBossRoom(bossRoomCoordinates);
+            setStartingRoom(startingRoomCoordinates);
+            
         } else{
             nbRooms = 0; 
 
@@ -46,9 +50,8 @@ public abstract class Level{
 
             Carte = new ICRogueRoom[nbRooms][nbRooms];
             roomsPlacement = generateRandomRoomPlacement();
-
             printMap(roomsPlacement);
-            // generateRandomMap();
+            generateRandomMap();
         }
 
     }
@@ -100,7 +103,8 @@ public abstract class Level{
     abstract protected void setUpConnector(MapState[][] roomsPlacement, ICRogueRoom room);
 
     abstract protected void generateFixedMap();
-    
+
+    abstract protected ICRogueRoom createRoom(int ordinal, DiscreteCoordinates coordinates);
 
     // * RANDOM
     protected void generateRandomMap(){
@@ -108,34 +112,40 @@ public abstract class Level{
             int k = roomsDistribution[i];
 
             //Usable map coords
-            List<Integer> usablex = new ArrayList<Integer>(); 
-            List<Integer> usabley = new ArrayList<Integer>();
+            List<Integer[]> usableRoomsPlacement = new ArrayList<Integer[]>();
             for(int j=0 ; j<roomsPlacement.length ; j++){
                 for(int h=0 ; h<roomsPlacement[0].length ; h++){
                     if(roomsPlacement[j][h] == MapState.PLACED || roomsPlacement[j][h] == MapState.EXPLORED){
-                        usablex.add(j); usabley.add(h);
+                        Integer[] tab = {j,h};
+                        usableRoomsPlacement.add(tab);
                     }
                     if(roomsPlacement[j][h] == MapState.BOSS_ROOM){
                         bossRoomCoordinates = new DiscreteCoordinates(j, h);
+                        setRoom(bossRoomCoordinates, createRoom(0, bossRoomCoordinates));
                     }
                 }
             }
 
             //Emplacements map coords
-            List<Integer> emplacementsx = RandomHelper.chooseKInList(k, usablex);
-            List<Integer> emplacementsy = new ArrayList<Integer>();
-            for(int index : emplacementsx){
-                emplacementsy.add(usabley.get(usablex.indexOf(index)));
+            List<Integer> index = new ArrayList<Integer>();
+            for(int val = 0; val<usableRoomsPlacement.size(); val++){
+                index.add(val);
             }
 
+            List<Integer> emplacements = RandomHelper.chooseKInList(k, index);
+            
             //Placement
-            for(int l=0 ; l<emplacementsx.size() ; l++){
-                setRoom(new DiscreteCoordinates(emplacementsx.get(l),emplacementsy.get(l)), roomTypes[i]);
-                roomsPlacement[emplacementsx.get(l)][emplacementsy.get(l)] = MapState.CREATED;
+            for(int l : emplacements){
+                int x = usableRoomsPlacement.get(l)[0]; int y = usableRoomsPlacement.get(l)[1];
+                DiscreteCoordinates coords = new DiscreteCoordinates(x,y);
+                setRoom(coords, createRoom(i, coords));
+                if(i == 4){
+                    setStartingRoom(coords);
+                }
+                roomsPlacement[x][y] = MapState.CREATED;
+                setUpConnector(roomsPlacement, Carte[x][y]);
             }
         }
-        //???
-        setUpConnector(roomsPlacement, roomTypes[i]);
         setBossRoom(bossRoomCoordinates);
 
     }
@@ -206,6 +216,7 @@ public abstract class Level{
     }
 
 
+   
     private int[][][] freeSlots(MapState[][] map, int x, int y, MapState type){
         int[][][] freeSlots = {{{0,0},{0,0},{0,0},{0,0}},{{0}}}; //HAUT, BAS, GAUCHE, DROITE, nbfreeSlots
 

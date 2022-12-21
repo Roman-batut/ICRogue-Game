@@ -34,7 +34,7 @@ public class Connector extends AreaEntity{
     
     private Sprite sprite;
 
-    //* CONSTRUCTOR
+    // * CONSTRUCTOR
     /**
      * @param area
      * @param orientation
@@ -44,13 +44,12 @@ public class Connector extends AreaEntity{
         super(area, orientation.opposite(), position);
 
         type = State.INVISIBLE;
-        CoordinatesOfArrive = position; 
         keyID = NO_KEY_ID;
         hasOpen = false;
     }
 
 
-    //* GETTERS
+    // * GETTERS
     public State getType(){ 
         return type; 
     }
@@ -66,11 +65,12 @@ public class Connector extends AreaEntity{
     public DiscreteCoordinates getCoordinatesofarrive(){
         return CoordinatesOfArrive;
     }
+
     public boolean gethasOpen(){
         return hasOpen;
     }
 
-    //* SETTERS
+    // * SETTERS
     public void setType(State type){ 
         this.type = type; 
         if(type == State.OPEN){
@@ -82,15 +82,16 @@ public class Connector extends AreaEntity{
         this.destination = destination; 
     } 
 
-    public void setCoordinates(DiscreteCoordinates CoordinatesOfArrive){
+    public void setDestinationCoordinates(DiscreteCoordinates CoordinatesOfArrive){
         this.CoordinatesOfArrive = CoordinatesOfArrive;
     }
+
     public void setKeyId(int keyId){
         this.keyID = keyId;
     }
     
 
-    //* REDEFINE Interactable
+    // * REDEFINE Interactable
     /**
      * Get this Interactor's current occupying cells coordinates
      * @return (List of DiscreteCoordinates). May be empty but not null
@@ -137,7 +138,7 @@ public class Connector extends AreaEntity{
         ((ICRogueInteractionHandler) v).interactWith(this, isCellInteraction);
     }
 
-    //* DRAW
+    // * DRAW
     /**
      * Renders itself on specified canvas.
      * @param canvas target, not null
@@ -151,4 +152,5 @@ public class Connector extends AreaEntity{
             sprite.draw(canvas);
         }
     }
+    
 }

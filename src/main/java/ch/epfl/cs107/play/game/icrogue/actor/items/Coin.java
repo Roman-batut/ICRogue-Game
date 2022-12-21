@@ -16,33 +16,61 @@ import ch.epfl.cs107.play.window.Canvas;
 public class Coin extends Item{
 
     private Sprite sprite;
+
+    // * CONSTRUCTOR
+    /**
+     * @param area
+     * @param orientation
+     * @param position
+     */
     public Coin(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, false);
         sprite = new Sprite("zelda/coin", 0.75f, 0.75f, this, new RegionOfInterest(0,0,16,16), new Vector(0, 0));
-        //TODO Auto-generated constructor stub
     }
 
+
+    // * REDEFINE Interactable
+    /**
+     * Get this Interactor's current occupying cells coordinates
+     * @return (List of DiscreteCoordinates). May be empty but not null
+     */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
-        // TODO Auto-generated method stub
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
-    @Override
-    public boolean isCellInteractable() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    @Override
-    public boolean isViewInteractable() {
-        // TODO Auto-generated method stub
-        return false;
-    }
+    /** 
+     * Call directly the interaction on this if accepted
+     * @param v (AreaInteractionVisitor) : the visitor
+     * @param isCellInteraction (boolean) : true if the interaction is on a cell
+     */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICRogueInteractionHandler) v).interactWith( this, isCellInteraction);
     }
+
+    /**
+     * @return (boolean): true if this is able to have cell interactions
+     */
+    @Override
+    public boolean isCellInteractable() {
+        return true;
+    }
+
+    /**
+     * @return (boolean): true if this is able to have view interactions
+     */
+    @Override
+    public boolean isViewInteractable() {
+        return false;
+    }
+
+
+    // * DRAW
+    /**
+     * Draw the sprite on the canvas
+     * @param canvas (Canvas) : the canvas to draw on
+     */
     @Override
     public void draw(Canvas canvas) {
         sprite.draw(canvas);

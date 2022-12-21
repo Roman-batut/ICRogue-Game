@@ -11,12 +11,19 @@ public class Level0EnemyRoom extends Level0Room{
     private List<Enemy> ennemies;
 
     // * CONSTRUCTOR
+    /**
+     * @param roomCoordinates
+     */
     public Level0EnemyRoom(DiscreteCoordinates roomCoordinates) {
         super(roomCoordinates);
         ennemies = new ArrayList<Enemy>();
     }
 
+
     // * REDEFINE Logic
+    /**
+     * @return (boolean): true if the signal is considered as on
+     */
     @Override
     public boolean isOn() {
         if(ennemies.size()== 0){
@@ -25,6 +32,9 @@ public class Level0EnemyRoom extends Level0Room{
         return false;
     }
 
+    /**
+     * @return (boolean): true if the signal is considered as off
+     */
     @Override
     public boolean isOff() {
         return !isOn();
@@ -47,6 +57,10 @@ public class Level0EnemyRoom extends Level0Room{
     }
 
     // * UPDATE
+    /**
+     * Update the player
+     * @param deltaTime (float) : elapsed time since last update, in seconds, non negative
+     */
     @Override
     public void update(float deltaTime){
         for(int i = 0; i<ennemies.size(); i++){
