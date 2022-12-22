@@ -11,7 +11,7 @@ abstract public class Item extends CollectableAreaEntity {
 
     private Sprite sprite;
 
-    //* CONSTRUCTOR
+    // * CONSTRUCTOR
     /**
      * @param area
      * @param orientation
@@ -23,7 +23,7 @@ abstract public class Item extends CollectableAreaEntity {
     }
     
 
-    //* REDEFINE Interactable
+    // * REDEFINE Interactable
     /**
      * Indicate if the current Interactable take the whole cell space or not
      * @return (boolean)
@@ -33,7 +33,8 @@ abstract public class Item extends CollectableAreaEntity {
         return false;
     }
 
-    //* DRAW
+
+    // * DRAW
     /**
      * Renders itself on specified canvas.
      * @param canvas target, not null
@@ -42,5 +43,4 @@ abstract public class Item extends CollectableAreaEntity {
         sprite.draw(canvas);
     }    
 
-    
 }

@@ -8,7 +8,7 @@ public class Level0KeyRoom extends Level0ItemRoom {
     
     private Key key;
 
-    // * Constructor
+    // * CONSTRUCTOR
     /**
      * @param roomCoordinates
      * @param keyId
@@ -19,6 +19,12 @@ public class Level0KeyRoom extends Level0ItemRoom {
         super.addItem(key);
     }
     
+
+    // * CREATE AREA
+    /**
+     * Create the area
+     * Register all actors
+     */
     @Override
     protected void createArea(){
         super.createArea();

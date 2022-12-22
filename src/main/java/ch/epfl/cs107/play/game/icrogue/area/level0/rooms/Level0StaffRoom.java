@@ -9,7 +9,7 @@ public class Level0StaffRoom extends Level0ItemRoom{
 
     private Staff staff;
 
-    // * Constructor
+    // * CONSTRUCTOR
     /**
      * @param roomCoordinates
      */
@@ -19,6 +19,12 @@ public class Level0StaffRoom extends Level0ItemRoom{
         super.addItem(staff);
     }
     
+
+    // * CREATE AREA
+    /**
+     * Create the area
+     * Register all actors
+     */
     @Override
     protected void createArea(){
         super.createArea();

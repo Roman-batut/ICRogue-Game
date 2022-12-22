@@ -64,7 +64,7 @@ public class Fire extends Projectile{
     }
     
 
-    //* UPDATE
+    // * UPDATE
     /**
      * Update the actor
      * @param deltaTime elapsed time since last update, in seconds, non-negative
@@ -74,7 +74,7 @@ public class Fire extends Projectile{
         super.update(deltaTime);
     }
 
-    //* DRAW
+    // * DRAW
     /**
      * Renders itself on specified canvas.
      * @param canvas target, not null

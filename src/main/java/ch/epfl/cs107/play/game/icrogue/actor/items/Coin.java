@@ -28,7 +28,7 @@ public class Coin extends Item{
         sprite = new Sprite("zelda/coin", 0.75f, 0.75f, this, new RegionOfInterest(0,0,16,16), new Vector(0, 0));
     }
 
-
+    
     // * REDEFINE Interactable
     /**
      * Get this Interactor's current occupying cells coordinates

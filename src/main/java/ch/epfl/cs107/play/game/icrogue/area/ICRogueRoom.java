@@ -24,8 +24,13 @@ abstract public class ICRogueRoom extends Area implements Logic{
 
     private List<Connector> connectors;
 
-    
-    //* CONSTRUCTOR
+    // * CONSTRUCTOR
+    /**
+     * @param connectorsCoordinates
+     * @param orientations
+     * @param behaviorName
+     * @param roomCoordinates
+     */
     public ICRogueRoom(List<DiscreteCoordinates> connectorsCoordinates, List<Orientation> orientations, String behaviorName, DiscreteCoordinates roomCoordinates){
         assert connectorsCoordinates.size() == orientations.size();
         this.roomCoordinates = roomCoordinates;
@@ -52,7 +57,7 @@ abstract public class ICRogueRoom extends Area implements Logic{
         return roomCoordinates;
     }
 
-    // * Setters
+    // * SETTERS
     public void setConnectorDestination(String destination, ConnectorInRoom connector){
         Connector currentConnector = connectors.get(connector.getIndex());
         currentConnector.setDestination(destination);
@@ -74,6 +79,39 @@ abstract public class ICRogueRoom extends Area implements Logic{
         currentConnector.setDestinationCoordinates(connector.getDestination());
     }
 
+
+    // * REDEFINE Area
+    /** 
+     * @return (float): camera scale factor, assume it is the same in x and y direction 
+     */
+    @Override
+    public final float getCameraScaleFactor() {
+        return ICRogue.CAMERA_SCALE_FACTOR;
+    }
+
+    // * REDEFINE Logic 
+    /**
+     * @return (boolean): true if the signal is considered as on
+     */
+    @Override
+    public boolean isOn() {
+        return isVisited;
+    }
+
+    /**
+     * @return (boolean): true if the signal is considered as off
+     */
+    @Override
+    public boolean isOff() {
+        return !isVisited;
+    }
+
+    @Override
+    public float getIntensity() {
+        return 0;
+    }
+
+
     // * METHODS 
     public void openConnectors(){
         for(Connector val : connectors){
@@ -86,39 +124,26 @@ abstract public class ICRogueRoom extends Area implements Logic{
     public void isVisited(){
         isVisited = true;
     }
-
-
-    // * REDEFINE Area
-    @Override
-    public final float getCameraScaleFactor() {
-        return ICRogue.CAMERA_SCALE_FACTOR;
-    }
-
-    // * REDEFINE Logic 
-    @Override
-    public boolean isOn() {
-        return isVisited;
-    }
-
-    @Override
-    public boolean isOff() {
-        return !isVisited;
-    }
-
-    @Override
-    public float getIntensity() {
-        return 0;
-    }
     
 
-    //* CREATE AREA
+    // * CREATE AREA
+    /**
+     * Create the area
+     * Register all actors
+     */
     protected void createArea(){
         for(Connector val : connectors){
             registerActor(val);
         }   
     }
     
-    //* BEGIN
+    // * BEGIN
+    /**
+     * Begin the room
+     * @param window (Window) : graphic context, not null
+     * @param fileSystem (FileSystem) : file system, not null
+     * @return (boolean) : true if the room is correctly initialized
+     */
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
         if (super.begin(window, fileSystem)) {
@@ -131,7 +156,11 @@ abstract public class ICRogueRoom extends Area implements Logic{
         return false;
     }
     
-    //* UPDATE
+    // * UPDATE
+    /**
+     * Update the room
+     * @param deltaTime (float) : elapsed time since last update, in seconds, non negative
+     */
     @Override
     public void update(float deltaTime){
         if(isOn() && !open){

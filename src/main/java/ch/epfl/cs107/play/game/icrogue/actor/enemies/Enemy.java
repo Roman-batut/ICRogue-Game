@@ -118,6 +118,7 @@ public abstract class Enemy extends ICRogueActor implements Interactor {
         }
     }
 
+    
     // * UPDATE
     /**
      * Update the actor

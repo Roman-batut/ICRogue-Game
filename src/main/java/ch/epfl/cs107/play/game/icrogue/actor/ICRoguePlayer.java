@@ -10,6 +10,7 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.icrogue.actor.Connector.State;
 import ch.epfl.cs107.play.game.icrogue.actor.health.Healthbar;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
+import ch.epfl.cs107.play.game.icrogue.actor.items.Coeur;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Coin;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Key;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
@@ -142,29 +143,32 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     public boolean wantsViewInteraction() {
         return distInteraction;
     }
-
+    
     // INTERACTIONS
-    public void reciveDmg(int Dmg){
-        hp -= Dmg;
-    }
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
     }
-
+    
     private class ICRoguePlayerInteractionHandler implements ICRogueInteractionHandler {
         // Cherry
         @Override
         public void interactWith(Cherry cherry, boolean isCellInteraction) {
             cherry.collect();
         }
-
+        
         //  Coin 
         public void interactWith(Coin coin, boolean isCellInteraction) {
             coin.collect();
             money ++;
         }
-
+        
+        // Coeur
+        public void interactWith(Coeur coeur, boolean isCellInteraction) {
+            coeur.collect();
+            hp ++;
+        }
+        
         // Staff
         @Override
         public void interactWith(Staff staff, boolean isCellInteraction) {
@@ -172,20 +176,20 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
                 staff.collect();
                 equipW = true;
             }
-
+            
         }
-
+        
         // Key
         @Override
         public void interactWith(Key key, boolean isCellInteraction) {
             equipK.add(key);
             key.collect();
         }
-
+        
         // Connector
         @Override
         public void interactWith(Connector connector, boolean isCellInteraction) {
-
+            
             if (wantsViewInteraction()) {
                 if (connector.getType() == State.LOCK) {
                     for (Key val : equipK) {
@@ -203,10 +207,10 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
                 }
             }
         }
-
+        
     }
-
-
+    
+    
     // * KEY ACTIONS
     private void moveIfPressed(Orientation orientation, Button b) {
         if (b.isDown()) {
@@ -216,14 +220,14 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
             }
         }
     }
-
+    
     private void launchFireball(Orientation orientation, Button b) {
         if (b.isPressed()) {
             new Fire(getOwnerArea(), orientation, getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
             // fireball.setSprite(new Sprite("zelda/bridge", 1f, 1f, fireball));
         }
     }
-
+    
     private void viewInteraction(Button b) {
         if(b.isPressed()){
             distInteraction = true;
@@ -233,14 +237,14 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         }
         
     }
-
-
+    
+    
     // * METHODS
     public void leaveRoom() {
         getOwnerArea().unregisterActor(this);
         getOwnerArea().unregisterActor(hpbar);
     }
-
+    
     public void enterRoom(ICRogueRoom icRogueRoom, DiscreteCoordinates position) {
         icRogueRoom.registerActor(this);
         icRogueRoom.registerActor(hpbar);
@@ -248,14 +252,18 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         setCurrentPosition(position.toVector());
         resetMotion();
         icRogueRoom.isVisited();
-
+        
     }
-
+    
     private void die(){
         isAlive = false;
     }
-
-
+    
+    public void reciveDmg(int Dmg){
+        hp -= Dmg;
+    }
+    
+    
     // * UPDATE
     /**
      * Update the player
@@ -277,6 +285,9 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         
         if(hp <= 0){
             die();
+        }
+        if(hp > 6){
+            hp=6;
         }
         bourse.setText("Bourse : "+ money);
         hpbar.update(deltaTime);
@@ -307,6 +318,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         bourse.draw(canvas);
 
         hpbar.draw(canvas);
+        
         sprite.draw(canvas);
     }
 

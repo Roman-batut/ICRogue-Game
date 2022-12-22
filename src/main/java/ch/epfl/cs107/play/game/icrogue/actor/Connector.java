@@ -138,6 +138,7 @@ public class Connector extends AreaEntity{
         ((ICRogueInteractionHandler) v).interactWith(this, isCellInteraction);
     }
 
+    
     // * DRAW
     /**
      * Renders itself on specified canvas.

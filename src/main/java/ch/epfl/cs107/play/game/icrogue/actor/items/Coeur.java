@@ -9,9 +9,11 @@ import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.RegionOfInterest;
+import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
 
-public class Cherry extends Item {
+public class Coeur extends Item {
 
     private Sprite sprite;
 
@@ -21,12 +23,12 @@ public class Cherry extends Item {
      * @param orientation
      * @param position
      */
-    public Cherry(Area area, Orientation orientation, DiscreteCoordinates position) {
+    public Coeur(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, false);
-        sprite = new Sprite("icrogue/cherry", 0.6f, 0.6f, this);
+        sprite = new Sprite("zelda/heart", 0.75f, 0.75f, this, new RegionOfInterest(0,0,16,16), new Vector(0, 0));
     }
 
-    
+
     // * REDEFINE Item
     /**
      * Get this Interactor's current occupying cells coordinates
@@ -37,7 +39,6 @@ public class Cherry extends Item {
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
-
     // * REDEFINE Interactable
     /** 
      * Call directly the interaction on this if accepted
@@ -46,7 +47,7 @@ public class Cherry extends Item {
      */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        ((ICRogueInteractionHandler) v).interactWith((Cherry) this, isCellInteraction);
+        ((ICRogueInteractionHandler) v).interactWith(this, isCellInteraction);
     }
 
     /**

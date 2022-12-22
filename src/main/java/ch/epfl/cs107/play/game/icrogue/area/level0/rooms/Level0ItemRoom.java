@@ -54,6 +54,10 @@ abstract public class Level0ItemRoom extends Level0Room {
     
 
     // * CREATE AREA
+    /**
+     * Create the area
+     * Register all the items
+     */
     @Override
     protected void createArea() {
         super.createArea();

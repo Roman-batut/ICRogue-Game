@@ -9,6 +9,10 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class Level0BossRoom extends Level0EnemyRoom{
 
+    // * CONSTRUCTOR
+    /**
+     * @param roomCoordinates
+     */
     public Level0BossRoom(DiscreteCoordinates roomCoordinates) {
         super(roomCoordinates);
         
@@ -20,6 +24,10 @@ public class Level0BossRoom extends Level0EnemyRoom{
     
     
     // * CREATE AREA
+    /**
+     * Create the area
+     * Register all actors
+     */
     @Override
     protected void createArea(){
         super.createArea();

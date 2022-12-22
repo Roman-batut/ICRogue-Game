@@ -33,7 +33,6 @@ public class Heart extends AreaEntity{
         super(area, orientation, position);
         Coeur1 = new Sprite("zelda/heartDisplay", 1.1f, 1.1f, this);
         state = HealthState.FULL;
-    
     }
 
     // * SETTERS
@@ -88,7 +87,6 @@ public class Heart extends AreaEntity{
         if(state == HealthState.HALF){Coeur1 = new Sprite("zelda/heartDisplay", 1.1f, 1.1f, this,new RegionOfInterest(16, 0, 16, 16),new Vector(0, 0));}
         if(state == HealthState.EMPTY){Coeur1 = new Sprite("zelda/heartDisplay", 1.1f, 1.1f, this, new RegionOfInterest(0, 0, 16, 16),new Vector(0, 0));}
         Coeur1.draw(canvas);
-        
     }
     
 }

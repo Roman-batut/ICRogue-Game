@@ -20,7 +20,10 @@ public class ICRogue extends AreaGame{
 	private Level currentLevel;
 	private ICRoguePlayer player;
 
-	//* INIT LEVEL
+	// * INIT LEVEL
+	/**
+	 * Init the level
+	 */
 	private void initLevel(){
 		Level level = new Level0(this, true);
 		currentRoom = (ICRogueRoom)setCurrentArea(level.getStartingRoom().getTitle(), true);
@@ -29,15 +32,20 @@ public class ICRogue extends AreaGame{
 		player.enterRoom(currentRoom, new DiscreteCoordinates(2, 1));
 	}
 
-
-	//* GETTER
+	// * GETTER
 	@Override
 	public String getTitle() {
 		return "ICRogue";
 	}
 
 
-	//* BEGIN
+	// * BEGIN
+	/**
+     * Initialises game state : display and controls
+     * @param window (Window): display context. Not null
+     * @param fileSystem (FileSystem): given file system. Not null
+     * @return (boolean): whether the game was successfully started
+     */
 	@Override
 	public boolean begin(Window window, FileSystem fileSystem) {
 		if (super.begin(window, fileSystem)) {
@@ -47,7 +55,11 @@ public class ICRogue extends AreaGame{
 		return false;
 	}
     
-	//* UPDATE
+	// * UPDATE
+	/**
+     * Simulates a single time step.
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
+     */
 	@Override
 	public void update(float deltaTime) {
 		Keyboard keyboard = currentRoom.getKeyboard();
@@ -65,21 +77,30 @@ public class ICRogue extends AreaGame{
 		super.update(deltaTime);
 	}
 
-	//* END
+	// * END
+	/**
+	 * Cleans up things, called even if initialisation failed.
+	 */
 	@Override
 	public void end() {
 	}
 
-	//* RESTART
+	// * RESTART
+	/**
+	 * Restart the game
+	 * @param b (Button): the button to restart
+	 */
 	private void restart(Button b){
         if(b.isPressed()){
             begin(getWindow(), getFileSystem());
         }
     }
 
-	//* SWITCH AREA 
+	// * SWITCH AREA 
+	/**
+	 * Switch the area
+	 */
 	protected void switchRoom() {
-		
 		player.leaveRoom();
 		
 		currentRoom = (ICRogueRoom)setCurrentArea(player.getDestination(), false);

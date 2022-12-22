@@ -60,11 +60,6 @@ public class Level0Room extends ICRogueRoom{
 		return "icrogue/level0" + roomCoordinates.x + roomCoordinates.y;
 	}
 
-	@Override
-	public DiscreteCoordinates getPlayerSpawnPosition() {
-		return new DiscreteCoordinates(5,15);
-	}
-
 	public static List<DiscreteCoordinates> getAllConnectorsPosition(){
 		List<DiscreteCoordinates> tab = new ArrayList<DiscreteCoordinates>();
 		
@@ -85,8 +80,19 @@ public class Level0Room extends ICRogueRoom{
 		return tab;
 	}
 
+	
+	// * REDEFINE ICRogueRoom
+	@Override
+	public DiscreteCoordinates getPlayerSpawnPosition() {
+		return new DiscreteCoordinates(5,15);
+	}
+
 
 	// * CREATE AREA
+	/**
+	 * Create the area
+	 * Register all actors
+	 */
 	@Override
 	protected void createArea() {
 		super.createArea();

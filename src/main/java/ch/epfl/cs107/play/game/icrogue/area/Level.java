@@ -9,6 +9,19 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public abstract class Level{
 
+    protected enum MapState {
+        NULL, // Empty space
+        PLACED, // The room has been placed but not yet explored by the room placement algorithm 
+        EXPLORED, // The room has been placed and explored by the algorithm
+        BOSS_ROOM, // The room is a boss room
+        CREATED; // The room has been instantiated in the room map
+        
+        @Override
+        public String toString() {
+            return Integer.toString(ordinal()); 
+        }
+    }
+
     private ICRogueRoom[][] Carte;
     private DiscreteCoordinates bossRoomCoordinates;
     private DiscreteCoordinates startingRoomCoordinates;
@@ -49,14 +62,12 @@ public abstract class Level{
 
             Carte = new ICRogueRoom[nbRooms][nbRooms];
             roomsPlacement = generateRandomRoomPlacement();
-            printMap(roomsPlacement);
             generateRandomMap();
-            printMap(roomsPlacement);
         }
 
     }
 
-    // * Getter
+    // * GETTER
     public ICRogueRoom getStartingRoom(){
         return StartingRoom;
     }
@@ -66,7 +77,7 @@ public abstract class Level{
     }
     
 
-    // * Methods
+    // * METHODS
     protected void setRoom(DiscreteCoordinates coords, ICRogueRoom room) {
         Carte[coords.x][coords.y] = room;
         jeu.addArea(room);
@@ -229,8 +240,7 @@ public abstract class Level{
         return placementmap;
     }
 
-
-   
+   //Methods
     private List<Integer[]> freeSlots(MapState[][] map, int x, int y, MapState type){
         List<Integer[]> freeSlots = new ArrayList<Integer[]>();
 
@@ -268,33 +278,6 @@ public abstract class Level{
         if(a<b){return a;}
         return b;
 
-    }
-
-    private void printMap(MapState[][] map) { System.out.println("Generated map:");
-        System.out.print(" | ");
-        for (int j = 0; j < map[0].length; j++) {
-            System.out.print(j + " "); }
-            System.out.println(); System.out.print("--|-");
-        for (int j = 0; j < map[0].length; j++) {
-            System.out.print("--"); }
-            System.out.println();
-        for (int i = 0; i < map.length; i++) { System.out.print(i + " | ");
-        for (int j = 0; j < map[i].length; j++) {
-            System.out.print(map[j][i] + " "); }
-            System.out.println(); }
-            System.out.println();
-    }
-
-    protected enum MapState {
-    NULL, // Empty space
-    PLACED, // The room has been placed but not yet explored by the room placement algorithm 
-    EXPLORED, // The room has been placed and explored by the algorithm
-    BOSS_ROOM, // The room is a boss room
-    CREATED; // The room has been instantiated in the room map
-    
-    @Override
-    public String toString() {
-        return Integer.toString(ordinal()); }
     }
 
 }

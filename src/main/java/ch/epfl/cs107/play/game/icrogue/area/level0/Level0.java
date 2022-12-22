@@ -12,58 +12,56 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 public class Level0 extends Level{
 
+    public enum RoomType {
+        TURRET_ROOM(3), // type and number of roon 
+        STAFF_ROOM(1),
+        BOSS_KEY(1),
+        SPAWN(1),
+        NORMAL(1);
+
+        int occurence;
+        
+        // Constructor
+        private RoomType(int numberOf){
+            this.occurence = numberOf;
+		}
+
+        //Getter
+        public static int[] getroomDistrubution(){
+           int[] RoomT = new int[RoomType.values().length];
+           int i =0;
+            for(RoomType room : RoomType.values()){
+			    RoomT[i] = (room.occurence);
+                i++;
+            }
+            return RoomT;
+        }
+
+    }
+
     private int BOSS_KEY_ID = 0;
     private int PART_1_KEY_ID = 0;
     
     // * CONSTRUCTORS
+    /**
+     * @param jeu
+     * @param randomMap
+     */
     public Level0(ICRogue jeu, boolean randomMap) {
         super(randomMap, new DiscreteCoordinates(2, 0), RoomType.getroomDistrubution() ,4,2,jeu);
     }
 
+    /**
+     * @param jeu
+     */
     public Level0(ICRogue jeu){
         super(true, new DiscreteCoordinates(2, 0), RoomType.getroomDistrubution(), 4,2, jeu);
     }
     
-    
-    // * METHODS
+    // * REDEFINE Level
+    @Override
     public void generateFixedMap(){
         generateMapFinal();
-
-    }
-
-    private void generateMapFinal() {
-        DiscreteCoordinates room00 = new DiscreteCoordinates(0, 0);
-        setRoom(room00, new Level0TurretRoom(room00));
-        setRoomConnector(room00, "icrogue/level010", Level0Room.Level0Connectors.E);
-        setConnectorDestinationcoords(room00,Level0Room.Level0Connectors.N);
-
-        DiscreteCoordinates room10 = new DiscreteCoordinates(1,0);
-        setRoom(room10, new Level0Room(room10));
-        setRoomConnector(room10, "icrogue/level011", Level0Room.Level0Connectors.S);
-        setConnectorDestinationcoords(room10,Level0Room.Level0Connectors.S);
-        setRoomConnector(room10, "icrogue/level020", Level0Room.Level0Connectors.E);
-        setConnectorDestinationcoords(room10,Level0Room.Level0Connectors.E);
-
-        lockRoomConnector(room10, Level0Room.Level0Connectors.W,  PART_1_KEY_ID);
-        setRoomConnectorDestination(room10, "icrogue/level000", Level0Room.Level0Connectors.W);
-        setConnectorDestinationcoords(room10,Level0Room.Level0Connectors.W);
-
-        DiscreteCoordinates room20 = new DiscreteCoordinates(2,0);
-        setRoom(room20,  new Level0StaffRoom(room20));
-        setRoomConnector(room20, "icrogue/level010", Level0Room.Level0Connectors.W);
-        setConnectorDestinationcoords(room20,Level0Room.Level0Connectors.W);
-        setRoomConnector(room20, "icrogue/level030", Level0Room.Level0Connectors.E);
-        setConnectorDestinationcoords(room20,Level0Room.Level0Connectors.E);
-
-        DiscreteCoordinates room30 = new DiscreteCoordinates(3,0);
-        setRoom(room30, new Level0KeyRoom(room30, BOSS_KEY_ID));
-        setRoomConnector(room30, "icrogue/level020", Level0Room.Level0Connectors.W);
-        setConnectorDestinationcoords(room30,Level0Room.Level0Connectors.W);
-
-        DiscreteCoordinates room11 = new DiscreteCoordinates(1, 1);
-        setRoom (room11, new Level0Room(room11));
-        setRoomConnector(room11, "icrogue/level010", Level0Room.Level0Connectors.N);
-        setConnectorDestinationcoords(room11,Level0Room.Level0Connectors.N);
     }
 
     @Override
@@ -111,6 +109,7 @@ public class Level0 extends Level{
         }
     }
 
+    @Override
     protected ICRogueRoom createRoom(int ordinal, DiscreteCoordinates coordinates){
         ICRogueRoom room = new Level0BossRoom(coordinates);
 
@@ -124,29 +123,42 @@ public class Level0 extends Level{
 
         return room;
     }
+    
 
-    public enum RoomType {
-        TURRET_ROOM(3), // type and number of roon 
-        STAFF_ROOM(1),
-        BOSS_KEY(1),
-        SPAWN(1),
-        NORMAL(1);
+    // * METHODS
+    private void generateMapFinal() {
+        DiscreteCoordinates room00 = new DiscreteCoordinates(0, 0);
+        setRoom(room00, new Level0TurretRoom(room00));
+        setRoomConnector(room00, "icrogue/level010", Level0Room.Level0Connectors.E);
+        setConnectorDestinationcoords(room00,Level0Room.Level0Connectors.N);
 
-        int occurence;
-        
-        private RoomType(int numberOf){
-            this.occurence = numberOf;
-		}
+        DiscreteCoordinates room10 = new DiscreteCoordinates(1,0);
+        setRoom(room10, new Level0Room(room10));
+        setRoomConnector(room10, "icrogue/level011", Level0Room.Level0Connectors.S);
+        setConnectorDestinationcoords(room10,Level0Room.Level0Connectors.S);
+        setRoomConnector(room10, "icrogue/level020", Level0Room.Level0Connectors.E);
+        setConnectorDestinationcoords(room10,Level0Room.Level0Connectors.E);
 
-        public static int[] getroomDistrubution(){
-           int[] RoomT = new int[RoomType.values().length];
-           int i =0;
-            for(RoomType room : RoomType.values()){
-			    RoomT[i] = (room.occurence);
-                i++;
-            }
-            return RoomT;
-        }
+        lockRoomConnector(room10, Level0Room.Level0Connectors.W,  PART_1_KEY_ID);
+        setRoomConnectorDestination(room10, "icrogue/level000", Level0Room.Level0Connectors.W);
+        setConnectorDestinationcoords(room10,Level0Room.Level0Connectors.W);
+
+        DiscreteCoordinates room20 = new DiscreteCoordinates(2,0);
+        setRoom(room20,  new Level0StaffRoom(room20));
+        setRoomConnector(room20, "icrogue/level010", Level0Room.Level0Connectors.W);
+        setConnectorDestinationcoords(room20,Level0Room.Level0Connectors.W);
+        setRoomConnector(room20, "icrogue/level030", Level0Room.Level0Connectors.E);
+        setConnectorDestinationcoords(room20,Level0Room.Level0Connectors.E);
+
+        DiscreteCoordinates room30 = new DiscreteCoordinates(3,0);
+        setRoom(room30, new Level0KeyRoom(room30, BOSS_KEY_ID));
+        setRoomConnector(room30, "icrogue/level020", Level0Room.Level0Connectors.W);
+        setConnectorDestinationcoords(room30,Level0Room.Level0Connectors.W);
+
+        DiscreteCoordinates room11 = new DiscreteCoordinates(1, 1);
+        setRoom (room11, new Level0Room(room11));
+        setRoomConnector(room11, "icrogue/level010", Level0Room.Level0Connectors.N);
+        setConnectorDestinationcoords(room11,Level0Room.Level0Connectors.N);
     }
-        
+
 }

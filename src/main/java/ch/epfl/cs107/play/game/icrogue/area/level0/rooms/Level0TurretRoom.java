@@ -20,7 +20,7 @@ public class Level0TurretRoom extends Level0EnemyRoom{
         super.addEnemy(new Turret(this, Orientation.DOWN, new DiscreteCoordinates(8, 1), new ArrayList<Orientation>(Arrays.asList(Orientation.UP, Orientation.LEFT))));
 
     }
-
+    
     
     // * CREATE AREA
     @Override

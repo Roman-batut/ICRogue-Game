@@ -16,7 +16,7 @@ public class Key extends Item{
     private Sprite sprite;
     private int ID;
 
-    //* CONSTRUCTOR
+    // * CONSTRUCTOR
     /**
      * @param area
      * @param orientation
@@ -30,13 +30,13 @@ public class Key extends Item{
     }
 
 
-    //* GETTERS
+    // * GETTERS
     public int getID(){ 
         return ID; 
     }
     
 
-    //* REDEFINE Item
+    // * REDEFINE Item
     /**
      * Get this Interactor's current occupying cells coordinates
      * @return (List of DiscreteCoordinates). May be empty but not null
@@ -46,7 +46,7 @@ public class Key extends Item{
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
-    //* REDEFINE Interactable
+    // * REDEFINE Interactable
     /** 
      * Call directly the interaction on this if accepted
      * @param v (AreaInteractionVisitor) : the visitor
@@ -74,7 +74,7 @@ public class Key extends Item{
     }
     
 
-    //* DRAW
+    // * DRAW
     /**
      * Renders itself on specified canvas.
      * @param canvas target, not null

@@ -75,8 +75,7 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
        return isConsumed;
     }
 
-
-    //* REDEFINE Interactor
+    // * REDEFINE Interactor
     /**
      * Get this Interactor's current field of view cells coordinates
      * @return (List of DiscreteCoordinates). May be empty but not null
@@ -102,7 +101,8 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
         return true;
     }
 
-    //* UPDATE
+
+    // * UPDATE
     /**
      * Update the actor
      * @param deltaTime elapsed time since last update, in seconds, non-negative
@@ -113,7 +113,7 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
         move(frames);
     }
     
-    //* DRAW
+    // * DRAW
     /**
      * Renders itself on specified canvas.
      * @param canvas target, not null
