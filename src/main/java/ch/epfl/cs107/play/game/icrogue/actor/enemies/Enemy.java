@@ -18,7 +18,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public abstract class Enemy extends ICRogueActor implements Interactor {
+public abstract class Enemy extends ICRogueActor implements Interactor, Interactable {
 
     private Sprite sprite; 
     private ICRogueEnemyInteractionHandler handler;
@@ -99,14 +99,24 @@ public abstract class Enemy extends ICRogueActor implements Interactor {
     }
 
     // * METHODS
+    /**
+     * Kill the enemy
+     */
     public void die() {
         isAlive = false;
     }
 
+    /**
+     * Receive damage
+     * @param Dmg
+     */
     public void reciveDmg(int Dmg) {
         hp -= Dmg;
     }
 
+    /**
+     * Drop money on death
+     */
     public void MoneyDrop() {
         List<Integer> proba = new ArrayList<Integer>();
         proba.add(0);

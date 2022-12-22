@@ -245,6 +245,11 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         getOwnerArea().unregisterActor(hpbar);
     }
     
+    /**
+     * Enter a room
+     * @param icRogueRoom (ICRogueRoom) : the room to enter
+     * @param position    (DiscreteCoordinates) : the position to enter the room
+     */
     public void enterRoom(ICRogueRoom icRogueRoom, DiscreteCoordinates position) {
         icRogueRoom.registerActor(this);
         icRogueRoom.registerActor(hpbar);
@@ -255,10 +260,17 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         
     }
     
+    /** 
+     * Kill the player 
+     */
     private void die(){
         isAlive = false;
     }
     
+    /**
+     * Deal damage to the player
+     * @param Dmg
+     */
     public void reciveDmg(int Dmg){
         hp -= Dmg;
     }

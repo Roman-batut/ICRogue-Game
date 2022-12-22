@@ -47,10 +47,17 @@ public class Level0EnemyRoom extends Level0Room{
 
     
     // * METHODS 
+    /**
+     * Add an enemy to the room
+     * @param e
+     */
     protected void addEnemy(Enemy e){
         ennemies.add(e);
     }
 
+    /**
+     * Spawn a heart
+     */
     protected void Spawnheart(){
         List<Integer> proba = new ArrayList<Integer>();
         proba.add(0);
@@ -78,7 +85,7 @@ public class Level0EnemyRoom extends Level0Room{
 
     // * UPDATE
     /**
-     * Update the player
+     * Update the room
      * @param deltaTime (float) : elapsed time since last update, in seconds, non negative
      */
     @Override

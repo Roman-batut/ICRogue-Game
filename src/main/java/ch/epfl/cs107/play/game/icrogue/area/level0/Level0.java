@@ -126,6 +126,9 @@ public class Level0 extends Level{
     
 
     // * METHODS
+    /**
+     * Generate the map
+     */
     private void generateMapFinal() {
         DiscreteCoordinates room00 = new DiscreteCoordinates(0, 0);
         setRoom(room00, new Level0TurretRoom(room00));

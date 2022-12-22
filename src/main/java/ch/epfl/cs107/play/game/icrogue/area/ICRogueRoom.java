@@ -113,6 +113,9 @@ abstract public class ICRogueRoom extends Area implements Logic{
 
 
     // * METHODS 
+    /**
+     * Open all connectors
+     */
     public void openConnectors(){
         for(Connector val : connectors){
             if(val.getType() == State.CLOSED){
@@ -121,6 +124,9 @@ abstract public class ICRogueRoom extends Area implements Logic{
         }
     }
 
+    /**
+     * Is the room visited
+     */
     public void isVisited(){
         isVisited = true;
     }

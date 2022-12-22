@@ -78,47 +78,97 @@ public abstract class Level{
     
 
     // * METHODS
+    /**
+     * Set a given room at the given coordinates
+     * @param coords
+     * @param room
+     */
     protected void setRoom(DiscreteCoordinates coords, ICRogueRoom room) {
         Carte[coords.x][coords.y] = room;
         jeu.addArea(room);
     }
     
+    /**
+     * Set destination of a given connector in a given room coordinates to a room name
+     * @param coords
+     * @param destination
+     * @param connector
+    */
     protected void setRoomConnectorDestination(DiscreteCoordinates coords, String destination, ConnectorInRoom connector) {
         ICRogueRoom currentRoom = Carte[coords.x][coords.y];
         
         currentRoom.setConnectorDestination(destination, connector);
     }
 
+    /**
+     * Set a connector in a given room coordinates
+     * @param coords
+     * @param destination
+     * @param connector
+     */
     protected void setRoomConnector(DiscreteCoordinates coords, String destination, ConnectorInRoom connector) {
         ICRogueRoom currentRoom = Carte[coords.x][coords.y];
     
         currentRoom.setConnector(destination, connector);
     }
 
+    /**
+     * Set a locked connector in a given room coordinates with a given key id
+     * @param coords
+     * @param connector
+     * @param keyId
+     */
     protected void lockRoomConnector(DiscreteCoordinates coords, ConnectorInRoom connector, int keyId) {
         ICRogueRoom currentRoom = Carte[coords.x][coords.y];
 
         currentRoom.lockRoomConnector(connector, keyId);
     }
+
+    /**
+     * Set destination of a given connector to a given room coordinates
+     * @param coords
+     * @param connector
+    */
     protected void setConnectorDestinationcoords(DiscreteCoordinates coords, ConnectorInRoom connector){
         ICRogueRoom currentRoom = Carte[coords.x][coords.y];
 
         currentRoom.setConnectorDestinationcoords(connector);
     }
     
+    /**
+     * Set the starting room of the level
+     * @param coords
+     */
     protected void setStartingRoom(DiscreteCoordinates coords) {
         StartingRoom = (ICRogueRoom)Carte[coords.x][coords.y];
 
     }
     
+    /**
+     * Set the boss room of the level
+     * @param coords
+     */
     protected void setBossRoom(DiscreteCoordinates coords) {
         bossRoom = (ICRogueRoom)Carte[coords.x][coords.y];
     }
 
-    abstract protected void setUpConnector(MapState[][] roomsPlacement, ICRogueRoom room);
-
+    /**
+     * Generate a fixed map
+     */
     abstract protected void generateFixedMap();
 
+    /**
+     * Set up the connectors of a given room
+     * @param roomsPlacement
+     * @param room
+    */
+    abstract protected void setUpConnector(MapState[][] roomsPlacement, ICRogueRoom room);
+
+    /**
+     * Create a specific room at a given coordinates
+     * @param ordinal
+     * @param coordinates
+     */
     abstract protected ICRogueRoom createRoom(int ordinal, DiscreteCoordinates coordinates);
 
     // * RANDOM
@@ -241,6 +291,13 @@ public abstract class Level{
     }
 
    //Methods
+   /**
+    * Returns a list of free slots around a given position
+    * @param map
+    * @param x
+    * @param y
+    * @param type
+    */
     private List<Integer[]> freeSlots(MapState[][] map, int x, int y, MapState type){
         List<Integer[]> freeSlots = new ArrayList<Integer[]>();
 
@@ -264,6 +321,10 @@ public abstract class Level{
         return freeSlots;
     }
 
+    /**
+     * Returns a random number between 1 and max
+     * @param max
+     */
     private int maxRoomsToPlace(int max){
         ArrayList<Integer> list = new ArrayList<Integer>();
 
@@ -274,6 +335,11 @@ public abstract class Level{
         return (RandomHelper.chooseKInList(1, list).get(0));
     }
 
+    /**
+     * Returns the minimum between a and b
+     * @param a
+     * @param b
+     */
     private int minimum(int a, int b){
         if(a<b){return a;}
         return b;

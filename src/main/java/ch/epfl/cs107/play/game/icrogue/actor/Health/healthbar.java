@@ -72,7 +72,7 @@ public class Healthbar extends AreaEntity{
     
     // * UPDATE
     /**
-     * Update the player
+     * Update the healthbar
      * @param deltaTime (float) : elapsed time since last update, in seconds, non negative
      */
     @Override

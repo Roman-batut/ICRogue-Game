@@ -46,12 +46,19 @@ public class Turret extends Enemy{
 
 
     // * METHODS
+    /**
+     * Shoots an arrow in each direction of shootOrientations
+     */
     private void shoot(){
         for(Orientation ort : shootOrientations){
             new Arrow(getOwnerArea(), ort, getCurrentMainCellCoordinates().jump(ort.toVector()));
         }
     }
     
+    /**
+     * Calculates the cooldown
+     * @param dt
+     */
     private float calculCooldown(float dt){
         time += dt;
         return (time);
