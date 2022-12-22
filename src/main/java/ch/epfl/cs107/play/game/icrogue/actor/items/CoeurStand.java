@@ -60,6 +60,22 @@ public class CoeurStand extends Item implements Stand{
         ((ICRogueInteractionHandler) v).interactWith(this, isCellInteraction);
     }
 
+         /**
+     * Indicate if the current Interactable take the whole cell space or not
+     * @return (boolean)
+     */
+    public boolean takeCellSpace(){
+        return true;
+    }
+    
+     /**
+     * @return (boolean): true if this is able to have view interactions
+     */
+    public boolean isViewInteractable() {
+        return true;
+    }
+    
+
     /**
      * @return (boolean): true if this is able to have cell interactions
      */

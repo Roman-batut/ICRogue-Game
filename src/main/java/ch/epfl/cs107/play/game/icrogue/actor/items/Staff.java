@@ -18,7 +18,6 @@ public class Staff extends Item{
 
     private Sprite sprite;
     private Text message;
-    private final float Cooldown = 0.1f;
     
     // * CONSTRUCTOR
     /**
@@ -30,11 +29,6 @@ public class Staff extends Item{
         super(area, orientation, position, false);
         sprite = new Sprite("zelda/staff_water.icon", .5f, .5f, this);
         message = new Text(("Press W to grab"), new DiscreteCoordinates(position.x, position.y+1),area,true,0.4f, Color.WHITE);
-    }
-
-    // GETTER
-    public float getCooldown(){
-        return Cooldown;
     }
 
 

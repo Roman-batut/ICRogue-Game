@@ -34,7 +34,7 @@ import java.util.List;
 
 public class ICRoguePlayer extends ICRogueActor implements Interactor {
 
-    private final static int MOVE_DURATION = 2;
+    private final static int MOVE_DURATION = 6;
 
     private int hp; 
     private int money;
@@ -50,8 +50,6 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     private Healthbar hpbar;
     private Text bourse;
     private DiscreteCoordinates destinationpos;
-    private float Weapon_cooldown;
-    private float time;
 
     // * CONSTRUCTOR
     /**
@@ -180,7 +178,6 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         @Override
         public void interactWith(Staff staff, boolean isCellInteraction) {
             if (wantsViewInteraction()) {
-                Weapon_cooldown = staff.getCooldown();
                 staff.collect();
                 equipW = true;
             }
@@ -304,16 +301,6 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         hp -= Dmg;
     }
 
-    /**
-     * Calculates the cooldown
-     * @param dt
-     */
-    private float calculCooldown(float dt){
-        time += dt;
-        return (time);
-    }
-
-    
     
     // * UPDATE
     /**
@@ -327,10 +314,8 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
         moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
         moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
-        calculCooldown(deltaTime);
-        if (equipW &&  time> Weapon_cooldown){
+        if (equipW){
             launchFireball(getOrientation(), keyboard.get(Keyboard.X));
-            time =0;
         }
         
         viewInteraction(keyboard.get(Keyboard.W));

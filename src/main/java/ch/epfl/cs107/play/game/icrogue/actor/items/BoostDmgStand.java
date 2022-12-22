@@ -67,6 +67,22 @@ public class BoostDmgStand extends Item implements Stand{
         return true;
     }
 
+    /**
+     * Indicate if the current Interactable take the whole cell space or not
+     * @return (boolean)
+     */
+    public boolean takeCellSpace(){
+        return true;
+    }
+    
+     /**
+     * @return (boolean): true if this is able to have view interactions
+     */
+    public boolean isViewInteractable() {
+        return true;
+    }
+    
+
     // * DRAW
     /**
      * Renders itself on specified canvas.

@@ -31,7 +31,6 @@ Dmg Héros (initiaux): 2
 Dmg ennemie à flèche : 1
 Boost de Dmg : +2
 Restauration de Coeur : +1 coeur complet
-Baton cooldown : 1/2 secondes
 
 ## Obtenir le baton
 
