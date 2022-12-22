@@ -9,6 +9,7 @@ items ->
     Coin
     BoostDmgStand
     CoeurStand
+    (interface)Stand
 
 level0 ->
     rooms -> 
@@ -33,12 +34,15 @@ level0 ->
 
     Classe CoeurStand : ch.epfl.cs107.play.game.icrogue.actor.items
         est un item collectable par le joueur au même titre que Staff et étendant par conséquent Item à condition d'avoir assez d'argent 
+    
+    Interface Stand : ch.epfl.cs107.play.game.icrogue.actor.items
+       est l'interface représentant les objets comme des interactable qui se doivent de prendre une place et de vouloir une viewinteraction, cela représente les éléments du stand. Ici on program to an interface not to implementation, cela rend le code plus clair 
 
     Classe Level0BossRoom : ch.epfl.cs107.play.game.icrogue.area.level0.rooms
         est une room étendant Level0EnemyRoom donc dans le même packetage que celui-ci
     
     Classe Level0ShopRoom : ch.epfl.cs107.play.game.icrogue.area.level0.rooms
-        est une room étendant Level0ItemRoom donc dans le même packetage que celui-ci ainsi elle peut contenir une liste d'Item;
+        est une room étendant Level0ItemRoom donc dans le même packetage que celui-ci ainsi elle peut contenir une liste d'Item
 
 # Modifications Personnelles: 
     Dans level0 la méthode setUpConnector nous n'avons pas utiliser la definition de destination ci dessous : 
@@ -67,5 +71,7 @@ level0 ->
     Marchand: simplement un pnj qui prends une case
    
     CoeurStand et BoostDmgStand : ces deux objets sont non traversables et sont présents dans le shop avec un certain prix(impossible d'acheter sans assez d'argent)
+
+    Stand : on a mis cette interface dans le package item car elle représente les items qui font parti d'un stand(étale d'items)
 
 

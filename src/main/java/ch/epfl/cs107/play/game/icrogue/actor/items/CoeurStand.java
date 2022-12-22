@@ -14,7 +14,8 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
-public class CoeurStand extends Item{
+
+public class CoeurStand extends Item implements Stand{
 
     private Sprite sprite;
     private Text message;
@@ -47,16 +48,6 @@ public class CoeurStand extends Item{
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
-
-    /**
-     * Indicate if the current Interactable take the whole cell space or not
-     * @return (boolean)
-     */
-    @Override
-    public boolean takeCellSpace(){
-        return true;
-    }
-
     
     // * REDEFINE Interactable
     /** 
@@ -76,16 +67,6 @@ public class CoeurStand extends Item{
     public boolean isCellInteractable() {
         return true;
     }
-
-    /**
-     * @return (boolean): true if this is able to have view interactions
-     */
-    @Override
-    public boolean isViewInteractable() {
-        return true;
-    }
-    
-
     // * DRAW
     /**
      * Renders itself on specified canvas.
