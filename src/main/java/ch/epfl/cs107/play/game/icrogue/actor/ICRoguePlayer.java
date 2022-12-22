@@ -8,13 +8,16 @@ import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.actor.Text;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.icrogue.actor.Connector.State;
-import ch.epfl.cs107.play.game.icrogue.actor.health.Healthbar;
+import ch.epfl.cs107.play.game.icrogue.actor.Health.Healthbar;
+import ch.epfl.cs107.play.game.icrogue.actor.items.BoostDmgStand;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Cherry;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Coeur;
+import ch.epfl.cs107.play.game.icrogue.actor.items.CoeurStand;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Coin;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Key;
 import ch.epfl.cs107.play.game.icrogue.actor.items.Staff;
 import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Fire;
+import ch.epfl.cs107.play.game.icrogue.actor.projectiles.Projectile;
 import ch.epfl.cs107.play.game.icrogue.area.ICRogueRoom;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -33,7 +36,9 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
 
     private final static int MOVE_DURATION = 2;
 
-    private int hp;
+    private int hp; 
+    private int money;
+    private int augmentation;
     private Sprite sprite;
     private boolean distInteraction;
     private ICRoguePlayerInteractionHandler handler;
@@ -43,9 +48,10 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     private String destination;
     private boolean isAlive;
     private Healthbar hpbar;
-    private int money;
     private Text bourse;
     private DiscreteCoordinates destinationpos;
+    private float Weapon_cooldown;
+    private float time;
 
     // * CONSTRUCTOR
     /**
@@ -95,6 +101,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     public void setPassing(boolean change) {
         wantTopass = change;
     }
+
 
     
     // * REDEFINE ICRogueActor
@@ -166,19 +173,41 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         // Coeur
         public void interactWith(Coeur coeur, boolean isCellInteraction) {
             coeur.collect();
-            hp ++;
+            hp +=2 ;
         }
         
         // Staff
         @Override
         public void interactWith(Staff staff, boolean isCellInteraction) {
             if (wantsViewInteraction()) {
+                Weapon_cooldown = staff.getCooldown();
                 staff.collect();
                 equipW = true;
             }
             
         }
         
+        // Coeur Marchand
+        @Override
+        public void interactWith(CoeurStand coeurStand, boolean isCellInteraction) {
+            if (wantsViewInteraction() && money>= coeurStand.cost()) {
+                coeurStand.collect();
+                hp +=2;
+                money -= coeurStand.cost();
+            }
+            
+        }
+
+        //Boost Marchand
+        @Override
+        public void interactWith(BoostDmgStand boostDmgStand, boolean isCellInteraction) {
+            if (wantsViewInteraction()&& money>= boostDmgStand.cost()) {
+                boostDmgStand.collect();
+                augmentation += 2;
+                money -= boostDmgStand.cost();
+            }
+            
+        }
         // Key
         @Override
         public void interactWith(Key key, boolean isCellInteraction) {
@@ -209,7 +238,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         }
         
     }
-    
+
     
     // * KEY ACTIONS
     private void moveIfPressed(Orientation orientation, Button b) {
@@ -223,7 +252,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     
     private void launchFireball(Orientation orientation, Button b) {
         if (b.isPressed()) {
-            new Fire(getOwnerArea(), orientation, getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
+            new Fire(getOwnerArea(), orientation, getCurrentMainCellCoordinates().jump(getOrientation().toVector()), 2+augmentation);
             // fireball.setSprite(new Sprite("zelda/bridge", 1f, 1f, fireball));
         }
     }
@@ -274,6 +303,16 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
     public void reciveDmg(int Dmg){
         hp -= Dmg;
     }
+
+    /**
+     * Calculates the cooldown
+     * @param dt
+     */
+    private float calculCooldown(float dt){
+        time += dt;
+        return (time);
+    }
+
     
     
     // * UPDATE
@@ -288,9 +327,10 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
         moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
         moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
-
-        if (equipW) {
+        calculCooldown(deltaTime);
+        if (equipW &&  time> Weapon_cooldown){
             launchFireball(getOrientation(), keyboard.get(Keyboard.X));
+            time =0;
         }
         
         viewInteraction(keyboard.get(Keyboard.W));
@@ -306,6 +346,7 @@ public class ICRoguePlayer extends ICRogueActor implements Interactor {
         super.update(deltaTime);
     }
 
+   
     // * DRAW
     /**
      * Renders itself on specified canvas.

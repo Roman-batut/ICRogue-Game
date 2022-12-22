@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.icrogue.actor.health;
+package ch.epfl.cs107.play.game.icrogue.actor.Health;
 
 import java.util.Collections;
 import java.util.List;

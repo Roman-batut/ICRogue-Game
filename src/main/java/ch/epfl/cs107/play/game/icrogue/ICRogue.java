@@ -19,6 +19,7 @@ public class ICRogue extends AreaGame{
 	private ICRogueRoom currentRoom;
 	private Level currentLevel;
 	private ICRoguePlayer player;
+	private boolean hasWin;
 
 	// * INIT LEVEL
 	/**
@@ -67,8 +68,9 @@ public class ICRogue extends AreaGame{
 		if(player.getPassing()){
 			switchRoom();
 		}
-		if(currentLevel.getBossRoom().isOn()){
+		if(currentLevel.getBossRoom().isOn() && !hasWin){
 			System.out.println("Win");
+			hasWin = true;
 		}
 		if(!player.isAlive()){
 			System.out.println("Game Over");
@@ -83,6 +85,7 @@ public class ICRogue extends AreaGame{
 	 */
 	@Override
 	public void end() {
+
 	}
 
 	// * RESTART
@@ -92,6 +95,7 @@ public class ICRogue extends AreaGame{
 	 */
 	private void restart(Button b){
         if(b.isPressed()){
+			hasWin =false;
             begin(getWindow(), getFileSystem());
         }
     }

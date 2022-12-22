@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.icrogue.actor.health;
+package ch.epfl.cs107.play.game.icrogue.actor.Health;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +8,7 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.AreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.icrogue.actor.ICRoguePlayer;
-import ch.epfl.cs107.play.game.icrogue.actor.health.Heart.HealthState;
+import ch.epfl.cs107.play.game.icrogue.actor.Health.Heart.HealthState;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 

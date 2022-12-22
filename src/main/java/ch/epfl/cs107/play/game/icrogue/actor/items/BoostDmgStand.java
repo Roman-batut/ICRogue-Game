@@ -11,14 +11,14 @@ import ch.epfl.cs107.play.game.areagame.actor.Text;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.icrogue.handler.ICRogueInteractionHandler;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.RegionOfInterest;
+import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Canvas;
-
-
-public class Staff extends Item{
+public class BoostDmgStand extends Item{
 
     private Sprite sprite;
     private Text message;
-    private final float Cooldown = 0.1f;
+    private int price;
     
     // * CONSTRUCTOR
     /**
@@ -26,17 +26,17 @@ public class Staff extends Item{
      * @param orientation
      * @param position
      */
-    public Staff(Area area, Orientation orientation, DiscreteCoordinates position) {
+    public BoostDmgStand(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, false);
-        sprite = new Sprite("zelda/staff_water.icon", .5f, .5f, this);
-        message = new Text(("Press W to grab"), new DiscreteCoordinates(position.x, position.y+1),area,true,0.4f, Color.WHITE);
+        price = 5;
+        sprite = new Sprite("zelda/bomb", 0.75f, 0.75f, this, new RegionOfInterest(0,0,16,16), new Vector(0, 0));
+        message = new Text((price+" Gold "), new DiscreteCoordinates(position.x, position.y+1),area,true,0.5f, Color.WHITE);
     }
 
-    // GETTER
-    public float getCooldown(){
-        return Cooldown;
+     // GETTER
+     public int cost(){
+        return price;
     }
-
 
     // * REDEFINE Item
     /**
@@ -66,7 +66,7 @@ public class Staff extends Item{
      */
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        ((ICRogueInteractionHandler) v).interactWith((Staff)this, isCellInteraction);
+        ((ICRogueInteractionHandler) v).interactWith(this, isCellInteraction);
     }
 
     /**
@@ -96,5 +96,4 @@ public class Staff extends Item{
         sprite.draw(canvas); 
         message.draw(canvas);
     }
-
 }

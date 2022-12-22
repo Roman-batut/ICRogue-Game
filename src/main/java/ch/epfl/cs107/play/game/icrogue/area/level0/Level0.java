@@ -6,6 +6,7 @@ import ch.epfl.cs107.play.game.icrogue.area.Level;
 import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0BossRoom;
 import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0KeyRoom;
 import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0Room;
+import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0ShopRoom;
 import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0StaffRoom;
 import ch.epfl.cs107.play.game.icrogue.area.level0.rooms.Level0TurretRoom;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -13,11 +14,13 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 public class Level0 extends Level{
 
     public enum RoomType {
-        TURRET_ROOM(3), // type and number of roon 
+        TURRET_ROOM(5), // type and number of roon 
         STAFF_ROOM(1),
         BOSS_KEY(1),
         SPAWN(1),
-        NORMAL(1);
+        NORMAL(3),
+        SHOP_ROOM(1);
+
 
         int occurence;
         
@@ -64,6 +67,7 @@ public class Level0 extends Level{
         generateMapFinal();
     }
 
+    //Put the connector of the room regarding of the rooms around
     @Override
     protected void setUpConnector(MapState[][] roomsPlacement, ICRogueRoom room) {
         DiscreteCoordinates roomCoordinates = room.getCoordinates();
@@ -109,6 +113,7 @@ public class Level0 extends Level{
         }
     }
 
+    // create the room regarding of the ordinality in the enum type
     @Override
     protected ICRogueRoom createRoom(int ordinal, DiscreteCoordinates coordinates){
         ICRogueRoom room = new Level0BossRoom(coordinates);
@@ -119,6 +124,7 @@ public class Level0 extends Level{
             case 2 -> room = new Level0KeyRoom(coordinates, BOSS_KEY_ID);
             case 3 -> room = new Level0Room(coordinates);
             case 4 -> room = new Level0Room(coordinates);
+            case 5 -> room = new Level0ShopRoom(coordinates);
         }
 
         return room;
@@ -127,7 +133,7 @@ public class Level0 extends Level{
 
     // * METHODS
     /**
-     * Generate the map
+     * Generate the map fixed
      */
     private void generateMapFinal() {
         DiscreteCoordinates room00 = new DiscreteCoordinates(0, 0);

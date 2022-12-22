@@ -120,7 +120,6 @@ public abstract class Enemy extends ICRogueActor implements Interactor, Interact
     public void MoneyDrop() {
         List<Integer> proba = new ArrayList<Integer>();
         proba.add(0);
-        proba.add(0);
         proba.add(1);
         int pick = RandomHelper.chooseKInList(1, proba).get(0);
         if (pick == 1) {
