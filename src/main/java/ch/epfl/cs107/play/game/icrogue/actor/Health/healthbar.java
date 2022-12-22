@@ -14,7 +14,6 @@ import ch.epfl.cs107.play.window.Canvas;
 
 public class Healthbar extends AreaEntity{
     
-    private String spritename;
     List<Heart> health;
     private ICRoguePlayer owner;
 

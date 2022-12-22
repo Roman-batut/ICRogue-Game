@@ -14,7 +14,7 @@ import ch.epfl.cs107.play.window.Canvas;
 
 public class Turret extends Enemy{
     
-    public final static float COOLDOWN = 2.f;
+    public final static float COOLDOWN = 1.5f;
 
     private float time;
     private List<Orientation> shootOrientations;
