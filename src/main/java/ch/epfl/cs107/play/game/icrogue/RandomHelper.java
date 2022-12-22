@@ -8,13 +8,13 @@ import java.util.Random;
  * Exposes multiple random generators for various part of the game
  */
 public class RandomHelper {
-    private static final int ROOM_SEED = 69;
+    private static final int ROOM_SEED = 420;
     public static Random roomGenerator = new Random(ROOM_SEED);
 
-    private static final int ENEMY_SEED = 69;
+    private static final int ENEMY_SEED = 420;
     public static Random enemyGenerator = new Random(ENEMY_SEED);
 
-    private static final int CHOOSE_SEED = 69;
+    private static final int CHOOSE_SEED = 420;
     private static final Random chooseGenerator = new Random(CHOOSE_SEED);
 
 

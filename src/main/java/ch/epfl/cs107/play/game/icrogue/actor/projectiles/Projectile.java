@@ -16,12 +16,12 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
     private final static int DEFAULT_DAMAGE = 1;
     private final static int DEFAULT_MOVE_DURATION = 10;
 
-    protected Sprite sprite; //TODO private ?
+    private Sprite sprite;
     private int frames;
     private int dmg;
     private boolean isConsumed ;
         
-    //* CONSTRUCTORS
+    // * CONSTRUCTORS
     /**
      * @param area
      * @param orientation
@@ -47,12 +47,12 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
         this(area, orientation, position, DEFAULT_DAMAGE, DEFAULT_MOVE_DURATION);
     }  
 
-    //* GETTERS
+    // * GETTERS
     public int getDmg(){
         return dmg;
     }
 
-    //* SETTERS
+    // * SETTERS
     public void setSprite(Sprite sprite){
         this.sprite = sprite;
     }
@@ -62,7 +62,7 @@ abstract public class Projectile extends ICRogueActor implements Consumable, Int
     }
     
 
-    //* REDEFINE Consumable
+    // * REDEFINE Consumable
     @Override
     public void consume(){
         if (!isConsumed) {

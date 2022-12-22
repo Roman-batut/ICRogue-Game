@@ -77,80 +77,47 @@ public class Healthbar extends AreaEntity{
      */
     @Override
     public void update(float deltaTime){
-        // switch (owner.hp()){
-            //     case 6 :
-            //         for(Heart val: health){
-                //             val.setState(HealthState.FULL);
-                //         }  
-                //     case 5 : 
-                //         health.get(0 ).setState(HealthState.HALF);
-                //         health.get(1 ).setState(HealthState.FULL);
-                //         health.get(2).setState(HealthState.FULL);
-                //     case 4 :
-                //         health.get(0 ).setState(HealthState.EMPTY);
-                //         health.get(1 ).setState(HealthState.FULL);
-                //         health.get(2).setState(HealthState.FULL);
-                //     case 3:
-                //         health.get(0 ).setState(HealthState.EMPTY);
-                //         health.get(1 ).setState(HealthState.HALF);
-                //         health.get(2).setState(HealthState.FULL);
-                //     case 2:
-                //         health.get(0 ).setState(HealthState.EMPTY);
-                //         health.get(1 ).setState(HealthState.EMPTY);
-                //         health.get(2).setState(HealthState.FULL);
-                //     case 1 : 
-                //         health.get(0 ).setState(HealthState.EMPTY);
-                //         health.get(1 ).setState(HealthState.EMPTY);
-                //         health.get(2).setState(HealthState.HALF);
-                //     case 0 :
-                //         for(Heart val: health){
-                    //             val.setState(HealthState.EMPTY);
-                    //         }  
-                    //     break;
-                    
-                    // }
-            if(owner.hp() == 0){
-                for(Heart val: health){
-                    val.setState(HealthState.EMPTY);
-                } 
-            }else if(owner.hp() == 1){
-                health.get(2 ).setState(HealthState.EMPTY);
-                health.get(1 ).setState(HealthState.EMPTY);
-                health.get(0).setState(HealthState.HALF);
-            }else if(owner.hp() == 2){
-                health.get(2 ).setState(HealthState.EMPTY);
-                health.get(1 ).setState(HealthState.EMPTY);
-                health.get(0).setState(HealthState.FULL);
-            }else if(owner.hp() == 3){
-                health.get(2 ).setState(HealthState.EMPTY);
-                health.get(1 ).setState(HealthState.HALF);
-                health.get(0).setState(HealthState.FULL);
-            }else if(owner.hp() == 4){
-                health.get(2).setState(HealthState.EMPTY);
-                health.get(1 ).setState(HealthState.FULL);
-                health.get(0).setState(HealthState.FULL);
-            }else if(owner.hp() == 5){
-                health.get(2 ).setState(HealthState.HALF);
-                health.get(1 ).setState(HealthState.FULL);
-                health.get(0).setState(HealthState.FULL);
-            }else if(owner.hp() == 6){
-                health.get(2 ).setState(HealthState.FULL);
-                health.get(1 ).setState(HealthState.FULL);
-                health.get(0).setState(HealthState.FULL);
-            }
-        }
-                
-
-        // * DRAW
-        /**
-         * Renders itself on specified canvas.
-         * @param canvas target, not null
-         */
-        @Override
-        public void draw(Canvas canvas) {
+        if(owner.hp() == 0){
             for(Heart val: health){
-                val.draw(canvas);
-            }
+                val.setState(HealthState.EMPTY);
+            } 
+        }else if(owner.hp() == 1){
+            health.get(2 ).setState(HealthState.EMPTY);
+            health.get(1 ).setState(HealthState.EMPTY);
+            health.get(0).setState(HealthState.HALF);
+        }else if(owner.hp() == 2){
+            health.get(2 ).setState(HealthState.EMPTY);
+            health.get(1 ).setState(HealthState.EMPTY);
+            health.get(0).setState(HealthState.FULL);
+        }else if(owner.hp() == 3){
+            health.get(2 ).setState(HealthState.EMPTY);
+            health.get(1 ).setState(HealthState.HALF);
+            health.get(0).setState(HealthState.FULL);
+        }else if(owner.hp() == 4){
+            health.get(2).setState(HealthState.EMPTY);
+            health.get(1 ).setState(HealthState.FULL);
+            health.get(0).setState(HealthState.FULL);
+        }else if(owner.hp() == 5){
+            health.get(2 ).setState(HealthState.HALF);
+            health.get(1 ).setState(HealthState.FULL);
+            health.get(0).setState(HealthState.FULL);
+        }else if(owner.hp() == 6){
+            health.get(2 ).setState(HealthState.FULL);
+            health.get(1 ).setState(HealthState.FULL);
+            health.get(0).setState(HealthState.FULL);
         }
+    }       
 
+    // * DRAW
+    /**
+     * Renders itself on specified canvas.
+     * @param canvas target, not null
+     */
+    @Override
+    public void draw(Canvas canvas) {
+        for(Heart val: health){
+            val.draw(canvas);
+        }
     }
+
+}

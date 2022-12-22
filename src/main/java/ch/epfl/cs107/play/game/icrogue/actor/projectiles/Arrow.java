@@ -27,8 +27,8 @@ public class Arrow extends Projectile{
      */
     public Arrow(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, 1,5);
-        sprite = new Sprite("zelda/arrow", 1f, 1f, this,new RegionOfInterest(32*orientation.ordinal(), 0, 32, 32),new Vector(0, 0));
-       handler = new ICRogueArrowInteractionHandler();
+        setSprite(new Sprite("zelda/arrow", 1f, 1f, this,new RegionOfInterest(32*orientation.ordinal(), 0, 32, 32),new Vector(0, 0)));
+        handler = new ICRogueArrowInteractionHandler();
         super.setDmg(1);
     }
 
@@ -52,12 +52,13 @@ public class Arrow extends Projectile{
     }
     private class ICRogueArrowInteractionHandler implements ICRogueInteractionHandler{
        @Override
-       //TODO UPgrade in projectile all common part
        public void interactWith(ICRogueCell cell, boolean isCellInteraction) {
            if(cell.getType() == ICRogueCellType.WALL || cell.getType() == ICRogueCellType.HOLE){
                 consume();
            }
        }
+       
+       @Override
        public void interactWith(ICRoguePlayer player, boolean isCellInteraction){
             consume();
             player.reciveDmg(getDmg());

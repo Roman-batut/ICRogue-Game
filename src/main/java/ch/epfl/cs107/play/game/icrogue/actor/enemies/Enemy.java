@@ -20,7 +20,7 @@ import java.util.Collections;
 
 public abstract class Enemy extends ICRogueActor implements Interactor {
 
-    protected Sprite sprite; // TODO private ?
+    private Sprite sprite; 
     private ICRogueEnemyInteractionHandler handler;
     private int hp;
     private boolean isAlive;
@@ -41,6 +41,11 @@ public abstract class Enemy extends ICRogueActor implements Interactor {
     // * GETTERS
     public boolean isAlive() {
         return isAlive;
+    }
+
+    // * SETTERS
+    protected void setSprite(Sprite sprite){
+        this.sprite = sprite;
     }
 
     // * REDEFINE Interactor
@@ -107,7 +112,6 @@ public abstract class Enemy extends ICRogueActor implements Interactor {
         proba.add(0);
         proba.add(0);
         proba.add(1);
-        proba.add(0);
         int pick = RandomHelper.chooseKInList(1, proba).get(0);
         if (pick == 1) {
             getOwnerArea().registerActor(new Coin(getOwnerArea(), Orientation.UP, getCurrentMainCellCoordinates()));

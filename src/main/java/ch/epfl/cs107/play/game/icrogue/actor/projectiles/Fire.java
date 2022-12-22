@@ -26,7 +26,7 @@ public class Fire extends Projectile{
      */
     public Fire(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position, 1,5);
-        sprite = new Sprite("zelda/fire", 1f, 1f, this,new RegionOfInterest(0, 0, 16, 16), new Vector(0, 0));
+        setSprite(new Sprite("zelda/fire", 1f, 1f, this,new RegionOfInterest(0, 0, 16, 16), new Vector(0, 0)));
         handler = new ICRogueFireInteractionHandler();
         super.setDmg(2);
     }

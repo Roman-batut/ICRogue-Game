@@ -28,7 +28,7 @@ public class Turret extends Enemy{
      */
     public Turret(Area area, Orientation orientation, DiscreteCoordinates position, List<Orientation> shootOrientations) {
         super(area, orientation, position);
-        sprite = new Sprite("icrogue/static_npc", 1.5f, 1.5f, this, null, new Vector(-0.25f, 0));
+        setSprite(new Sprite("icrogue/static_npc", 1.5f, 1.5f, this, null, new Vector(-0.25f, 0)));
         this.shootOrientations = shootOrientations;
     }
 
@@ -81,9 +81,7 @@ public class Turret extends Enemy{
      */
     @Override
     public void draw(Canvas canvas) {
-        if(isAlive()){
-            sprite.draw(canvas);
-        }
+        super.draw(canvas);
     }
     
 }
