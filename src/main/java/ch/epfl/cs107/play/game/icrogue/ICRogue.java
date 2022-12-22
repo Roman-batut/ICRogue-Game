@@ -84,7 +84,7 @@ public class ICRogue extends AreaGame{
 		
 		currentRoom = (ICRogueRoom)setCurrentArea(player.getDestination(), false);
 		
-		player.enterRoom(currentRoom, new DiscreteCoordinates(0, 2));//player.getDestinationOfArrive());
+		player.enterRoom(currentRoom, player.getDestinationOfArrive());
 		player.setPassing(false);
 	}
 

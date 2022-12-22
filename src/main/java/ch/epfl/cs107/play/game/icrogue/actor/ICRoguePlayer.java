@@ -30,7 +30,7 @@ import java.util.List;
 
 public class ICRoguePlayer extends ICRogueActor implements Interactor {
 
-    private final static int MOVE_DURATION = 5;
+    private final static int MOVE_DURATION = 2;
 
     private int hp;
     private Sprite sprite;

@@ -18,7 +18,6 @@ public abstract class Level{
     private int nbRooms;
     private MapState[][] roomsPlacement;
     private int[] roomsDistribution;
-    private ICRogueRoom[] roomTypes;
 
     // * Constructor
     /**
@@ -32,7 +31,7 @@ public abstract class Level{
     protected Level(boolean randomMap, DiscreteCoordinates startPosition,int[] roomsDistribution,  int height,int width, ICRogue jeu) {
         this.jeu = jeu;
         this.roomsDistribution = roomsDistribution;
-        
+
         if(!randomMap){
             Carte = new ICRogueRoom[height][width];
             bossRoomCoordinates = new DiscreteCoordinates(0, 0);
@@ -52,6 +51,7 @@ public abstract class Level{
             roomsPlacement = generateRandomRoomPlacement();
             printMap(roomsPlacement);
             generateRandomMap();
+            printMap(roomsPlacement);
         }
 
     }
@@ -89,6 +89,11 @@ public abstract class Level{
 
         currentRoom.lockRoomConnector(connector, keyId);
     }
+    protected void setConnectorDestinationcoords(DiscreteCoordinates coords, ConnectorInRoom connector){
+        ICRogueRoom currentRoom = Carte[coords.x][coords.y];
+
+        currentRoom.setConnectorDestinationcoords(connector);
+    }
     
     protected void setStartingRoom(DiscreteCoordinates coords) {
         StartingRoom = (ICRogueRoom)Carte[coords.x][coords.y];
@@ -97,7 +102,6 @@ public abstract class Level{
     
     protected void setBossRoom(DiscreteCoordinates coords) {
         bossRoom = (ICRogueRoom)Carte[coords.x][coords.y];
-
     }
 
     abstract protected void setUpConnector(MapState[][] roomsPlacement, ICRogueRoom room);
@@ -121,7 +125,6 @@ public abstract class Level{
                     }
                     if(roomsPlacement[j][h] == MapState.BOSS_ROOM){
                         bossRoomCoordinates = new DiscreteCoordinates(j, h);
-                        setRoom(bossRoomCoordinates, createRoom(0, bossRoomCoordinates));
                     }
                 }
             }
@@ -142,12 +145,16 @@ public abstract class Level{
                 if(i == 4){
                     setStartingRoom(coords);
                 }
+                
                 roomsPlacement[x][y] = MapState.CREATED;
                 setUpConnector(roomsPlacement, Carte[x][y]);
             }
         }
+        setRoom(bossRoomCoordinates, createRoom(-1, bossRoomCoordinates));
         setBossRoom(bossRoomCoordinates);
-
+        roomsPlacement[bossRoomCoordinates.x][bossRoomCoordinates.y] = MapState.CREATED;
+        setUpConnector(roomsPlacement, Carte[bossRoomCoordinates.x][bossRoomCoordinates.y]);
+    
     }
     
     protected MapState[][] generateRandomRoomPlacement(){
@@ -164,11 +171,11 @@ public abstract class Level{
         placementmap[posx][posy] = MapState.PLACED;
         roomsToPlace --;
         while(roomsToPlace > 0){
-            int[][] freeSlotsPlacement = freeSlots(placementmap, posx, posy, MapState.NULL)[0];
-            int freeSlots = freeSlots(placementmap, posx, posy, MapState.NULL)[1][0][0];
+            List<Integer[]> freeSlotsPlacement = freeSlots(placementmap, posx, posy, MapState.NULL);
+            int freeSlots = freeSlotsPlacement.size();
             
             List<Integer> freeSlotsPlacementIndex = new ArrayList<Integer>();
-            for(int i = 0; i<freeSlotsPlacement.length; i++){
+            for(int i = 0; i<freeSlotsPlacement.size(); i++){
                 freeSlotsPlacementIndex.add(i);
             }
 
@@ -180,18 +187,20 @@ public abstract class Level{
             for(int v : roomsDistribution){ roomsDistributionArray.add(v); }
     
             for(int index : chosePlaces){
-                int x = freeSlotsPlacement[index][0];
-                int y = freeSlotsPlacement[index][1];
-                placementmap[x][y] = MapState.PLACED;
-            }
+                int x = freeSlotsPlacement.get(index)[0];
+                int y = freeSlotsPlacement.get(index)[1];
+                if(x != -1 && y != -1){
+                    placementmap[x][y] = MapState.PLACED;
+                }
+            }    
 
             placementmap[posx][posy] = MapState.EXPLORED;
-            int[] pos = {0};  
+            Integer[] pos = {0};  
             if(chosePlaces.size() == 1){ 
-                pos = freeSlotsPlacement[chosePlaces.get(0)]; 
+                pos = freeSlotsPlacement.get(chosePlaces.get(0)); 
             }
             else{
-                pos = freeSlotsPlacement[RandomHelper.chooseKInList(1, chosePlaces).get(0)];
+                pos = freeSlotsPlacement.get(RandomHelper.chooseKInList(1, chosePlaces).get(0));
             }
             posx = pos[0]; posy = pos[1];
             roomsToPlace -= maxRoomsToPlace;
@@ -205,7 +214,7 @@ public abstract class Level{
         while(!isPlaced){
             int indexx = RandomHelper.chooseKInList(1, indexList).get(0);
             int indexy = RandomHelper.chooseKInList(1, indexList).get(0);
-            int nbrfreeslots = freeSlots(placementmap , indexx, indexy, MapState.PLACED)[1][0][0];
+            int nbrfreeslots = freeSlots(placementmap , indexx, indexy, MapState.PLACED).size();
             if(nbrfreeslots > 0){
                 placementmap[indexx][indexy] = MapState.BOSS_ROOM;
                 isPlaced =true;
@@ -217,30 +226,26 @@ public abstract class Level{
 
 
    
-    private int[][][] freeSlots(MapState[][] map, int x, int y, MapState type){
-        int[][][] freeSlots = {{{0,0},{0,0},{0,0},{0,0}},{{0}}}; //HAUT, BAS, GAUCHE, DROITE, nbfreeSlots
+    private List<Integer[]> freeSlots(MapState[][] map, int x, int y, MapState type){
+        List<Integer[]> freeSlots = new ArrayList<Integer[]>();
 
         if(x+1 < map[0].length && map[x+1][y].equals(type)){
-            freeSlots[0][0][0] = x+1;
-            freeSlots[0][0][1] = y;
-            freeSlots[1][0][0]++;
+            Integer[] tab = {x+1, y};
+            freeSlots.add(tab);
         }
         if(x-1 >= 0 && map[x-1][y].equals(type)){
-            freeSlots[0][1][0] = x-1;
-            freeSlots[0][1][1] = y;
-            freeSlots[1][0][0]++;
+            Integer[] tab = {x-1, y};
+            freeSlots.add(tab);
         }
-
         if(y-1 >= 0 && map[x][y-1].equals(type)){
-            freeSlots[0][2][0] = x;
-            freeSlots[0][2][1] = y-1;
-            freeSlots[1][0][0]++;
+            Integer[] tab = {x, y-1};
+            freeSlots.add(tab);
         }
         if(y+1 < map.length && map[x][y+1].equals(type)){
-            freeSlots[0][3][0] = x;
-            freeSlots[0][3][1] = y+1;
-            freeSlots[1][0][0]++;
+            Integer[] tab = {x, y+1};
+            freeSlots.add(tab);
         }
+        
         return freeSlots;
     }
 
@@ -274,6 +279,7 @@ public abstract class Level{
             System.out.println(); }
             System.out.println();
     }
+
     protected enum MapState {
     NULL, // Empty space
     PLACED, // The room has been placed but not yet explored by the room placement algorithm 

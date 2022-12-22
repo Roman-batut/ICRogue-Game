@@ -59,7 +59,7 @@ public class Connector extends AreaEntity{
     }
 
     public String getDestination(){
-         return destination;
+        return destination;
     }
     
     public DiscreteCoordinates getCoordinatesofarrive(){

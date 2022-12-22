@@ -24,7 +24,7 @@ public class Level0Room extends ICRogueRoom{
 		private Orientation orientation;
 		
 		// CONSTRUCTOR
-		private Level0Connectors(DiscreteCoordinates position, DiscreteCoordinates desination, Orientation orientation){
+		private Level0Connectors(DiscreteCoordinates position, DiscreteCoordinates destination, Orientation orientation){
 			this.position = position;
 			this.destination = destination;
 			this.orientation = orientation;
