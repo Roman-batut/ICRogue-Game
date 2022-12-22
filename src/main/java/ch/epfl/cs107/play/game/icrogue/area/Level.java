@@ -172,6 +172,7 @@ public abstract class Level{
     abstract protected ICRogueRoom createRoom(int ordinal, DiscreteCoordinates coordinates);
 
     // * RANDOM
+    // * Define the random type for each good position
     protected void generateRandomMap(){
         for(int i=0 ; i<roomsDistribution.length ; ++i){
             int k = roomsDistribution[i];
@@ -217,7 +218,8 @@ public abstract class Level{
         setUpConnector(roomsPlacement, Carte[bossRoomCoordinates.x][bossRoomCoordinates.y]);
     
     }
-    
+    // * Define the random position
+
     protected MapState[][] generateRandomRoomPlacement(){
         int roomsToPlace = nbRooms;
         

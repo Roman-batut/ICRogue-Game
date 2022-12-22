@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Submit",
+            "request": "launch",
+            "mainClass": "ch.epfl.cs107.play.Submit",
+            "projectName": "Mini-projet-2-1_b959cc25"
+        },
+        {
+            "type": "java",
             "name": "Launch Play",
             "request": "launch",
             "mainClass": "ch.epfl.cs107.play.Play",
